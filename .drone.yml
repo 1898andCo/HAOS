@@ -9,7 +9,6 @@ platform:
 steps:
 - name: test
   image: rancher/dapper:v0.4.2
-  privileged: true
   commands:
   - dapper test
   volumes:
