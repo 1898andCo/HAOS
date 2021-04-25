@@ -1,0 +1,38 @@
+style: github
+template: CHANGELOG.tpl.md
+info:
+  title: CHANGELOG
+  repository_url: https://github.com/BOHICA-LABS/BLAOS
+options:
+  commits:
+    filters:
+      Type:
+       - feat
+       - fix
+       - perf
+       - refactor
+       - docs
+       - style
+       - test
+       - chore
+       - deps
+  commit_groups:
+    title_maps:
+      feat: Features
+      fix: Bug Fixes
+      perf: Performance Improvements
+      refactor: Code Refactoring
+      docs: Documentation Improvements
+      style: Style Improvements
+      test: Test Coverage Improvements
+      chore: Maintenance
+      deps: Dependency Updates
+  header:
+    pattern: "^(\\w*)(?:\\(([\\w\\$\\.\\-\\*\\s]*)\\))?\\:\\s(.*)$"
+    pattern_maps:
+      - Type
+      - Scope
+      - Subject
+  notes:
+    keywords:
+      - BREAKING CHANGE
