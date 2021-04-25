@@ -14,4 +14,5 @@ steps:
   - dapper test
   volumes:
   - name: docker
-    path: /var/run/docker.sock
+    host:
+      path: /var/run/docker.sock
