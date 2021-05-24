@@ -1,17 +1,142 @@
 ---
 kind: pipeline
 name: amd64
+type: docker
 
 platform:
   os: linux
   arch: amd64
 
 steps:
-- name: test
-  image: rancher/dapper:v0.4.2
-  commands:
-  - dapper test
-  volumes:
+  - name: test
+    image: rancher/dapper:v0.5.6
+    commands:
+      - dapper test
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+
+  - name: build
+    image: rancher/dapper:v0.5.6
+    commands:
+      - dapper build
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+
+  - name: validate
+    image: rancher/dapper:v0.5.6
+    commands:
+      - dapper validate
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+
+  - name: package
+    image: rancher/dapper:v0.5.6
+    commands:
+      - dapper package
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+
+  - name: create releaselog
+    image: quay.io/git-chglog/git-chglog:latest
+    commands:
+      - "git fetch origin --prune --tags"
+      - "git-chglog ${DRONE_TAG} > RELEASELOG.md"
+    when:
+      branch:
+        - master
+      event: tag
+
+  - name: publish
+    image: plugins/github-release
+    settings:
+      api_key:
+        from_secret: global_github_token
+      files:
+        - "dist/artifacts/*"
+        - RELEASELOG.md
+      note: RELEASELOG.md
+      title: "Release ${DRONE_TAG}"
+      overwrite: true
+      checksum:
+        - sha512
+    when:
+      branch:
+        - master
+      event: tag
+
+volumes:
   - name: docker
     host:
       path: /var/run/docker.sock
+
+---
+kind: pipeline
+name: changelog
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+clone:
+  disable: true
+
+steps:
+  - name: clone
+    image: plugins/git-action:1
+    settings:
+      actions:
+        - clone
+      remote: ${DRONE_GIT_HTTP_URL}
+      branch: master
+      path: /drone/src
+      netrc_machine: github.com
+      netrc_username:
+        form_secret: global_github_username
+      netrc_password:
+        form_secret: global_github_token
+
+  - name: generate
+    image: quay.io/git-chglog/git-chglog:latest
+    commands:
+      - "git fetch origin --prune --tags"
+      - "git-chglog > CHANGELOG.md"
+    when:
+      event: tag
+
+  - name: diff
+    image: alpine/git:latest
+    commands:
+      - "git diff"
+
+  - name: output
+    image: alpine:latest
+    commands:
+      - "cat CHANGELOG.md"
+
+  - name: publish
+    image: plugins/git-action:1
+    settings:
+      actions:
+        - commit
+        - push
+      message: "docs(changelog): auto changelog update ${DRONE_TAG} [CI SKIP]"
+      author_email: devops@bohicalabs.com
+      author_name: bohicalabs
+      branch: master
+      path: /drone/src
+      netrc_machine: github.com
+      netrc_username:
+        from_secret: global_github_username
+      netrc_password:
+        from_secret: global_github_token
+
+trigger:
+  branch:
+    - master
+  event:
+    - tag
