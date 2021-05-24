@@ -39,6 +39,7 @@ type Install struct {
 	Debug     bool   `json:"debug,omitempty"`
 	TTY       string `json:"tty,omitempty"`
 }
+
 // Builds the cloud config object
 type CloudConfig struct {
 	SSHAuthorizedKeys []string   `json:"sshAuthorizedKeys,omitempty"`
