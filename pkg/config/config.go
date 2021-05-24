@@ -59,6 +59,11 @@ type File struct {
 	RawFilePermissions string `json:"permissions"`
 }
 
+type Manifest struct {
+	URL    string `json:"url"`
+	SHA256 string `json:"sha256,omitempty"`
+}
+
 func (f *File) Permissions() (os.FileMode, error) {
 	if f.RawFilePermissions == "" {
 		return os.FileMode(0644), nil
