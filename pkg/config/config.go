@@ -39,15 +39,16 @@ type Install struct {
 	Debug     bool   `json:"debug,omitempty"`
 	TTY       string `json:"tty,omitempty"`
 }
-
+// Builds the cloud config object
 type CloudConfig struct {
-	SSHAuthorizedKeys []string `json:"sshAuthorizedKeys,omitempty"`
-	WriteFiles        []File   `json:"writeFiles,omitempty"`
-	Hostname          string   `json:"hostname,omitempty"`
-	K3OS              K3OS     `json:"k3os,omitempty"`
-	Runcmd            []string `json:"runCmd,omitempty"`
-	Bootcmd           []string `json:"bootCmd,omitempty"`
-	Initcmd           []string `json:"initCmd,omitempty"`
+	SSHAuthorizedKeys []string   `json:"sshAuthorizedKeys,omitempty"`
+	BootManifests     []Manifest `json:"bootManifests,omitempty"`
+	WriteFiles        []File     `json:"writeFiles,omitempty"`
+	Hostname          string     `json:"hostname,omitempty"`
+	K3OS              K3OS       `json:"k3os,omitempty"`
+	Runcmd            []string   `json:"runCmd,omitempty"`
+	Bootcmd           []string   `json:"bootCmd,omitempty"`
+	Initcmd           []string   `json:"initCmd,omitempty"`
 }
 
 type File struct {
