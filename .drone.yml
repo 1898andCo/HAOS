@@ -46,6 +46,8 @@ steps:
       - "git fetch origin --prune --tags"
       - "git-chglog ${DRONE_TAG} > RELEASELOG.md"
     when:
+      branch:
+        - master
       event: tag
 
   - name: publish
@@ -62,6 +64,8 @@ steps:
       checksum:
         - sha512
     when:
+      branch:
+        - master
       event: tag
 
 volumes:
@@ -73,6 +77,10 @@ volumes:
 kind: pipeline
 name: changelog
 type: docker
+
+platform:
+  os: linux
+  arch: amd64
 
 clone:
   disable: true
