@@ -30,6 +30,7 @@ func RunApply(cfg *config.CloudConfig) error {
 		ApplySysctls,
 		ApplySSHKeysWithNet,
 		ApplyWriteFiles,
+		ApplyBootManifests,
 		ApplyEnvironment,
 		ApplyRuncmd,
 		ApplyInstall,
