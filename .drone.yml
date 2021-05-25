@@ -146,7 +146,7 @@ trigger:
 
 ---
 kind: pipeline
-name: sync
+name: syncrepo
 type: docker
 
 platform:
@@ -154,21 +154,21 @@ platform:
   arch: amd64
 
 steps:
-  - git-sync-master:
-    when:
-      ref: refs/heads/master
+  - name: sync master
     image: devatherock/drone-git-sync:latest
     target_repo: https://github.com/1898-Co/HAOS.git
     target_branch: master
     secrets: global_github_token
-
-  - git-sync-develop:
     when:
-      ref: refs/heads/develop
+      ref: refs/heads/master
+
+  - name: sync develop
     image: devatherock/drone-git-sync:latest
     target_repo: https://github.com/1898-Co/HAOS.git
     target_branch: develop
     secrets: global_github_token
+    when:
+      ref: refs/heads/develop
 
 trigger:
   repo:
