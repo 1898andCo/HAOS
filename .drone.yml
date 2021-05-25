@@ -153,22 +153,72 @@ platform:
   os: linux
   arch: amd64
 
-steps:
-  - name: sync master
-    image: devatherock/drone-git-sync:latest
-    target_repo: https://github.com/1898-Co/HAOS.git
-    target_branch: master
-    secrets: global_github_token
-    when:
-      ref: refs/heads/master
+clone:
+  disable: true
 
-  - name: sync develop
-    image: devatherock/drone-git-sync:latest
-    target_repo: https://github.com/1898-Co/HAOS.git
-    target_branch: develop
-    secrets: global_github_token
+steps:
+  - name: clone main develop
+    image: plugins/git-action:1
+    settings:
+      actions:
+        - clone
+      remote: ${DRONE_GIT_HTTP_URL}
+      branch: develop
+      path: /drone/src/source/develop
+      netrc_machine: github.com
+      netrc_username:
+        form_secret: global_github_username
+      netrc_password:
+        form_secret: global_github_token
     when:
-      ref: refs/heads/develop
+      ref:
+        - refs/heads/develop
+
+  - name: clone remote develop
+    image: plugins/git-action:1
+    settings:
+      actions:
+        - clone
+      remote: https://github.com/1898-Co/HAOS.git
+      branch: develop
+      path: /drone/src/remote/develop
+      netrc_machine: github.com
+      netrc_username:
+        form_secret: global_github_username
+      netrc_password:
+        form_secret: global_github_token
+    when:
+      ref:
+        - refs/heads/develop
+
+  - name: Overwrite
+    image: alpine:latest
+    commands:
+      - "rm -rf /drone/src/remote/develop/*"
+      - "cp /drone/src/source/develop /drone/src/remote/develop/"
+    when:
+      ref:
+        - refs/heads/develop
+
+  - name: publish remote develop
+    image: plugins/git-action:1
+    settings:
+      actions:
+        - commit
+        - push
+      message: "chore(sync): auto sync develop [CI SKIP]"
+      author_email: devops@bohicalabs.com
+      author_name: bohicalabs
+      branch: develop
+      path: /drone/src/remote/develop/
+      netrc_machine: github.com
+      netrc_username:
+        from_secret: global_github_username
+      netrc_password:
+        from_secret: global_github_token
+    when:
+      ref:
+        - refs/heads/develop
 
 trigger:
   repo:
