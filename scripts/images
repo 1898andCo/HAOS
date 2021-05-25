@@ -15,6 +15,7 @@ build_all()
         i=$(basename $i)
         IMAGE=${i##[0-9][0-9]-}
         FULL_IMAGE=$REPO/k3os-$IMAGE:$TAG
+        FULL_IMAGE=${FULL_IMAGE//+/$'-'}
 
         cd $i
         if [ -e archs ] && ! grep -w -q $ARCH archs; then
