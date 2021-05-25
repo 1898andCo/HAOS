@@ -46,6 +46,8 @@ steps:
       - "git fetch origin --prune --tags"
       - "git-chglog ${DRONE_TAG} > RELEASELOG.md"
     when:
+      event:
+        - tag
       ref:
         - refs/heads/master
         - refs/tags/*
@@ -64,6 +66,8 @@ steps:
       checksum:
         - sha512
     when:
+      event:
+        - tag
       ref:
         - refs/heads/master
         - refs/tags/*
@@ -105,8 +109,6 @@ steps:
     commands:
       - "git fetch origin --prune --tags"
       - "git-chglog > CHANGELOG.md"
-    when:
-      event: tag
 
   - name: diff
     image: alpine/git:latest
@@ -136,7 +138,8 @@ steps:
         from_secret: global_github_token
 
 trigger:
-  ref:
-    - refs/heads/master
   event:
     - tag
+  ref:
+    - refs/heads/master
+    - refs/tags/*
