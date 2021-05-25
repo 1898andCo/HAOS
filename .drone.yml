@@ -158,7 +158,7 @@ steps:
     image: devatherock/drone-git-sync:latest
     target_repo: https://github.com/1898-Co/HAOS.git
     target_branch: master
-    secrets: global_github_token
+    secrets: [global_github_token]
     when:
       ref: refs/heads/master
 
@@ -166,7 +166,7 @@ steps:
     image: devatherock/drone-git-sync:latest
     target_repo: https://github.com/1898-Co/HAOS.git
     target_branch: develop
-    secrets: global_github_token
+    secrets: [global_github_token]
     when:
       ref: refs/heads/develop
 
