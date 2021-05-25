@@ -48,7 +48,7 @@ steps:
     when:
       ref:
         - refs/heads/master
-      event: tag
+        - refs/tags/*
 
   - name: publish
     image: plugins/github-release
@@ -66,7 +66,7 @@ steps:
     when:
       ref:
         - refs/heads/master
-      event: tag
+        - refs/tags/*
 
 volumes:
   - name: docker
