@@ -158,6 +158,7 @@ steps:
     when:
       ref: refs/heads/master
     image: devatherock/drone-git-sync:latest
+    target_repo: https://github.com/1898-Co/HAOS.git
     target_branch: master
     secrets: global_github_token
 
@@ -165,5 +166,10 @@ steps:
     when:
       ref: refs/heads/develop
     image: devatherock/drone-git-sync:latest
+    target_repo: https://github.com/1898-Co/HAOS.git
     target_branch: develop
     secrets: global_github_token
+
+trigger:
+  repo:
+    - BOHICA-LABS/BLAOS
