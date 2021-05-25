@@ -143,3 +143,27 @@ trigger:
   ref:
     - refs/heads/master
     - refs/tags/*
+
+---
+kind: pipeline
+name: sync
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - git-sync-master:
+    when:
+      ref: refs/heads/master
+    image: devatherock/drone-git-sync:latest
+    target_branch: master
+    secrets: global_github_token
+
+  - git-sync-develop:
+    when:
+      ref: refs/heads/develop
+    image: devatherock/drone-git-sync:latest
+    target_branch: develop
+    secrets: global_github_token
