@@ -1,6 +1,16 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Bug Fixes
+- **drone:** add from_secrets flag
+- **drone:** add missing brackets
+
+### Documentation Improvements
+- **changelog:** auto changelog update v1.2.1-v1.20.4-k3s1 [CI SKIP]
+
+### Maintenance
+- **drone:** swapped git sync method
+
 
 <a name="v1.2.1-v1.20.4-k3s1"></a>
 ## [v1.2.1-v1.20.4-k3s1] - 2021-05-25
