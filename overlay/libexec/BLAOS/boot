@@ -69,7 +69,7 @@ setup_services()
 
 setup_config()
 {
-    k3os config --boot
+    BLAOS config --boot
     if [ -e /etc/conf.d/udev-settle ]; then
         ln -s /etc/init.d/udev-settle /etc/runlevels/sysinit/
     fi
@@ -117,15 +117,15 @@ setup_hostname()
         return 0
     fi
 
-    if [ -e /var/lib/rancher/k3os/hostname ]; then
-        cp /var/lib/rancher/k3os/hostname /etc/hostname
+    if [ -e /var/lib/rancher/BLAOS/hostname ]; then
+        cp /var/lib/rancher/BLAOS/hostname /etc/hostname
         return 0
     fi
 
-    mkdir -p /var/lib/rancher/k3os
-    HOSTNAME=k3os-${RANDOM}
-    echo $HOSTNAME > /var/lib/rancher/k3os/hostname
-    cp /var/lib/rancher/k3os/hostname /etc/hostname
+    mkdir -p /var/lib/rancher/BLAOS
+    HOSTNAME=BLAOS-${RANDOM}
+    echo $HOSTNAME > /var/lib/rancher/BLAOS/hostname
+    cp /var/lib/rancher/BLAOS/hostname /etc/hostname
 
 }
 
@@ -136,9 +136,9 @@ setup_mounts()
         mount --bind /.base/boot /boot
     fi
 
-    if [ -e /.base/k3os/system ]; then
-        mkdir -p /k3os/system
-        mount -o ro --bind /.base/k3os/system /k3os/system
+    if [ -e /.base/BLAOS/system ]; then
+        mkdir -p /BLAOS/system
+        mount -o ro --bind /.base/BLAOS/system /BLAOS/system
     fi
 
     # Twice on purpose.  A live system double mounts this
@@ -169,16 +169,16 @@ do_grow_live()
 
 grow_live()
 {
-    if [ "$K3OS_MODE" != "local" ]; then
+    if [ "$BLAOS_MODE" != "local" ]; then
         return 0
     fi
 
-    if [ -e /k3os/system/growpart ]; then
-        read DEV NUM < /k3os/system/growpart
+    if [ -e /BLAOS/system/growpart ]; then
+        read DEV NUM < /BLAOS/system/growpart
         if [ ! -e "${DEV}${NUM}" ]; then
             # /dev/sda2 => /dev/sda2
             # /dev/nvme0n1p2 => /dev/nvme0n1p2
-            PART=$(blkid -L K3OS_STATE)
+            PART=$(blkid -L BLAOS_STATE)
 
             # /dev/sda2 => /dev/sda
             # /dev/nvme0n1p2 => /dev/nvme0n1
@@ -190,7 +190,7 @@ grow_live()
         fi
         pinfo Growing ${PART:=${DEV}${NUM}}
         do_grow_live $DEV $NUM $PART || true
-        rm -f /k3os/system/growpart
+        rm -f /BLAOS/system/growpart
     fi
 }
 

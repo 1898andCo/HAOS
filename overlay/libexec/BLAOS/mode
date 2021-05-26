@@ -7,11 +7,11 @@ for x in $(cat /proc/cmdline); do
         rescue)
             MODE=shell
             ;;
-        k3os.mode=*)
-            MODE=${x#k3os.mode=}
+        BLAOS.mode=*)
+            MODE=${x#BLAOS.mode=}
             ;;
-        k3os.fallback_mode=*)
-            FALLBACK_MODE=${x#k3os.fallback_mode=}
+        BLAOS.fallback_mode=*)
+            FALLBACK_MODE=${x#BLAOS.fallback_mode=}
             ;;
     esac
 done
@@ -20,12 +20,12 @@ MODE_WAIT_SECONDS=30
 
 while [ -z "$MODE" ] && (( MODE_WAIT_SECONDS > 0 )); do
 
-if [ -z "$MODE" ] && [ -n "$(blkid -L K3OS_STATE)" ]; then
+if [ -z "$MODE" ] && [ -n "$(blkid -L BLAOS_STATE)" ]; then
     MODE=disk
 fi
 
-if [ -n "$K3OS_MODE" ]; then
-    MODE=$K3OS_MODE
+if [ -n "$BLAOS_MODE" ]; then
+    MODE=$BLAOS_MODE
 fi
 
 if [ -z "$MODE" ]; then
@@ -44,9 +44,9 @@ fi
 done
 
 if [ -z "$MODE" ]; then
-    pfatal "Failed to determine boot mode (did you forget to set k3os.mode?)"
+    pfatal "Failed to determine boot mode (did you forget to set BLAOS.mode?)"
 elif [ ! -e $SCRIPTS/mode-${MODE} ]; then
     pfatal "Mode script does not exist for ${MODE}"
 else
-    echo "$MODE" > /run/k3os/mode
+    echo "$MODE" > /run/BLAOS/mode
 fi

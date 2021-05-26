@@ -14,7 +14,7 @@ build_all()
     for i; do
         i=$(basename $i)
         IMAGE=${i##[0-9][0-9]-}
-        FULL_IMAGE=$REPO/k3os-$IMAGE:$TAG
+        FULL_IMAGE=$REPO/blaos-$IMAGE:$TAG
         FULL_IMAGE=${FULL_IMAGE//+/$'-'}
 
         cd $i
@@ -46,7 +46,7 @@ copy_all()
     for i; do
         i=$(basename $i)
         IMAGE=${i##[0-9][0-9]-}
-        FULL_IMAGE=$REPO/k3os-$IMAGE:$TAG
+        FULL_IMAGE=$REPO/blaos-$IMAGE:$TAG
 
         cd $i
         if [ -e archs ] && ! grep -w -q $ARCH archs; then

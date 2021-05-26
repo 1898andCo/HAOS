@@ -6,84 +6,84 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/rancher/k3os/pkg/system"
+	"github.com/BOHICA-LABS/BLAOS/pkg/system"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"golang.org/x/sys/unix"
 )
 
 var (
-	upgradeK3OS, upgradeK3S             bool
+	upgradeBLAOS, upgradeK3S             bool
 	upgradeKernel, upgradeRootFS        bool
 	doRemount, doSync, doReboot         bool
 	sourceDir, destinationDir, lockFile string
 )
 
-// Command is the `upgrade` sub-command, it performs upgrades to k3OS.
+// Command is the `upgrade` sub-command, it performs upgrades to BLAOS.
 func Command() cli.Command {
 	return cli.Command{
 		Name:  "upgrade",
 		Usage: "perform upgrades",
 		Flags: []cli.Flag{
 			cli.BoolFlag{
-				Name:        "k3os",
-				EnvVar:      "K3OS_UPGRADE_K3OS",
-				Destination: &upgradeK3OS,
+				Name:        "BLAOS",
+				EnvVar:      "BLAOS_UPGRADE_BLAOS",
+				Destination: &upgradeBLAOS,
 				Hidden:      true,
 			},
 			cli.BoolFlag{
 				Name:        "k3s",
-				EnvVar:      "K3OS_UPGRADE_K3S",
+				EnvVar:      "BLAOS_UPGRADE_K3S",
 				Destination: &upgradeK3S,
 				Hidden:      true,
 			},
 			cli.BoolFlag{
 				Name:        "kernel",
 				Usage:       "upgrade the kernel",
-				EnvVar:      "K3OS_UPGRADE_KERNEL",
+				EnvVar:      "BLAOS_UPGRADE_KERNEL",
 				Destination: &upgradeKernel,
 			},
 			cli.BoolFlag{
 				Name:        "rootfs",
-				Usage:       "upgrade k3os+k3s",
-				EnvVar:      "K3OS_UPGRADE_ROOTFS",
+				Usage:       "upgrade BLAOS+k3s",
+				EnvVar:      "BLAOS_UPGRADE_ROOTFS",
 				Destination: &upgradeRootFS,
 			},
 			cli.BoolFlag{
 				Name:        "remount",
 				Usage:       "pre-upgrade remount?",
-				EnvVar:      "K3OS_UPGRADE_REMOUNT",
+				EnvVar:      "BLAOS_UPGRADE_REMOUNT",
 				Destination: &doRemount,
 			},
 			cli.BoolFlag{
 				Name:        "sync",
 				Usage:       "post-upgrade sync?",
-				EnvVar:      "K3OS_UPGRADE_SYNC",
+				EnvVar:      "BLAOS_UPGRADE_SYNC",
 				Destination: &doSync,
 			},
 			cli.BoolFlag{
 				Name:        "reboot",
 				Usage:       "post-upgrade reboot?",
-				EnvVar:      "K3OS_UPGRADE_REBOOT",
+				EnvVar:      "BLAOS_UPGRADE_REBOOT",
 				Destination: &doReboot,
 			},
 			cli.StringFlag{
 				Name:        "source",
-				EnvVar:      "K3OS_UPGRADE_SOURCE",
+				EnvVar:      "BLAOS_UPGRADE_SOURCE",
 				Value:       system.RootPath(),
 				Required:    true,
 				Destination: &sourceDir,
 			},
 			cli.StringFlag{
 				Name:        "destination",
-				EnvVar:      "K3OS_UPGRADE_DESTINATION",
+				EnvVar:      "BLAOS_UPGRADE_DESTINATION",
 				Value:       system.RootPath(),
 				Required:    true,
 				Destination: &destinationDir,
 			},
 			cli.StringFlag{
 				Name:        "lock-file",
-				EnvVar:      "K3OS_UPGRADE_LOCK_FILE",
+				EnvVar:      "BLAOS_UPGRADE_LOCK_FILE",
 				Value:       system.StatePath("upgrade.lock"),
 				Hidden:      true,
 				Destination: &lockFile,
@@ -97,9 +97,9 @@ func Command() cli.Command {
 			}
 			if upgradeRootFS {
 				upgradeK3S = true
-				upgradeK3OS = true
+				upgradeBLAOS = true
 			}
-			if !upgradeK3OS && !upgradeK3S && !upgradeKernel {
+			if !upgradeBLAOS && !upgradeK3S && !upgradeKernel {
 				cli.ShowSubcommandHelp(c)
 				logrus.Error("must specify components to upgrade, e.g. `rootfs`, `kernel`")
 				os.Exit(1)
@@ -132,8 +132,8 @@ func Run(_ *cli.Context) {
 
 	var atLeastOneComponentCopied bool
 
-	if upgradeK3OS {
-		if copied, err := system.CopyComponent(sourceDir, destinationDir, doRemount, "k3os"); err != nil {
+	if upgradeBLAOS {
+		if copied, err := system.CopyComponent(sourceDir, destinationDir, doRemount, "BLAOS"); err != nil {
 			logrus.Error(err)
 		} else if copied {
 			atLeastOneComponentCopied = true

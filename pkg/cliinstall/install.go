@@ -6,13 +6,13 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/BOHICA-LABS/BLAOS/pkg/config"
+	"github.com/BOHICA-LABS/BLAOS/pkg/questions"
 	"github.com/ghodss/yaml"
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/questions"
 )
 
 func Run() error {
-	fmt.Println("\nRunning k3OS configuration")
+	fmt.Println("\nRunning BLAOS configuration")
 
 	cfg, err := config.ReadConfig()
 	if err != nil {
@@ -69,23 +69,23 @@ func runInstall(cfg config.CloudConfig) error {
 		return err
 	}
 
-	if !cfg.K3OS.Install.Silent {
+	if !cfg.BLAOS.Install.Silent {
 		val, err := questions.PromptBool("\nConfiguration\n"+"-------------\n\n"+
 			string(installBytes)+
-			"\nYour disk will be formatted and k3OS will be installed with the above configuration.\nContinue?", false)
+			"\nYour disk will be formatted and BLAOS will be installed with the above configuration.\nContinue?", false)
 		if err != nil || !val {
 			return err
 		}
 	}
 
-	if cfg.K3OS.Install.ConfigURL == "" {
-		tempFile, err = ioutil.TempFile("/tmp", "k3os.XXXXXXXX")
+	if cfg.BLAOS.Install.ConfigURL == "" {
+		tempFile, err = ioutil.TempFile("/tmp", "BLAOS.XXXXXXXX")
 		if err != nil {
 			return err
 		}
 		defer tempFile.Close()
 
-		cfg.K3OS.Install.ConfigURL = tempFile.Name()
+		cfg.BLAOS.Install.ConfigURL = tempFile.Name()
 	}
 
 	ev, err := config.ToEnv(cfg)
@@ -94,7 +94,7 @@ func runInstall(cfg config.CloudConfig) error {
 	}
 
 	if tempFile != nil {
-		cfg.K3OS.Install = nil
+		cfg.BLAOS.Install = nil
 		bytes, err := yaml.Marshal(&cfg)
 		if err != nil {
 			return err
@@ -108,7 +108,7 @@ func runInstall(cfg config.CloudConfig) error {
 		defer os.Remove(tempFile.Name())
 	}
 
-	cmd := exec.Command("/usr/libexec/k3os/install")
+	cmd := exec.Command("/usr/libexec/BLAOS/install")
 	cmd.Env = append(os.Environ(), ev...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout

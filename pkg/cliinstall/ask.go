@@ -9,10 +9,10 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/mode"
-	"github.com/rancher/k3os/pkg/questions"
-	"github.com/rancher/k3os/pkg/util"
+	"github.com/BOHICA-LABS/BLAOS/pkg/config"
+	"github.com/BOHICA-LABS/BLAOS/pkg/mode"
+	"github.com/BOHICA-LABS/BLAOS/pkg/questions"
+	"github.com/BOHICA-LABS/BLAOS/pkg/util"
 )
 
 func Ask(cfg *config.CloudConfig) (bool, error) {
@@ -50,7 +50,7 @@ func isInstall(cfg *config.CloudConfig) (bool, error) {
 }
 
 func AskInstall(cfg *config.CloudConfig) error {
-	if cfg.K3OS.Install.Silent {
+	if cfg.BLAOS.Install.Silent {
 		return nil
 	}
 
@@ -62,7 +62,7 @@ func AskInstall(cfg *config.CloudConfig) error {
 		return err
 	}
 
-	if cfg.K3OS.Install.ConfigURL == "" {
+	if cfg.BLAOS.Install.ConfigURL == "" {
 		if err := AskGithub(cfg); err != nil {
 			return err
 		}
@@ -84,7 +84,7 @@ func AskInstall(cfg *config.CloudConfig) error {
 }
 
 func AskInstallDevice(cfg *config.CloudConfig) error {
-	if cfg.K3OS.Install.Device != "" {
+	if cfg.BLAOS.Install.Device != "" {
 		return nil
 	}
 
@@ -98,7 +98,7 @@ func AskInstallDevice(cfg *config.CloudConfig) error {
 		return err
 	}
 
-	cfg.K3OS.Install.Device = "/dev/" + fields[i]
+	cfg.BLAOS.Install.Device = "/dev/" + fields[i]
 	return nil
 }
 
@@ -108,7 +108,7 @@ func AskToken(cfg *config.CloudConfig, server bool) error {
 		err   error
 	)
 
-	if cfg.K3OS.Token != "" {
+	if cfg.BLAOS.Token != "" {
 		return nil
 	}
 
@@ -121,7 +121,7 @@ func AskToken(cfg *config.CloudConfig, server bool) error {
 	} else {
 		token, err = questions.Prompt(msg+": ", "")
 	}
-	cfg.K3OS.Token = token
+	cfg.BLAOS.Token = token
 
 	return err
 }
@@ -133,7 +133,7 @@ func isServer(cfg *config.CloudConfig) (bool, error) {
 	}
 	if mode == "live-server" {
 		return true, nil
-	} else if mode == "live-agent" || (cfg.K3OS.ServerURL != "" && cfg.K3OS.Token != "") {
+	} else if mode == "live-agent" || (cfg.BLAOS.ServerURL != "" && cfg.BLAOS.Token != "") {
 		return false, nil
 	}
 
@@ -147,7 +147,7 @@ func isServer(cfg *config.CloudConfig) (bool, error) {
 }
 
 func AskServerAgent(cfg *config.CloudConfig) error {
-	if cfg.K3OS.ServerURL != "" {
+	if cfg.BLAOS.ServerURL != "" {
 		return nil
 	}
 
@@ -164,13 +164,13 @@ func AskServerAgent(cfg *config.CloudConfig) error {
 	if err != nil {
 		return err
 	}
-	cfg.K3OS.ServerURL = url
+	cfg.BLAOS.ServerURL = url
 
 	return AskToken(cfg, false)
 }
 
 func AskPassword(cfg *config.CloudConfig) error {
-	if len(cfg.SSHAuthorizedKeys) > 0 || cfg.K3OS.Password != "" {
+	if len(cfg.SSHAuthorizedKeys) > 0 || cfg.BLAOS.Password != "" {
 		return nil
 	}
 
@@ -188,7 +188,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 	}
 
 	if os.Getuid() != 0 {
-		cfg.K3OS.Password = pass
+		cfg.BLAOS.Password = pass
 		return nil
 	}
 
@@ -201,7 +201,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 	}()
 
 	cmd := exec.Command("chpasswd")
-	cmd.Stdin = strings.NewReader(fmt.Sprintf("rancher:%s", pass))
+	cmd.Stdin = strings.NewReader(fmt.Sprintf("bohicalabs:%s", pass))
 	errBuffer := &bytes.Buffer{}
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = errBuffer
@@ -220,8 +220,8 @@ func AskPassword(cfg *config.CloudConfig) error {
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		fields := strings.Split(scanner.Text(), ":")
-		if len(fields) > 1 && fields[0] == "rancher" {
-			cfg.K3OS.Password = fields[1]
+		if len(fields) > 1 && fields[0] == "bohicalabs" {
+			cfg.BLAOS.Password = fields[1]
 			return nil
 		}
 	}
@@ -230,7 +230,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 }
 
 func AskWifi(cfg *config.CloudConfig) error {
-	if len(cfg.K3OS.Wifi) > 0 {
+	if len(cfg.BLAOS.Wifi) > 0 {
 		return nil
 	}
 
@@ -250,7 +250,7 @@ func AskWifi(cfg *config.CloudConfig) error {
 			return err
 		}
 
-		cfg.K3OS.Wifi = append(cfg.K3OS.Wifi, config.Wifi{
+		cfg.BLAOS.Wifi = append(cfg.BLAOS.Wifi, config.Wifi{
 			Name:       name,
 			Passphrase: pass,
 		})
@@ -263,7 +263,7 @@ func AskWifi(cfg *config.CloudConfig) error {
 }
 
 func AskGithub(cfg *config.CloudConfig) error {
-	if len(cfg.SSHAuthorizedKeys) > 0 || cfg.K3OS.Password != "" {
+	if len(cfg.SSHAuthorizedKeys) > 0 || cfg.BLAOS.Password != "" {
 		return nil
 	}
 
@@ -285,7 +285,7 @@ func AskGithub(cfg *config.CloudConfig) error {
 }
 
 func AskConfigURL(cfg *config.CloudConfig) error {
-	if cfg.K3OS.Install.ConfigURL != "" {
+	if cfg.BLAOS.Install.ConfigURL != "" {
 		return nil
 	}
 
@@ -303,6 +303,6 @@ func AskConfigURL(cfg *config.CloudConfig) error {
 		return err
 	}
 
-	cfg.K3OS.Install.ConfigURL = str
+	cfg.BLAOS.Install.ConfigURL = str
 	return nil
 }

@@ -32,16 +32,16 @@ setup_users()
 
 setup_dirs()
 {
-    mkdir -p /run/k3os
+    mkdir -p /run/BLAOS
 }
 
 setup_config()
 {
-    if [ "$K3OS_MODE" = "local" ]; then
+    if [ "$BLAOS_MODE" = "local" ]; then
         return 0
     fi
 
-    $K3OS_SYSTEM/k3os/current/k3os config --initrd
+    $BLAOS_SYSTEM/BLAOS/current/BLAOS config --initrd
 }
 
 setup_etc
@@ -50,7 +50,7 @@ setup_etc
 
 setup_modules
 setup_users
-$K3OS_SYSTEM/k3os/current/k3os rc
+$BLAOS_SYSTEM/BLAOS/current/BLAOS rc
 setup_dirs
 setup_kernel
 setup_config

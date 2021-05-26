@@ -2,19 +2,19 @@
 set -e
 
 rescue() {
-    echo ERROR "Something went wrong, run with cmdline k3os.debug for more logging"
+    echo ERROR "Something went wrong, run with cmdline BLAOS.debug for more logging"
     echo Dropping to shell
     exec bash
 }
 
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
-. /usr/libexec/k3os/functions
+. /usr/libexec/BLAOS/functions
 . /usr/lib/os-release
 
 pinfo Welcome to $PRETTY_NAME
 
-if [ "$K3OS_DEBUG" = "true" ]; then
+if [ "$BLAOS_DEBUG" = "true" ]; then
     set -x
 fi
 
@@ -32,9 +32,9 @@ fi
 
 trap rescue EXIT
 
-export K3OS_MODE=$(</run/k3os/mode)
-pinfo Running mode: ${K3OS_MODE}
-source $SCRIPTS/mode-${K3OS_MODE}
+export BLAOS_MODE=$(</run/BLAOS/mode)
+pinfo Running mode: ${BLAOS_MODE}
+source $SCRIPTS/mode-${BLAOS_MODE}
 
 pinfo Booting system
 source $SCRIPTS/boot

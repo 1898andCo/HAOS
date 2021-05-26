@@ -1,17 +1,17 @@
 package main
 
-// Copyright 2019 Rancher Labs, Inc.
+// Copyright 2021 BOHICA LABS.
 // SPDX-License-Identifier: Apache-2.0
 
 import (
 	"os"
 	"path/filepath"
 
+	"github.com/BOHICA-LABS/BLAOS/pkg/cli/app"
+	"github.com/BOHICA-LABS/BLAOS/pkg/enterchroot"
+	"github.com/BOHICA-LABS/BLAOS/pkg/transferroot"
 	"github.com/docker/docker/pkg/mount"
 	"github.com/docker/docker/pkg/reexec"
-	"github.com/rancher/k3os/pkg/cli/app"
-	"github.com/rancher/k3os/pkg/enterchroot"
-	"github.com/rancher/k3os/pkg/transferroot"
 	"github.com/sirupsen/logrus"
 )
 
@@ -37,12 +37,12 @@ func main() {
 }
 
 func initrd() {
-	enterchroot.DebugCmdline = "k3os.debug"
+	enterchroot.DebugCmdline = "BLAOS.debug"
 	transferroot.Relocate()
 	if err := mount.Mount("", "/", "none", "rw,remount"); err != nil {
 		logrus.Errorf("failed to remount root as rw: %v", err)
 	}
-	if err := enterchroot.Mount("./k3os/data", os.Args, os.Stdout, os.Stderr); err != nil {
+	if err := enterchroot.Mount("./BLAOS/data", os.Args, os.Stdout, os.Stderr); err != nil {
 		logrus.Fatalf("failed to enter root: %v", err)
 	}
 }

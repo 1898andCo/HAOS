@@ -3,14 +3,14 @@
 setup_motd()
 {
     echo >> /etc/motd
-    echo 'You can configure this system or install to disk using "sudo k3os install"' >> /etc/motd
+    echo 'You can configure this system or install to disk using "sudo BLAOS install"' >> /etc/motd
 }
 
 setup_base()
 {
-    K3OS_ISO=$(blkid -L K3OS || true)
-    if [ -n "$K3OS_ISO" ]; then
-        mount -o ro $(blkid -L K3OS) /.base
+    BLAOS_ISO=$(blkid -L BLAOS || true)
+    if [ -n "$BLAOS_ISO" ]; then
+        mount -o ro $(blkid -L BLAOS) /.base
     else
         success=false
         for (( j=0; j < 5 ; j++ )); do

@@ -1,16 +1,16 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG} as base
+FROM ${REPO}/blaos-base:${TAG} as base
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-progs:${TAG} as progs
+FROM ${REPO}/blaos-progs:${TAG} as progs
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-k3s:${TAG} as k3s
+FROM ${REPO}/blaos-k3s:${TAG} as k3s
 
-FROM base as k3os-build
+FROM base as blaos-build
 ARG VERSION
 ARG ARCH
 RUN apk add squashfs-tools
@@ -83,19 +83,19 @@ RUN rm -rf \
     /usr/src/image/usr/share/vim/vim81/tutor \
     /usr/src/image/usr/share/vim/vim81/doc
 
-COPY --from=k3s /output/install.sh /usr/src/image/libexec/k3os/k3s-install.sh
+COPY --from=k3s /output/install.sh /usr/src/image/libexec/BLAOS/k3s-install.sh
 COPY --from=progs /output/metadata /usr/src/image/sbin/metadata
 COPY --from=progs /output/kubectx/kubectx /output/kubectx/kubens /usr/src/image/bin/
 
 COPY overlay/ /usr/src/image/
 
-RUN ln -s /k3os/system/k3os/current/k3os /usr/src/image/sbin/k3os
-RUN ln -s /k3os/system/k3s/current/k3s /usr/src/image/sbin/k3s
+RUN ln -s /BLAOS/system/BLAOS/current/BLAOS /usr/src/image/sbin/BLAOS
+RUN ln -s /BLAOS/system/k3s/current/k3s /usr/src/image/sbin/k3s
 RUN ln -s k3s /usr/src/image/sbin/kubectl
 RUN ln -s k3s /usr/src/image/sbin/crictl
 RUN ln -s k3s /usr/src/image/sbin/ctr
 
-COPY install.sh /usr/src/image/libexec/k3os/install
+COPY install.sh /usr/src/image/libexec/BLAOS/install
 RUN sed -i -e "s/%VERSION%/${VERSION}/g" -e "s/%ARCH%/${ARCH}/g" /usr/src/image/lib/os-release
 RUN mkdir -p /output && \
     mksquashfs /usr/src/image /output/rootfs.squashfs

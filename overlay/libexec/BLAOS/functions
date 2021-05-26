@@ -1,0 +1,81 @@
+#!/bin/bash
+set -e
+
+export SCRIPTS=/usr/libexec/BLAOS
+export BLAOS_SYSTEM=/.base/BLAOS/system
+
+reinit_debug()
+{
+    if [ "$BLAOS_DEBUG" = "true" ]; then
+        set -x
+        return 0
+    fi
+
+    if [ -e /run/BLAOS/debug ]; then
+        set -x
+        return 0
+    fi
+
+    if [ -e /proc/cmdline ]; then
+        for x in $(cat /proc/cmdline); do
+            case $x in
+                BLAOS.debug*)
+                    export BLAOS_DEBUG=true
+                    mkdir -p /run/BLAOS
+                    echo debug > /run/BLAOS/debug || true
+                    ;;
+            esac
+        done
+    fi
+
+    if [ "$BLAOS_DEBUG" = "true" ]; then
+        set -x
+    fi
+}
+
+setup_kernel()
+{
+    KERNEL=${BLAOS_SYSTEM}/kernel/$(uname -r)/kernel.squashfs
+    if [ ! -e ${KERNEL} ]; then
+        return 0
+    fi
+
+    mkdir -p /run/BLAOS/kernel
+    mount -t squashfs $KERNEL /run/BLAOS/kernel
+
+    mount --bind /run/BLAOS/kernel/lib/modules /lib/modules
+    mount --bind /run/BLAOS/kernel/lib/firmware /lib/firmware
+    mount --bind /run/BLAOS/kernel/headers /usr/src
+
+    umount /run/BLAOS/kernel
+}
+
+perr()
+{
+    echo "[ERROR]" "$@" 1>&2
+}
+
+pfatal()
+{
+    echo "[FATAL]" "$@" 1>&2
+    exit 1
+}
+
+pinfo()
+{
+    echo " * " "$@"
+}
+
+cleanup()
+{
+    rm -rf /run/BLAOS
+    unset SCRIPTS
+    unset BLAOS_SYSTEM
+    if [ -n "$BLAOS_MODE" ]; then
+        mkdir -p /run/BLAOS
+        echo "$BLAOS_MODE" > /run/BLAOS/mode
+    fi
+    unset BLAOS_MODE
+}
+
+reinit_debug

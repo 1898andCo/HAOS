@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-type K3OS struct {
+type BLAOS struct {
 	DataSources    []string          `json:"dataSources,omitempty"`
 	Modules        []string          `json:"modules,omitempty"`
 	Sysctls        map[string]string `json:"sysctls,omitempty"`
@@ -46,7 +46,7 @@ type CloudConfig struct {
 	BootManifests     []Manifest `json:"bootManifests,omitempty"`
 	WriteFiles        []File     `json:"writeFiles,omitempty"`
 	Hostname          string     `json:"hostname,omitempty"`
-	K3OS              K3OS       `json:"k3os,omitempty"`
+	BLAOS              BLAOS       `json:"BLAOS,omitempty"`
 	Runcmd            []string   `json:"runCmd,omitempty"`
 	Bootcmd           []string   `json:"bootCmd,omitempty"`
 	Initcmd           []string   `json:"initCmd,omitempty"`

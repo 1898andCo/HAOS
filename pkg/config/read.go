@@ -8,8 +8,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/BOHICA-LABS/BLAOS/pkg/system"
 	"github.com/ghodss/yaml"
-	"github.com/rancher/k3os/pkg/system"
 	"github.com/rancher/mapper"
 	"github.com/rancher/mapper/convert"
 	merge2 "github.com/rancher/mapper/convert/merge"
@@ -75,7 +75,7 @@ func ReadConfig() (CloudConfig, error) {
 
 func readersToObject(readers ...reader) (CloudConfig, error) {
 	result := CloudConfig{
-		K3OS: K3OS{
+		BLAOS: BLAOS{
 			Install: &Install{},
 		},
 	}

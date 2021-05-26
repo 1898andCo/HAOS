@@ -1,10 +1,10 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-iso:${TAG} as iso
+FROM ${REPO}/blaos-iso:${TAG} as iso
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG}
+FROM ${REPO}/blaos-base:${TAG}
 ARG ARCH
 
-COPY --from=iso /output/k3os-vm.iso /output/k3os-vm-${ARCH}.iso
+COPY --from=iso /output/BLAOS-vm.iso /output/BLAOS-vm-${ARCH}.iso

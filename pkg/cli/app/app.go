@@ -3,11 +3,11 @@ package app
 import (
 	"fmt"
 
-	"github.com/rancher/k3os/pkg/cli/config"
-	"github.com/rancher/k3os/pkg/cli/install"
-	"github.com/rancher/k3os/pkg/cli/rc"
-	"github.com/rancher/k3os/pkg/cli/upgrade"
-	"github.com/rancher/k3os/pkg/version"
+	"github.com/BOHICA-LABS/BLAOS/pkg/cli/config"
+	"github.com/BOHICA-LABS/BLAOS/pkg/cli/install"
+	"github.com/BOHICA-LABS/BLAOS/pkg/cli/rc"
+	"github.com/BOHICA-LABS/BLAOS/pkg/cli/upgrade"
+	"github.com/BOHICA-LABS/BLAOS/pkg/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -19,7 +19,7 @@ var (
 // New CLI App
 func New() *cli.App {
 	app := cli.NewApp()
-	app.Name = "k3os"
+	app.Name = "BLAOS"
 	app.Usage = "Booting to k3s so you don't have to"
 	app.Version = version.Version
 	cli.VersionPrinter = func(c *cli.Context) {
@@ -30,7 +30,7 @@ func New() *cli.App {
 		cli.BoolFlag{
 			Name:        "debug",
 			Usage:       "Turn on debug logs",
-			EnvVar:      "K3OS_DEBUG",
+			EnvVar:      "BLAOS_DEBUG",
 			Destination: &Debug,
 		},
 	}

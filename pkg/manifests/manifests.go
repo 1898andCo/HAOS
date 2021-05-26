@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/BOHICA-LABS/BLAOS/pkg/config"
 	"github.com/pkg/errors"
-	"github.com/rancher/k3os/pkg/config"
 	"github.com/sirupsen/logrus"
 )
 

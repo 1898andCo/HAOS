@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/util"
+	"github.com/BOHICA-LABS/BLAOS/pkg/config"
+	"github.com/BOHICA-LABS/BLAOS/pkg/util"
 	"github.com/sirupsen/logrus"
 )
 
@@ -26,7 +26,7 @@ func SetAuthorizedKeys(cfg *config.CloudConfig, withNet bool) error {
 	if err != nil {
 		return err
 	}
-	uid, gid, homeDir, err := findUserHomeDir(bytes, "rancher")
+	uid, gid, homeDir, err := findUserHomeDir(bytes, "bohicalabs")
 	if err != nil {
 		return err
 	}

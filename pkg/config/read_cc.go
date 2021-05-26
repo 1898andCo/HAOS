@@ -78,8 +78,8 @@ func readUserData() (map[string]interface{}, error) {
 	if script {
 		cc.WriteFiles[0].Owner = "root"
 		cc.WriteFiles[0].RawFilePermissions = "0700"
-		cc.WriteFiles[0].Path = "/run/k3os/userdata"
-		cc.Runcmd = []string{"source /run/k3os/userdata"}
+		cc.WriteFiles[0].Path = "/run/BLAOS/userdata"
+		cc.Runcmd = []string{"source /run/BLAOS/userdata"}
 
 		return convert.EncodeToMap(cc)
 	}

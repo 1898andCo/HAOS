@@ -4,13 +4,13 @@ import "path/filepath"
 
 const (
 	// DefaultRootDir represents where persistent installations are located
-	DefaultRootDir = "/k3os/system"
+	DefaultRootDir = "/BLAOS/system"
 	// DefaultDataDir represents where persistent state is located
-	DefaultDataDir = "/k3os/data"
+	DefaultDataDir = "/BLAOS/data"
 	// DefaultLocalDir represents where local, persistent configuration is located
-	DefaultLocalDir = "/var/lib/rancher/k3os"
+	DefaultLocalDir = "/var/lib/rancher/BLAOS"
 	// DefaultStateDir represents where ephemeral state is located
-	DefaultStateDir = "/run/k3os"
+	DefaultStateDir = "/run/BLAOS"
 )
 
 var (

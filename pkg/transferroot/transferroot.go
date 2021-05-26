@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	relocated = "K3OS_RELOCATED"
+	relocated = "BLAOS_RELOCATED"
 	nextInit  = "/init"
 )
 
@@ -235,7 +235,7 @@ func Relocate() {
 		}
 
 		// exec /sbin/init
-		if err := syscall.Exec(nextInit, []string{nextInit}, append(os.Environ(), "K3OS_RELOCATED=true")); err != nil {
+		if err := syscall.Exec(nextInit, []string{nextInit}, append(os.Environ(), "BLAOS_RELOCATED=true")); err != nil {
 			log.Fatalf("Cannot exec /sbin/init")
 		}
 	}

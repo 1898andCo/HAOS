@@ -1,4 +1,4 @@
-module github.com/rancher/k3os
+module github.com/BOHICA-LABS/BLAOS
 
 go 1.16
 

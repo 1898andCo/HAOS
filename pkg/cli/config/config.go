@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/rancher/k3os/pkg/cc"
-	"github.com/rancher/k3os/pkg/config"
+	"github.com/BOHICA-LABS/BLAOS/pkg/cc"
+	"github.com/BOHICA-LABS/BLAOS/pkg/config"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -23,7 +23,7 @@ var (
 func Command() cli.Command {
 	return cli.Command{
 		Name:      "config",
-		Usage:     "configure k3OS",
+		Usage:     "configure BLAOS",
 		ShortName: "cfg",
 		// Aliases: []string{
 		// 	"ccapply",

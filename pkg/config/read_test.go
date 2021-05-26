@@ -5,7 +5,7 @@ import "testing"
 func TestDataSource(t *testing.T) {
 	cc, err := readersToObject(func() (map[string]interface{}, error) {
 		return map[string]interface{}{
-			"k3os": map[string]interface{}{
+			"BLAOS": map[string]interface{}{
 				"datasource": "foo",
 			},
 		}, nil
@@ -13,11 +13,11 @@ func TestDataSource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(cc.K3OS.DataSources) != 1 {
+	if len(cc.BLAOS.DataSources) != 1 {
 		t.Fatal("no datasources")
 	}
-	if cc.K3OS.DataSources[0] != "foo" {
-		t.Fatalf("%s != foo", cc.K3OS.DataSources[0])
+	if cc.BLAOS.DataSources[0] != "foo" {
+		t.Fatalf("%s != foo", cc.BLAOS.DataSources[0])
 	}
 }
 

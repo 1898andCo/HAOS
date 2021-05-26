@@ -1,10 +1,10 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-package:${TAG} as package
+FROM ${REPO}/blaos-package:${TAG} as package
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG} as base
+FROM ${REPO}/blaos-base:${TAG} as base
 ARG VERSION
 ARG ARCH
 RUN apk add xorriso grub grub-efi mtools libvirt qemu-img
@@ -20,17 +20,17 @@ COPY grub.cfg /usr/src/iso/boot/grub/grub.cfg
 
 COPY --from=package /output/ /usr/src/iso/
 
-COPY config.yaml /usr/src/iso/k3os/system/
+COPY config.yaml /usr/src/iso/BLAOS/system/
 RUN mkdir -p /output && \
-    grub-mkrescue -o /output/k3os.iso /usr/src/iso/. -- -volid K3OS -joliet on && \
-    [ -e /output/k3os.iso ] # grub-mkrescue doesn't exit non-zero on failure
+    grub-mkrescue -o /output/BLAOS.iso /usr/src/iso/. -- -volid BLAOS -joliet on && \
+    [ -e /output/BLAOS.iso ] # grub-mkrescue doesn't exit non-zero on failure
 
 # [START] Used in the creation of the virtual image version
-RUN rm -f /usr/src/iso/k3os/system/kernel/current/kernel.squashfs
-COPY --from=package /output-vm/kernel.vm.squashfs /usr/src/iso/k3os/system/kernel/current/kernel.squashfs
+RUN rm -f /usr/src/iso/BLAOS/system/kernel/current/kernel.squashfs
+COPY --from=package /output-vm/kernel.vm.squashfs /usr/src/iso/BLAOS/system/kernel/current/kernel.squashfs
 RUN mkdir -p /output && \
-    grub-mkrescue -o /output/k3os-vm.iso /usr/src/iso/. -- -volid K3OS -joliet on && \
-    [ -e /output/k3os-vm.iso ] # grub-mkrescue doesn't exit non-zero on failure
+    grub-mkrescue -o /output/BLAOS-vm.iso /usr/src/iso/. -- -volid BLAOS -joliet on && \
+    [ -e /output/BLAOS-vm.iso ] # grub-mkrescue doesn't exit non-zero on failure
 # [END] Used in the creation of the virtual image version
 
 
