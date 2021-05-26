@@ -146,79 +146,22 @@ trigger:
 
 ---
 kind: pipeline
-name: syncrepo
+name: mirroring
 type: docker
-
-platform:
-  os: linux
-  arch: amd64
 
 clone:
   disable: true
 
 steps:
-  - name: clone main develop
-    image: plugins/git-action:1
+  - name: mirror
+    image: bohicalabs/drone-git-mirror:1.0.7
     settings:
-      actions:
-        - clone
-      remote: ${DRONE_GIT_HTTP_URL}
-      branch: develop
-      path: /drone/src/source/develop
-      netrc_machine: github.com
-      netrc_username:
-        form_secret: global_github_username
-      netrc_password:
-        form_secret: global_github_token
-    when:
-      ref:
-        - refs/heads/develop
-
-  - name: clone remote develop
-    image: plugins/git-action:1
-    settings:
-      actions:
-        - clone
-      remote: https://github.com/1898-Co/HAOS.git
-      branch: develop
-      path: /drone/src/remote/develop
-      netrc_machine: github.com
-      netrc_username:
-        form_secret: global_github_username
-      netrc_password:
-        form_secret: global_github_token
-    when:
-      ref:
-        - refs/heads/develop
-
-  - name: Overwrite
-    image: alpine:latest
-    commands:
-      - "rm -rf /drone/src/remote/develop/*"
-      - "cp /drone/src/source/develop /drone/src/remote/develop/"
-    when:
-      ref:
-        - refs/heads/develop
-
-  - name: publish remote develop
-    image: plugins/git-action:1
-    settings:
-      actions:
-        - commit
-        - push
-      message: "chore(sync): auto sync develop [CI SKIP]"
-      author_email: devops@bohicalabs.com
-      author_name: bohicalabs
-      branch: develop
-      path: /drone/src/remote/develop/
-      netrc_machine: github.com
-      netrc_username:
+      target_repo: github.com/1898andCo/HAOS.git
+      git_domain: github.com
+      git_username:
         from_secret: global_github_username
-      netrc_password:
+      git_password:
         from_secret: global_github_token
-    when:
-      ref:
-        - refs/heads/develop
 
 trigger:
   repo:
