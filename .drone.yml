@@ -146,29 +146,22 @@ trigger:
 
 ---
 kind: pipeline
-name: syncrepo
+name: mirroring
 type: docker
 
-platform:
-  os: linux
-  arch: amd64
+clone:
+  disable: true
 
 steps:
-  - name: sync master
-    image: devatherock/drone-git-sync:latest
-    target_repo: https://github.com/1898-Co/HAOS.git
-    target_branch: master
-    secrets: global_github_token
-    when:
-      ref: refs/heads/master
-
-  - name: sync develop
-    image: devatherock/drone-git-sync:latest
-    target_repo: https://github.com/1898-Co/HAOS.git
-    target_branch: develop
-    secrets: global_github_token
-    when:
-      ref: refs/heads/develop
+  - name: mirror
+    image: bohicalabs/drone-git-mirror:1.0.7
+    settings:
+      target_repo: github.com/1898andCo/HAOS.git
+      git_domain: github.com
+      git_username:
+        from_secret: global_github_username
+      git_password:
+        from_secret: global_github_token
 
 trigger:
   repo:
