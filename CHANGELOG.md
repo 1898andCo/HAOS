@@ -1,6 +1,25 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Bug Fixes
+- **drone:** add from_secrets flag
+- **drone:** add missing brackets
+
+### Documentation Improvements
+- **changelog:** auto changelog update v1.2.1-v1.20.4-k3s1 [CI SKIP]
+
+### Maintenance
+- **drone:** swapped git sync method
+
+
+<a name="v1.2.1-v1.20.4-k3s1"></a>
+## [v1.2.1-v1.20.4-k3s1] - 2021-05-25
+### Documentation Improvements
+- **changelog:** auto changelog update v1.2.0-v1.20.4-k3s1 [CI SKIP]
+
+### Maintenance
+- **drone:** change sync plugin
+
 
 <a name="v1.2.0-v1.20.4-k3s1"></a>
 ## [v1.2.0-v1.20.4-k3s1] - 2021-05-24
@@ -50,5 +69,6 @@
 - **drone:** specify host
 
 
-[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.0-v1.20.4-k3s1...HEAD
+[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.1-v1.20.4-k3s1...HEAD
+[v1.2.1-v1.20.4-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.0-v1.20.4-k3s1...v1.2.1-v1.20.4-k3s1
 [v1.2.0-v1.20.4-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.0.0-v1.20.4-k3s1...v1.2.0-v1.20.4-k3s1
