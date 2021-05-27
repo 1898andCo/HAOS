@@ -15,7 +15,7 @@ copy_all ${DIST} "$@"
 popd
 
 mkdir -p ./build
-ID=$(docker create ${REPO}/BLAOS-package:${TAG})
+ID=$(docker create ${REPO}/blaos-package:${TAG})
 docker cp ${ID}:/output/BLAOS ./build/
 docker rm -fv $ID
 
@@ -25,11 +25,11 @@ docker build \
   --build-arg TAG=${TAG} \
   --build-arg VERSION=${VERSION} \
   --file package/Dockerfile \
-  --tag ${REPO}/BLAOS:${TAG} \
-  --tag ${REPO}/BLAOS:latest \
+  --tag ${REPO}/blaos:${TAG} \
+  --tag ${REPO}/blaos:latest \
 .
 docker image save --output ./dist/images.tar \
-  ${REPO}/BLAOS:${TAG} \
-  ${REPO}/BLAOS:latest
-echo ${REPO}/BLAOS:${TAG} > ./dist/images.txt
-echo Built ${REPO}/BLAOS:${TAG}
+  ${REPO}/blaos:${TAG} \
+  ${REPO}/blaos:latest
+echo ${REPO}/blaos:${TAG} > ./dist/images.txt
+echo Built ${REPO}/blaos:${TAG}
