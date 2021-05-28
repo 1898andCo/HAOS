@@ -40,6 +40,17 @@ steps:
       - name: docker
         path: /var/run/docker.sock
 
+  - name: cache package
+    image: curlimages/curl:7.77.0
+    environment:
+      PASSWORD:
+        from_secret: drone_upload_password
+      USERNAME:
+        from_secret: drone_upload_username
+    commands:
+      - "tar -czvf ${DRONE_TAG}.tar.gz /dist/artifacts/"
+      - "curl -i -u '${USERNAME}:${PASSWORD}' -F 'file=${DRONE_TAG}.tar.gz' https://upload.bohicalabs.com"
+
   - name: create releaselog
     image: quay.io/git-chglog/git-chglog:latest
     commands:
