@@ -29,7 +29,7 @@ setup_ttys()
 setup_sudoers()
 {
     echo '%sudo   ALL = (ALL) ALL' > /etc/sudoers.d/sudo
-    echo 'rancher ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers.d/sudo
+    echo 'bohicalabs ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers.d/sudo
 }
 
 setup_services()
