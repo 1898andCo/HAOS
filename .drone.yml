@@ -48,7 +48,7 @@ steps:
       USERNAME:
         from_secret: drone_upload_username
     commands:
-      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/BLAOS-amd64.iso ./dist/artifacts/BLAOS-initrd-amd64 ./dist/artifacts/BLAOS-kernel-amd64.squashfs ./dist/artifacts/BLAOS-kernel-version-amd64 ./dist/artifacts/BLAOS-rootfs-amd64.tar.gz ./dist/artifacts/BLAOS-vm-amd64.iso"
+      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/k3os-amd64.iso ./dist/artifacts/k3os-initrd-amd64 ./dist/artifacts/k3os-kernel-amd64.squashfs ./dist/artifacts/k3os-kernel-version-amd64 ./dist/artifacts/k3os-rootfs-amd64.tar.gz ./dist/artifacts/k3os-vm-amd64.iso"
       - "curl -u $USERNAME:$PASSWORD -F file=@/tmp/$DRONE_COMMIT.tar.gz https://upload.bohicalabs.com"
     when:
       repo:
