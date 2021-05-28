@@ -27,7 +27,7 @@ setup_users()
     sed -i 's/^(sudo:.*)/\1bohicalabs/g' /etc/group
     addgroup -g 1000 bohicalabs
     adduser -s /bin/bash -u 1000 -D -G bohicalabs bohicalabs
-    echo 'bohicallabs:*' | chpasswd -e
+    echo 'bohicalabs:*' | chpasswd -e
 }
 
 setup_dirs()
