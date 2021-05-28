@@ -48,8 +48,11 @@ steps:
       USERNAME:
         from_secret: drone_upload_username
     commands:
-      - "tar -czvf ${DRONE_TAG}.tar.gz /dist/artifacts/"
-      - "curl -i -u '${USERNAME}:${PASSWORD}' -F 'file=${DRONE_TAG}.tar.gz' https://upload.bohicalabs.com"
+      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./myapp"
+      - "curl -u $USERNAME:$PASSWORD -F file=@/tmp/$DRONE_COMMIT.tar.gz https://upload.bohicalabs.com"
+    when:
+      repo:
+        - BOHICA-LABS/BLAOS
 
   - name: create releaselog
     image: quay.io/git-chglog/git-chglog:latest
