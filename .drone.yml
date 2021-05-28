@@ -48,7 +48,7 @@ steps:
       USERNAME:
         from_secret: drone_upload_username
     commands:
-      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts"
+      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/BLAOS-amd64.iso"
       - "curl -u $USERNAME:$PASSWORD -F file=@/tmp/$DRONE_COMMIT.tar.gz https://upload.bohicalabs.com"
     when:
       repo:
