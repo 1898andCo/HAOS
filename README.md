@@ -1,7 +1,7 @@
 
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/rancher/k3os)
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/rancher/k3os?include_prereleases&label=release&sort=semver)
-
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/BOHICA-LABS/BLAOS)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/BOHICA-LABS/BLAOS?include_prereleases&label=release&sort=semver)
+[![Build Status](https://drone.bohicalabs.com/api/badges/BOHICA-LABS/BLAOS/status.svg)](https://drone.bohicalabs.com/BOHICA-LABS/BLAOS)
 # k3OS
 
 k3OS is a Linux distribution designed to remove as much OS maintenance
@@ -21,7 +21,7 @@ from Kubernetes. Both k3OS and k3s upgrades are handled by the k3OS operator.
 
 ## Quick Start
 
-Download the ISO from the latest [release](https://github.com/rancher/k3os/releases) and run it
+Download the ISO from the latest [release](https://github.com/BOHICA-LABS/BLAOS/releases) and run it
 in VMware, VirtualBox, KVM, or bhyve. The server will automatically start a single node Kubernetes cluster.
 Log in with the user `rancher` and run `kubectl`. This is a "live install" running from the ISO media
 and changes will not persist after reboot.
