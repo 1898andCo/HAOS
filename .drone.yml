@@ -40,6 +40,20 @@ steps:
       - name: docker
         path: /var/run/docker.sock
 
+  - name: cache package
+    image: curlimages/curl:7.77.0
+    environment:
+      PASSWORD:
+        from_secret: drone_upload_password
+      USERNAME:
+        from_secret: drone_upload_username
+    commands:
+      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/k3os-amd64.iso ./dist/artifacts/k3os-initrd-amd64 ./dist/artifacts/k3os-kernel-amd64.squashfs ./dist/artifacts/k3os-kernel-version-amd64 ./dist/artifacts/k3os-rootfs-amd64.tar.gz ./dist/artifacts/k3os-vm-amd64.iso"
+      - "curl -u $USERNAME:$PASSWORD -F file=@/tmp/$DRONE_COMMIT.tar.gz https://upload.bohicalabs.com"
+    when:
+      repo:
+        - BOHICA-LABS/BLAOS
+
   - name: create releaselog
     image: quay.io/git-chglog/git-chglog:latest
     commands:
