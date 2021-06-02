@@ -2,6 +2,22 @@
 ## [Unreleased]
 
 
+<a name="v1.4.0-v1.21.0-k3s1"></a>
+## [v1.4.0-v1.21.0-k3s1] - 2021-06-01
+### Bug Fixes
+- **Images 06-base:** correct kots install
+- **images 06-base:** change name of kots to kubectl-kots
+- **images 06-base:** moved kots to sbin
+
+### Documentation Improvements
+- **changelog:** auto changelog update v1.3.0-v1.21.0-k3s1 [CI SKIP]
+- **readme:** updated shields
+
+### Features
+- **k3s:** bump to version v1.21.1+k3s1
+- **kubectl pugins:** add kots plugin
+
+
 <a name="v1.3.0-v1.21.0-k3s1"></a>
 ## [v1.3.0-v1.21.0-k3s1] - 2021-05-30
 ### Bug Fixes
@@ -98,7 +114,8 @@
 - **drone:** specify host
 
 
-[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.3.0-v1.21.0-k3s1...HEAD
+[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.4.0-v1.21.0-k3s1...HEAD
+[v1.4.0-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.3.0-v1.21.0-k3s1...v1.4.0-v1.21.0-k3s1
 [v1.3.0-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.1-v1.20.4-k3s1...v1.3.0-v1.21.0-k3s1
 [v1.2.1-v1.20.4-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.0-v1.20.4-k3s1...v1.2.1-v1.20.4-k3s1
 [v1.2.0-v1.20.4-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.0.0-v1.20.4-k3s1...v1.2.0-v1.20.4-k3s1
