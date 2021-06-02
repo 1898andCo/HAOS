@@ -7,4 +7,5 @@ ENV ARCH ${ARCH}
 ENV VERSION v1.43.0
 RUN curl -L https://github.com/replicatedhq/kots/releases/download/${VERSION}/kots_linux_amd64.tar.gz > kots_linux_amd64.tar.gz
 RUN tar -zxvf /kots_linux_amd64.tar.gz kots
-RUN mv /kots /usr/local/bin/kots
+RUN rm -rf /kots_linux_amd64.tar.gz
+RUN mv -vf kots /sbin
