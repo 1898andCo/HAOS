@@ -1,15 +1,44 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v1.3.0-v1.21.0-k3s1"></a>
+## [v1.3.0-v1.21.0-k3s1] - 2021-05-30
 ### Bug Fixes
+- **apparmor:** disable apparmor
 - **drone:** add from_secrets flag
 - **drone:** add missing brackets
+- **startup:** Apply hostname, DNS, NTP, Wifi, password furing startup
+- **update-issue:** improved font choice
+
+### Dependency Updates
+- **k3os:** update to golang 1.16.x
+- **vendor:** tidy vendors
 
 ### Documentation Improvements
 - **changelog:** auto changelog update v1.2.1-v1.20.4-k3s1 [CI SKIP]
+- **changelog:** auto changelog update v1.2.1-v1.20.4-k3s1 [CI SKIP]
+
+### Features
+- **k3s:** bump to v1.21.0+k3s1
+- **kernel:** bump kernel to v5.4.0-72.80-rancher1
+- **package:** add smartmontools
+- **system-upgrade-controller:** bump to v0.7.0
 
 ### Maintenance
+- **docker:** update docker ignore
+- **drone:** revert package names to k3os
+- **drone:** add cache step to build
 - **drone:** swapped git sync method
+- **update-issue:** update to BLAOS
+
+### Style Improvements
+- **motd:** improve the motd
+- **update-issue:** improved issue text
+
+### Reverts
+- fix(drone): add from_secrets flag
+- fix(drone): add missing brackets
 
 
 <a name="v1.2.1-v1.20.4-k3s1"></a>
@@ -69,6 +98,7 @@
 - **drone:** specify host
 
 
-[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.1-v1.20.4-k3s1...HEAD
+[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.3.0-v1.21.0-k3s1...HEAD
+[v1.3.0-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.1-v1.20.4-k3s1...v1.3.0-v1.21.0-k3s1
 [v1.2.1-v1.20.4-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.0-v1.20.4-k3s1...v1.2.1-v1.20.4-k3s1
 [v1.2.0-v1.20.4-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.0.0-v1.20.4-k3s1...v1.2.0-v1.20.4-k3s1
