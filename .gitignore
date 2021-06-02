@@ -13,3 +13,5 @@
 .vagrant/
 packer_cache/
 *.box
+/Dockerfile.dapper818872835
+/Dockerfile.dapper678393222
