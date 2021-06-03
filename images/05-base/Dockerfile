@@ -1,10 +1,10 @@
 ARG REPO
 ARG TAG
 FROM ${REPO}/k3os-base:${TAG} AS base
-RUN apk --no-cache add \
-    grub-bios \
-    open-vm-tools \
-    open-vm-tools-deploypkg \
-    open-vm-tools-guestinfo \
-    open-vm-tools-static \
-    open-vm-tools-vmbackup
+RUN apk --update --no-cache add \
+    grub-bios=2.04-r1 \
+    open-vm-tools=11.1.0-r3 \
+    open-vm-tools-deploypkg=11.1.0-r3 \
+    open-vm-tools-guestinfo=11.1.0-r3 \
+    open-vm-tools-static=11.1.0-r3 \
+    open-vm-tools-vmbackup=11.1.0-r3

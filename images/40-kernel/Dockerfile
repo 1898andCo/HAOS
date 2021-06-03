@@ -6,7 +6,8 @@ FROM ${REPO}/k3os-kernel-stage1:${TAG} as kernel
 
 FROM ${REPO}/k3os-base:${TAG}
 ARG TAG
-RUN apk add squashfs-tools
+RUN apk --update add \
+    squashfs-tools=4.4-r0
 COPY --from=kernel /output/ /usr/src/kernel/
 
 RUN mkdir -p /usr/src/initrd/lib && \

@@ -13,7 +13,8 @@ FROM ${REPO}/k3os-k3s:${TAG} as k3s
 FROM base as k3os-build
 ARG VERSION
 ARG ARCH
-RUN apk add squashfs-tools
+RUN apk --update add \
+    squashfs-tools=4.4-r0
 COPY --from=base /bin /usr/src/image/bin/
 COPY --from=base /lib /usr/src/image/lib/
 COPY --from=base /sbin /usr/src/image/sbin/
