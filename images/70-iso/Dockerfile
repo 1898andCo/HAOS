@@ -9,11 +9,11 @@ ARG VERSION
 ARG ARCH
 RUN apk --update add \
     xorriso=1.5.2-r0 \
-    grub=2.04-r1 \
-    grub-efi=2.04-r1 \
-    mtools=4.0.24-r0\
-    libvirt=6.6.0-r4 \
-    qemu-img=5.0.0-r2
+    grub=2.04-r2 \
+    grub-efi=2.04-r2 \
+    mtools=4.0.26-r0 \
+    libvirt=6.10.0-r1 \
+    qemu-img=5.2.0-r3
 RUN if [ "$ARCH" == "amd64" ]; then \
         apk add qemu-system-x86_64 grub-bios ovmf \
     ;elif [ "$ARCH" == "arm64" ]; then \
