@@ -7,7 +7,13 @@ ARG TAG
 FROM ${REPO}/k3os-base:${TAG} as base
 ARG VERSION
 ARG ARCH
-RUN apk add xorriso grub grub-efi mtools libvirt qemu-img
+RUN apk --update add \
+    xorriso=1.5.2-r0 \
+    grub=2.04-r2 \
+    grub-efi=2.04-r2 \
+    mtools=4.0.26-r0 \
+    libvirt=6.10.0-r1 \
+    qemu-img=5.2.0-r3
 RUN if [ "$ARCH" == "amd64" ]; then \
         apk add qemu-system-x86_64 grub-bios ovmf \
     ;elif [ "$ARCH" == "arm64" ]; then \
