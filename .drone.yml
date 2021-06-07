@@ -208,5 +208,8 @@ steps:
         from_secret: global_github_token
 
 trigger:
+  ref:
+    - refs/head/master
+    - refs/tags/*
   repo:
     - BOHICA-LABS/BLAOS
