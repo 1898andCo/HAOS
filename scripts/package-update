@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+source $(dirname $0)/version
+
+cd $(dirname $0)/..
+
+# Create Directories
+mkdir -p build/updates/amd64
+mkdir -p build/updates/amd64-vm
+PACK=build/updates
+DIST=dist/artifacts
+SEASCRIPT=scripts/sea_scripts
+
+# CP OS Update files to staging - amd64
+cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64"
+cp "${DIST}/k3os-kernel-amd64.squashfs" "${PACK}/amd64"
+cp "${DIST}/k3os-rootfs-amd64.tar.gz" "${PACK}/amd64"
+cp "${DIST}/k3os-kernel-version-amd64" "${PACK}/amd64"
+#cp "${DIST}/k3os-version-amd64" "${PACK}/amd64"
+
+# CP OS Update files to staging - amd64-vm
+cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64-vm"
+cp "${DIST}/k3os-kernel-vm-amd64.squashfs" "${PACK}/amd64-vm/k3os-kernel-amd64.squashfs"
+cp "${DIST}/k3os-rootfs-amd64.tar.gz" "${PACK}/amd64-vm"
+cp "${DIST}/k3os-kernel-version-amd64" "${PACK}/amd64-vm"
+#cp "${DIST}/k3os-version-amd64" "${PACK}/amd64-vm"
+
+# CP Installation Script
+cp "${SEASCRIPT}/run_update" "${PACK}/amd64"
+cp "${SEASCRIPT}/run_update" "${PACK}/amd64-vm"
+
+# Pack Update
+makeself.sh --sha256 --nomd5 --notemp "${PACK}/amd64" "${DIST}/update-amd64.run" "Update installer for AMD64 Systems" ./run_update
+makeself.sh --sha256 --nomd5 --notemp "${PACK}/amd64-vm" "${DIST}/update-vm-amd64.run" "Update installer for AMD64 Virtual Systems" ./run_update
+
