@@ -5,11 +5,11 @@ source $(dirname $0)/version
 cd $(dirname $0)/..
 
 # Create Directories
-mkdir -p build/updates/amd64
-mkdir -p build/updates/amd64-vm
-PACK=build/updates
-DIST=dist/artifacts
-SEASCRIPT=scripts/sea_scripts
+mkdir -p ./build/updates/amd64
+mkdir -p ./build/updates/amd64-vm
+PACK=./build/updates
+DIST=./dist/artifacts
+SEASCRIPT=./scripts/sea_scripts
 
 # CP OS Update files to staging - amd64
 cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64"
