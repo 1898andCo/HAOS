@@ -32,18 +32,18 @@ steps:
       - name: docker
         path: /var/run/docker.sock
 
-  - name: package
-    image: rancher/dapper:v0.5.6
-    commands:
-      - dapper package
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-
   - name: package-update
     image: rancher/dapper:v0.5.6
     commands:
       - dapper package-update
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+
+  - name: package-image
+    image: rancher/dapper:v0.5.6
+    commands:
+      - dapper package
     volumes:
       - name: docker
         path: /var/run/docker.sock
