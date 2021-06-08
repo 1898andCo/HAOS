@@ -2,6 +2,41 @@
 ## [Unreleased]
 
 
+<a name="v1.5.2-v1.21.0-k3s1"></a>
+## [v1.5.2-v1.21.0-k3s1] - 2021-06-08
+### Bug Fixes
+- **dapper:** musl-dev version
+
+### Dependency Updates
+- **10-gobuild:** bump musl-dev
+
+### Documentation Improvements
+- **changelog:** auto changelog update v1.5.1-v1.21.0-k3s1 [CI SKIP]
+
+### Features
+- **images 01-vm:** output virtual version of kernel for update
+- **kernel:** bump kernel version
+- **package-update:** add package-update step
+
+### Maintenance
+- **blaos-vm:** add kernel to vm output
+- **ci:** add package-update to ci
+- **dapper:** version lock deps
+- **dapper:** add makeself to dapper env
+- **deps:** remove redundant U arg
+- **drone:** Add echo to track each section
+- **drone:** reorganized drone yaml
+- **drone:** add master ref to mirror
+- **drone:** adjusted file path
+- **drone:** add support for package-update
+- **drone:** removed multi steps
+- **drone:** corrected to capture amd non vm update
+- **updates:** adjust path for update package script
+
+### Reverts
+- fix(dapper): musl-dev version
+
+
 <a name="v1.5.1-v1.21.0-k3s1"></a>
 ## [v1.5.1-v1.21.0-k3s1] - 2021-06-03
 ### Dependency Updates
@@ -127,7 +162,8 @@
 - **drone:** specify host
 
 
-[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.1-v1.21.0-k3s1...HEAD
+[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.2-v1.21.0-k3s1...HEAD
+[v1.5.2-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.1-v1.21.0-k3s1...v1.5.2-v1.21.0-k3s1
 [v1.5.1-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.4.0-v1.21.0-k3s1...v1.5.1-v1.21.0-k3s1
 [v1.4.0-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.3.0-v1.21.0-k3s1...v1.4.0-v1.21.0-k3s1
 [v1.3.0-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.1-v1.20.4-k3s1...v1.3.0-v1.21.0-k3s1
