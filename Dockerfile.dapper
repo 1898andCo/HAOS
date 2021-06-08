@@ -9,7 +9,7 @@ RUN apk --update --no-cache add \
     bash=5.1.0-r0 \
     git=2.30.2-r0 \
     gcc=10.2.1_pre1-r3 \
-    musl-dev=1.2.2-r0 \
+    musl-dev=1.2.2-r1 \
     docker=20.10.3-r1 \
     vim=8.2.2320-r0 \
     less=563-r0 \
