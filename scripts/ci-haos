@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+cd $(dirname $0)
+
+./haos
+./build
+./test
+./validate
+./package
+./package-update
