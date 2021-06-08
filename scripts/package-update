@@ -5,10 +5,10 @@ source $(dirname $0)/version
 cd $(dirname $0)/..
 
 # Create Directories
-mkdir -p ./build/updates/amd64
-mkdir -p ./build/updates/amd64-vm
-PACK=./build/updates
-DIST=./dist/artifacts
+mkdir -p $(pwd)/build/updates/amd64
+mkdir -p $(pwd)/build/updates/amd64-vm
+PACK=$(pwd)/build/updates
+DIST=$(pwd)/dist/artifacts
 SEASCRIPT=./scripts/sea_scripts
 
 # CP OS Update files to staging - amd64
