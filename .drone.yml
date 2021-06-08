@@ -11,39 +11,7 @@ steps:
   - name: test
     image: rancher/dapper:v0.5.6
     commands:
-      - dapper test
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-
-  - name: build
-    image: rancher/dapper:v0.5.6
-    commands:
-      - dapper build
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-
-  - name: validate
-    image: rancher/dapper:v0.5.6
-    commands:
-      - dapper validate
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-
-  - name: package-update
-    image: rancher/dapper:v0.5.6
-    commands:
-      - dapper package-update
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-
-  - name: package-image
-    image: rancher/dapper:v0.5.6
-    commands:
-      - dapper package
+      - dapper ci
     volumes:
       - name: docker
         path: /var/run/docker.sock
