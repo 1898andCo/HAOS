@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+cd $(dirname $0)/..
+
+echo "prepping for haos distribution"
+# CP HAOS files
+
+
+rm -rf $(pwd)/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/k3os-latest.yaml
+rm -rf $(pwd)overlay/sbin/update-issue
+cp -rf $(pwd)/haos/k3os-latest.yaml $(pwd)/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/k3os-latest.yaml
+cp -rf $(pwd)/haos/update-issue $(pwd)/overlay/sbin/update-issue
