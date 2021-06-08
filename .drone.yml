@@ -15,6 +15,20 @@ steps:
     volumes:
       - name: docker
         path: /var/run/docker.sock
+    when:
+      repo:
+        - BOHICA-LABS/BLAOS
+
+  - name: haos build and package
+    image: rancher/dapper:v0.5.6
+    commands:
+      - dapper ci-haos
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+    when:
+      repo:
+        - 1898andCo/HAOS
 
   - name: cache package
     image: curlimages/curl:7.77.0
@@ -27,6 +41,9 @@ steps:
       - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/k3os-amd64.iso ./dist/artifacts/k3os-initrd-amd64 ./dist/artifacts/k3os-kernel-amd64.squashfs ./dist/artifacts/k3os-kernel-version-amd64 ./dist/artifacts/k3os-rootfs-amd64.tar.gz ./dist/artifacts/k3os-vm-amd64.iso ./dist/artifacts/update-amd64.run ./dist/artifacts/update-vm-amd64.run"
       - "curl -u $USERNAME:$PASSWORD -F file=@/tmp/$DRONE_COMMIT.tar.gz https://upload.bohicalabs.com"
     when:
+      event:
+        exclude:
+          - tag
       branch:
         exclude:
           - master
@@ -65,7 +82,7 @@ steps:
         - refs/heads/master
         - refs/tags/*
 
-  - name: docker-publish
+  - name: docker publish
     image: plugins/docker
     settings:
       dockerfile: package/Dockerfile
@@ -78,6 +95,25 @@ steps:
     when:
       repo:
         - BOHICA-LABS/BLAOS
+      ref:
+        - refs/head/master
+        - refs/tags/*
+      event:
+        - tag
+
+  - name: haos docker publish
+    image: plugins/docker
+    settings:
+      dockerfile: package/Dockerfile
+      password:
+        from_secret: docker_password
+      repo: "1898andco/haos"
+      tag: "${DRONE_TAG}-amd64"
+      username:
+        from_secret: docker_username
+    when:
+      repo:
+        - 1898andCo/HAOS
       ref:
         - refs/head/master
         - refs/tags/*
