@@ -11,6 +11,7 @@ steps:
   - name: haos prep
     image: alpine:latest
     commands:
+      - "apk add --no-cache bash"
       - "./scripts/haos"
     when:
       repo:
