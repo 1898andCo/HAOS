@@ -8,34 +8,10 @@ platform:
   arch: amd64
 
 steps:
-  - name: test
+  - name: build and package
     image: rancher/dapper:v0.5.6
     commands:
-      - dapper test
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-
-  - name: build
-    image: rancher/dapper:v0.5.6
-    commands:
-      - dapper build
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-
-  - name: validate
-    image: rancher/dapper:v0.5.6
-    commands:
-      - dapper validate
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-
-  - name: package
-    image: rancher/dapper:v0.5.6
-    commands:
-      - dapper package
+      - dapper ci
     volumes:
       - name: docker
         path: /var/run/docker.sock
@@ -48,9 +24,12 @@ steps:
       USERNAME:
         from_secret: drone_upload_username
     commands:
-      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/k3os-amd64.iso ./dist/artifacts/k3os-initrd-amd64 ./dist/artifacts/k3os-kernel-amd64.squashfs ./dist/artifacts/k3os-kernel-version-amd64 ./dist/artifacts/k3os-rootfs-amd64.tar.gz ./dist/artifacts/k3os-vm-amd64.iso"
+      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/k3os-amd64.iso ./dist/artifacts/k3os-initrd-amd64 ./dist/artifacts/k3os-kernel-amd64.squashfs ./dist/artifacts/k3os-kernel-version-amd64 ./dist/artifacts/k3os-rootfs-amd64.tar.gz ./dist/artifacts/k3os-vm-amd64.iso ./dist/artifacts/update-amd64.run ./dist/artifacts/update-vm-amd64.run"
       - "curl -u $USERNAME:$PASSWORD -F file=@/tmp/$DRONE_COMMIT.tar.gz https://upload.bohicalabs.com"
     when:
+      branch:
+        exclude:
+          - master
       repo:
         - BOHICA-LABS/BLAOS
 
@@ -78,13 +57,32 @@ steps:
       title: "Release ${DRONE_TAG}"
       overwrite: true
       checksum:
-        - sha512
+        - sha256
     when:
       event:
         - tag
       ref:
         - refs/heads/master
         - refs/tags/*
+
+  - name: docker-publish
+    image: plugins/docker
+    settings:
+      dockerfile: package/Dockerfile
+      password:
+        from_secret: docker_password
+      repo: "bohicalabs/blaos"
+      tag: "${DRONE_TAG}-amd64"
+      username:
+        from_secret: docker_username
+    when:
+      repo:
+        - BOHICA-LABS/BLAOS
+      ref:
+        - refs/head/master
+        - refs/tags/*
+      event:
+        - tag
 
 volumes:
   - name: docker
@@ -178,5 +176,8 @@ steps:
         from_secret: global_github_token
 
 trigger:
+  ref:
+    - refs/head/master
+    - refs/tags/*
   repo:
     - BOHICA-LABS/BLAOS
