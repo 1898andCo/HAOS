@@ -1,6 +1,9 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Documentation Improvements
+- **changelog:** auto changelog update v1.5.3-v1.21.1-k3s1 [CI SKIP]
+
 
 <a name="v1.5.3-v1.21.1-k3s1"></a>
 ## [v1.5.3-v1.21.1-k3s1] - 2021-06-08
