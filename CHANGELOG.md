@@ -2,6 +2,19 @@
 ## [Unreleased]
 
 
+<a name="v1.5.1-v1.21.0-k3s1"></a>
+## [v1.5.1-v1.21.0-k3s1] - 2021-06-03
+### Dependency Updates
+- **alpine:** bump to version 3.13
+- **package managers:** lock package versions for deterministic installation
+
+### Documentation Improvements
+- **changelog:** auto changelog update v1.4.0-v1.21.0-k3s1 [CI SKIP]
+
+### Maintenance
+- **gitignore:** updated gitignore for dapper files
+
+
 <a name="v1.4.0-v1.21.0-k3s1"></a>
 ## [v1.4.0-v1.21.0-k3s1] - 2021-06-01
 ### Bug Fixes
@@ -114,7 +127,8 @@
 - **drone:** specify host
 
 
-[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.4.0-v1.21.0-k3s1...HEAD
+[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.1-v1.21.0-k3s1...HEAD
+[v1.5.1-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.4.0-v1.21.0-k3s1...v1.5.1-v1.21.0-k3s1
 [v1.4.0-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.3.0-v1.21.0-k3s1...v1.4.0-v1.21.0-k3s1
 [v1.3.0-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.1-v1.20.4-k3s1...v1.3.0-v1.21.0-k3s1
 [v1.2.1-v1.20.4-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.2.0-v1.20.4-k3s1...v1.2.1-v1.20.4-k3s1
