@@ -1,7 +1,14 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="v1.5.4-v1.21.1-k3s1"></a>
+## [v1.5.4-v1.21.1-k3s1] - 2021-06-08
+### Dependency Updates
+- **00-base:** bump openrc version
+
 ### Documentation Improvements
+- **changelog:** auto changelog update v1.5.3-v1.21.1-k3s1 [CI SKIP]
 - **changelog:** auto changelog update v1.5.3-v1.21.1-k3s1 [CI SKIP]
 
 
@@ -181,7 +188,8 @@
 - **drone:** specify host
 
 
-[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.3-v1.21.1-k3s1...HEAD
+[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.4-v1.21.1-k3s1...HEAD
+[v1.5.4-v1.21.1-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.3-v1.21.1-k3s1...v1.5.4-v1.21.1-k3s1
 [v1.5.3-v1.21.1-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.2-v1.21.0-k3s1...v1.5.3-v1.21.1-k3s1
 [v1.5.2-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.1-v1.21.0-k3s1...v1.5.2-v1.21.0-k3s1
 [v1.5.1-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.4.0-v1.21.0-k3s1...v1.5.1-v1.21.0-k3s1
