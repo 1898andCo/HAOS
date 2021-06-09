@@ -1,13 +1,20 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Documentation Improvements
+- **changelog:** auto changelog update v1.5.4-v1.21.1-k3s1 [CI SKIP]
+
 
 <a name="v1.5.4-v1.21.1-k3s1"></a>
 ## [v1.5.4-v1.21.1-k3s1] - 2021-06-08
+### Bug Fixes
+- **drone:** add bash to haos prep
+
 ### Dependency Updates
 - **00-base:** bump openrc version
 
 ### Documentation Improvements
+- **changelog:** auto changelog update v1.5.4-v1.21.1-k3s1 [CI SKIP]
 - **changelog:** auto changelog update v1.5.3-v1.21.1-k3s1 [CI SKIP]
 - **changelog:** auto changelog update v1.5.3-v1.21.1-k3s1 [CI SKIP]
 
