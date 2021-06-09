@@ -62,7 +62,8 @@ cd /k3os/system
 mount -o remount,rw .
 
 mv ${PACKAGE}/k3os-rootfs-amd64.tar.gz ./
-cat k3os-rootfs-amd64.tar.gz | tar xzvf --strip-components=3
+tar -xzvf k3os-rootfs-amd64.tar.gz --strip-components=3 -C ./
+
 rm -rf k3os-rootfs-amd64.tar.gz
 sync
 echo "Upgrade complete! Please reboot."
