@@ -10,7 +10,7 @@ RUN apk --update --no-cache add \
     connman=1.39-r0 \
     conntrack-tools=1.4.6-r0\
     coreutils=8.32-r2 \
-    curl=7.77.0-r0 \
+    curl=7.77.0-r1 \
     dbus=1.12.20-r1 \
     dmidecode=3.3-r0 \
     dosfstools=4.1-r1 \
