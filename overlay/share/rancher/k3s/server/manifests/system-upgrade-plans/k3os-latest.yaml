@@ -3,7 +3,7 @@ apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
   # This `name` should be short but descriptive.
-  name: Master-BLAOS-latest
+  name: master-blaos-latest
   # The same `namespace` as is used for the system-upgrade-controller Deployment.
   namespace: k3os-system
 spec:
@@ -82,7 +82,7 @@ apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
   # This `name` should be short but descriptive.
-  name: Worker-BLAOS-latest
+  name: worker-blaos-latest
   # The same `namespace` as is used for the system-upgrade-controller Deployment.
   namespace: k3os-system
 spec:
@@ -130,7 +130,7 @@ spec:
   prepare:
     args:
       - prepare
-      - Master-BLAOS-latest
+      - master-blaos-latest
     image: rancher/k3s-upgrade:latest
 
   # See https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/#use-kubectl-drain-to-remove-a-node-from-service
