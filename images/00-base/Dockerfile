@@ -41,7 +41,7 @@ RUN apk --update --no-cache add \
     ncurses=6.2_p20210109-r0 \
     ncurses-terminfo=6.2_p20210109-r0 \
     nfs-utils=2.5.2-r0 \
-    open-iscsi=2.1.3-r0 \
+    open-iscsi=2.1.3-r1 \
     openrc=0.42.1-r20 \
     openssh-client=8.4_p1-r3 \
     openssh-server=8.4_p1-r3 \
