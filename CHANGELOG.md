@@ -2,8 +2,8 @@
 ## [Unreleased]
 
 
-<a name="Release-v1.6.0-v1.20.7-k3s1"></a>
-## [Release-v1.6.0-v1.20.7-k3s1] - 2021-06-22
+<a name="v1.6.0-v1.20.7-k3s1"></a>
+## [v1.6.0-v1.20.7-k3s1] - 2021-06-22
 ### Bug Fixes
 - **k3s:** revert k3s to 1.20.7+k3s1
 - **sea_scripts:** correct regression in update script
@@ -15,6 +15,7 @@
 - **kernel-stage1:** bump initramfs-tools to 0.136ubuntu6.6
 
 ### Documentation Improvements
+- **changelog:** auto changelog update Release-v1.6.0-v1.20.7-k3s1 [CI SKIP]
 - **changelog:** auto changelog update v1.6.0-v1.20.7+k3s1 [CI SKIP]
 - **changelog:** auto changelog update v1.6.0-v1.20.7+k3s1 [CI SKIP]
 - **changelog:** auto changelog update v1.5.4-v1.21.1-k3s1 [CI SKIP]
@@ -217,6 +218,5 @@
 ### Style Improvements
 - **cc:** correct gofmt style errors
 - **drone:** specify host
-
 
 
