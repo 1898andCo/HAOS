@@ -1,12 +1,9 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
-### Documentation Improvements
-- **changelog:** auto changelog update v1.6.0-v1.20.7+k3s1 [CI SKIP]
 
-
-<a name="v1.6.0-v1.20.7+k3s1"></a>
-## [v1.6.0-v1.20.7+k3s1] - 2021-06-22
+<a name="Release-v1.6.0-v1.20.7-k3s1"></a>
+## [Release-v1.6.0-v1.20.7-k3s1] - 2021-06-22
 ### Bug Fixes
 - **k3s:** revert k3s to 1.20.7+k3s1
 - **sea_scripts:** correct regression in update script
@@ -18,6 +15,8 @@
 - **kernel-stage1:** bump initramfs-tools to 0.136ubuntu6.6
 
 ### Documentation Improvements
+- **changelog:** auto changelog update v1.6.0-v1.20.7+k3s1 [CI SKIP]
+- **changelog:** auto changelog update v1.6.0-v1.20.7+k3s1 [CI SKIP]
 - **changelog:** auto changelog update v1.5.4-v1.21.1-k3s1 [CI SKIP]
 - **changelog:** auto changelog update v1.5.4-v1.21.1-k3s1 [CI SKIP]
 
@@ -220,8 +219,8 @@
 - **drone:** specify host
 
 
-[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.6.0-v1.20.7+k3s1...HEAD
-[v1.6.0-v1.20.7+k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.4-v1.21.1-k3s1...v1.6.0-v1.20.7+k3s1
+[Unreleased]: https://github.com/BOHICA-LABS/BLAOS/compare/Release-v1.6.0-v1.20.7-k3s1...HEAD
+[Release-v1.6.0-v1.20.7-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.4-v1.21.1-k3s1...Release-v1.6.0-v1.20.7-k3s1
 [v1.5.4-v1.21.1-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.3-v1.21.1-k3s1...v1.5.4-v1.21.1-k3s1
 [v1.5.3-v1.21.1-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.2-v1.21.0-k3s1...v1.5.3-v1.21.1-k3s1
 [v1.5.2-v1.21.0-k3s1]: https://github.com/BOHICA-LABS/BLAOS/compare/v1.5.1-v1.21.0-k3s1...v1.5.2-v1.21.0-k3s1
