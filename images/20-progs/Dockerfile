@@ -7,9 +7,9 @@ ENV LINUXKIT v0.8
 
 FROM gobuild as linuxkit
 ENV GO111MODULE off
-RUN git clone https://github.com/linuxkit/linuxkit.git $GOPATH/src/github.com/linuxkit/linuxkit
+RUN git clone https://github.com/BOHICA-LABS/linuxkit.git $GOPATH/src/github.com/linuxkit/linuxkit
 WORKDIR $GOPATH/src/github.com/linuxkit/linuxkit/pkg/metadata
-RUN git checkout -b current $LINUXKIT
+RUN git checkout develop
 RUN gobuild -o /output/metadata
 
 FROM gobuild as k3os
