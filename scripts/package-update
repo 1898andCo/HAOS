@@ -13,22 +13,23 @@ SEASCRIPT=./scripts/sea_scripts
 
 
 # CP OS Update files to staging - amd64
-cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64"
-cp "${DIST}/k3os-kernel-amd64.squashfs" "${PACK}/amd64"
+#cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64"
+#cp "${DIST}/k3os-kernel-amd64.squashfs" "${PACK}/amd64"
 cp "${DIST}/k3os-rootfs-amd64.tar.gz" "${PACK}/amd64"
-cp "${DIST}/k3os-kernel-version-amd64" "${PACK}/amd64"
+#cp "${DIST}/k3os-kernel-version-amd64" "${PACK}/amd64"
 #cp "${DIST}/k3os-version-amd64" "${PACK}/amd64"
 
 # CP OS Update files to staging - amd64-vm
-cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64-vm"
-cp "${DIST}/k3os-kernel-vm-amd64.squashfs" "${PACK}/amd64-vm/k3os-kernel-amd64.squashfs"
-cp "${DIST}/k3os-rootfs-amd64.tar.gz" "${PACK}/amd64-vm"
-cp "${DIST}/k3os-kernel-version-amd64" "${PACK}/amd64-vm"
+#cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64-vm"
+#cp "${DIST}/k3os-kernel-vm-amd64.squashfs" "${PACK}/amd64-vm/k3os-kernel-amd64.squashfs"
+cp "${DIST}/k3os-rootfs-amd64.tar.gz" "${PACK}/amd64-vm" # TODO: this needs to be reviewed. It will contain the firmware that we remove for vm versions
+                                                         # TODO: This applies to the dockerhub k3os, we need to generate a vm version
+#cp "${DIST}/k3os-kernel-version-amd64" "${PACK}/amd64-vm"
 #cp "${DIST}/k3os-version-amd64" "${PACK}/amd64-vm"
 
 # CP Installation Script
-cp "${SEASCRIPT}/run_update" "${PACK}/amd64"
-cp "${SEASCRIPT}/run_update" "${PACK}/amd64-vm"
+cp "${SEASCRIPT}/run_update2" "${PACK}/amd64"
+cp "${SEASCRIPT}/run_update2" "${PACK}/amd64-vm"
 
 # Pack Update
 makeself.sh --sha256 --nomd5 --notemp "${PACK}/amd64" "${DIST}/update-amd64.run" "Update installer for AMD64 Systems" ./run_update

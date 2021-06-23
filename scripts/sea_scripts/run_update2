@@ -30,31 +30,6 @@ else
 	exit 1
 fi
 
-KERNEL_VERSION=$(cat k3os-kernel-version-${ARCH})  # Capture Kernel Version
-
-# Error Checking
-if [ -z "$KERNEL_VERSION" ]
-then
-  echo "Unable to determine kernel version"
-  exit 1
-fi
-
-echo "Upgrading k3os kernel to ${KERNEL_VERSION}"
-
-# Perform Kernel upgrade
-PACKAGE=$(pwd)
-cd /k3os/system/
-mount -o remount,rw .
-cd kernel
-mkdir -vp ${KERNEL_VERSION}
-
-mv ${PACKAGE}/k3os-initrd-${ARCH} ${KERNEL_VERSION}/initrd
-mv ${PACKAGE}/k3os-kernel-${ARCH}.squashfs ${KERNEL_VERSION}/kernel.squashfs
-
-ln -nsf $(readlink current) previous
-ln -nsf ${KERNEL_VERSION} current
-
-sync
 echo "Kernel Upgrade complete!"
 
 echo "Starting rootfs upgrade."

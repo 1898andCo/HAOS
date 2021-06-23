@@ -10,7 +10,7 @@ RUN apk --update --no-cache add \
     connman=1.39-r0 \
     conntrack-tools=1.4.6-r0\
     coreutils=8.32-r2 \
-    curl=7.77.0-r0 \
+    curl=7.77.0-r1 \
     dbus=1.12.20-r1 \
     dmidecode=3.3-r0 \
     dosfstools=4.1-r1 \
@@ -41,7 +41,7 @@ RUN apk --update --no-cache add \
     ncurses=6.2_p20210109-r0 \
     ncurses-terminfo=6.2_p20210109-r0 \
     nfs-utils=2.5.2-r0 \
-    open-iscsi=2.1.3-r0 \
+    open-iscsi=2.1.3-r1 \
     openrc=0.42.1-r20 \
     openssh-client=8.4_p1-r3 \
     openssh-server=8.4_p1-r3 \
