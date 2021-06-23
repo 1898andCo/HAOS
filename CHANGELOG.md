@@ -4,7 +4,6 @@
 ### Documentation Improvements
 - **changelog:** auto changelog update v1.6.0-v1.20.7-k3s1 [CI SKIP]
 
-
 <a name="v1.6.0-v1.20.7-k3s1"></a>
 ## [v1.6.0-v1.20.7-k3s1] - 2021-06-22
 ### Bug Fixes
