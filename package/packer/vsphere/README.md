@@ -1,4 +1,4 @@
-# k3OS Packer VMware image
+# HAOS Packer VMware image
 
 This is a working template for building k30s Server and Agent templates using packer in VMware.
 

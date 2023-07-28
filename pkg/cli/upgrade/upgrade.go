@@ -19,7 +19,7 @@ var (
 	sourceDir, destinationDir, lockFile string
 )
 
-// Command is the `upgrade` sub-command, it performs upgrades to k3OS.
+// Command is the `upgrade` sub-command, it performs upgrades to HAOS.
 func Command() cli.Command {
 	return cli.Command{
 		Name:  "upgrade",

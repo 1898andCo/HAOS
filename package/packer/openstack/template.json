@@ -3,7 +3,7 @@
     {
       "flavor": "{{user `os_flavor`}}",
       "floating_ip_pool": "{{user `os_floating_ip_pool`}}",
-      "image_name": "k3OS-{{user `k3os_version`}}-amd64",
+      "image_name": "HAOS-{{user `k3os_version`}}-amd64",
       "networks": "{{user `os_network_id`}}",
       "security_groups": [
         "default"
@@ -49,4 +49,3 @@
     "os_source_image_id": "{{env `OS_SOURCE_IMAGE`}}"
   }
 }
-
