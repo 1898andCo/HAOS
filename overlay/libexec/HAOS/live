@@ -8,8 +8,8 @@ setup_motd()
 
 setup_base()
 {
-    K3OS_ISO=$(blkid -L K3OS || true)
-    if [ -n "$K3OS_ISO" ]; then
+    HAOS_ISO=$(blkid -L K3OS || true)
+    if [ -n "$HAOS_ISO" ]; then
         mount -o ro $(blkid -L K3OS) /.base
     else
         success=false
