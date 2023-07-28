@@ -30,7 +30,7 @@ func New() *cli.App {
 		cli.BoolFlag{
 			Name:        "debug",
 			Usage:       "Turn on debug logs",
-			EnvVar:      "K3OS_DEBUG",
+			EnvVar:      "HAOS_DEBUG",
 			Destination: &Debug,
 		},
 	}
