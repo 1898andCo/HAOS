@@ -9,10 +9,10 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/rancher/1898andCo/HAOS/pkg/config"
-	"github.com/rancher/1898andCo/HAOS/pkg/mode"
-	"github.com/rancher/1898andCo/HAOS/pkg/questions"
-	"github.com/rancher/1898andCo/HAOS/pkg/util"
+	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/mode"
+	"github.com/1898andCo/HAOS/pkg/questions"
+	"github.com/1898andCo/HAOS/pkg/util"
 )
 
 func Ask(cfg *config.CloudConfig) (bool, error) {

@@ -7,8 +7,8 @@ import (
 	"os/exec"
 
 	"github.com/ghodss/yaml"
-	"github.com/rancher/1898andCo/HAOS/pkg/config"
-	"github.com/rancher/1898andCo/HAOS/pkg/questions"
+	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/questions"
 )
 
 func Run() error {
