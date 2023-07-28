@@ -16,7 +16,7 @@ FROM gobuild as HAOS
 ARG VERSION
 COPY go.mod $GOPATH/src/github.com/1898andCo/HAOS/
 COPY go.sum $GOPATH/src/github.com/1898andCo/HAOS/
-COPY /pkg/ $GOPATH/src/github.com/rancher/1898andCo/HAOS/pkg/
+COPY /pkg/ $GOPATH/src/github.com/1898andCo/HAOS/pkg/
 COPY /main.go $GOPATH/src/github.com/1898andCo/HAOS/
 COPY /vendor/ $GOPATH/src/github.com/1898andCo/HAOS/vendor/
 WORKDIR $GOPATH/src/github.com/1898andCo/HAOS

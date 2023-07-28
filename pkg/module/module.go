@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/paultag/go-modprobe"
-	"github.com/rancher/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/sirupsen/logrus"
 )
 

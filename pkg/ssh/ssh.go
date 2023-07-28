@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rancher/1898andCo/HAOS/pkg/config"
-	"github.com/rancher/1898andCo/HAOS/pkg/util"
+	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/util"
 	"github.com/sirupsen/logrus"
 )
 
