@@ -8,7 +8,7 @@ This image does not utilize a cloud-init config and instead utilizes the boot co
 
 ## Quick start
 
-Download the [latest version](https://github.com/rancher/k3os/releases/latest) version of k3os and copy it to your vCenter datastore.
+Download the [latest version](https://github.com/1898andCo/HAOSreleases/latest) version of k3os and copy it to your vCenter datastore.
 
 Assuming that packer and packer-builder-vware-iso are installed you will run the following commands:
 

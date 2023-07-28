@@ -111,7 +111,7 @@ Below is a reference of all cmdline args used to automate installation
 | k3os.install.force_efi  | false   | true                                              | Force EFI installation even when EFI is not detected |
 | k3os.install.device     |         | /dev/vda                                          | Device to partition and format (/dev/sda, /dev/vda) |
 | k3os.install.config_url |         | [https://gist.github.com/.../dweomer.yaml](https://gist.github.com/dweomer/8750d56fb21a3fbc8d888609d6e74296#file-dweomer-yaml) | The URL of the config to be installed at `/k3os/system/config.yaml` |
-| k3os.install.iso_url    |         | https://github.com/rancher/k3os/../k3os-amd64.iso | ISO to download and install from if booting from kernel/vmlinuz and not ISO. |
+| k3os.install.iso_url    |         | https://github.com/1898andCo/HAOS../k3os-amd64.iso | ISO to download and install from if booting from kernel/vmlinuz and not ISO. |
 | k3os.install.no_format  |         | true                                              | Do not partition and format, assume layout exists already |
 | k3os.install.tty        | auto    | ttyS0                                             | The tty device used for console |
 | k3os.install.debug      | false   | true                                              | Run installation with more logging and configure debug for installed system |
@@ -130,7 +130,7 @@ This script will run the same installation as the ISO but is a bit more raw and 
 ```
 Usage: ./install.sh [--force-efi] [--debug] [--tty TTY] [--poweroff] [--takeover] [--no-format] [--config https://.../config.yaml] DEVICE ISO_URL
 
-Example: ./install.sh /dev/vda https://github.com/rancher/k3os/releases/download/v0.10.0/k3os.iso
+Example: ./install.sh /dev/vda https://github.com/1898andCo/HAOSreleases/download/v0.10.0/k3os.iso
 
 DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the K3OS_STATE partition (/dev/vda2)
 
@@ -170,7 +170,7 @@ and run with the `--takeover` flag. This will install HAOS to the current root a
 In order for this to work a couple of assumptions are made. First the root (/) is assumed to be an ext4 partition. Also it is assumed that grub2 is installed and looking for the configuration at `/boot/grub/grub.cfg`. When running `--takeover` ensure that you also set `--no-format` and DEVICE must be set to the partition of `/`. Refer to the AWS packer template to see this mode in action. Below is any example of how to run a takeover installation.
 
 ```bash
-./install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/vda1 https://github.com/rancher/k3os/releases/download/v0.10.0/k3os.iso
+./install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/vda1 https://github.com/1898andCo/HAOSreleases/download/v0.10.0/k3os.iso
 ```
 
 ### ARM Overlay Installation
@@ -180,7 +180,7 @@ All you must do is boot the ARM system and then extract `k3os-rootfs-arm.tar.gz`
 look at the example below) and then place your cloud-config at `/k3os/system/config.yaml`. For example:
 
 ```bash
-curl -sfL https://github.com/rancher/k3os/releases/download/v0.10.0/k3os-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
+curl -sfL https://github.com/1898andCo/HAOSreleases/download/v0.10.0/k3os-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
 cp myconfig.yaml /k3os/system/config.yaml
 sync
 reboot -f
@@ -354,8 +354,8 @@ the cluster.
 
 ### Automatic Upgrades
 
-Integration with [rancher/system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) has been implemented as of [v0.9.0](https://github.com/rancher/k3os/releases/tag/v0.9.0).
-To enable a HAOS node to automatically upgrade from the [latest GitHub release](https://github.com/rancher/k3os/releases/latest) you will need to make sure it has the label
+Integration with [rancher/system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) has been implemented as of [v0.9.0](https://github.com/1898andCo/HAOSreleases/tag/v0.9.0).
+To enable a HAOS node to automatically upgrade from the [latest GitHub release](https://github.com/1898andCo/HAOSreleases/latest) you will need to make sure it has the label
 `k3os.io/upgrade` with value `enabled` (for HAOS versions prior to v0.11.x please use label `plan.upgrade.cattle.io/k3os-latest`). The upgrade controller will then spawn an upgrade job
 that will drain most pods, upgrade the HAOS content under `/k3os/system`, and then reboot. The system should come back up running the latest
 kernel and k3s version bundled with HAOS and ready to schedule pods.
