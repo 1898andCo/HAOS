@@ -12,7 +12,7 @@ import (
 )
 
 func Run() error {
-	fmt.Println("\nRunning k3OS configuration")
+	fmt.Println("\nRunning HAOS configuration")
 
 	cfg, err := config.ReadConfig()
 	if err != nil {
@@ -72,7 +72,7 @@ func runInstall(cfg config.CloudConfig) error {
 	if !cfg.K3OS.Install.Silent {
 		val, err := questions.PromptBool("\nConfiguration\n"+"-------------\n\n"+
 			string(installBytes)+
-			"\nYour disk will be formatted and k3OS will be installed with the above configuration.\nContinue?", false)
+			"\nYour disk will be formatted and HAOS will be installed with the above configuration.\nContinue?", false)
 		if err != nil || !val {
 			return err
 		}

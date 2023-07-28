@@ -19,7 +19,7 @@
       },
       "ssh_username": "ubuntu",
       "tags": {
-        "Name": "k3OS",
+        "Name": "HAOS",
         "Version": "{{user `k3os_version`}}"
       },
       "type": "amazon-ebs"
@@ -60,4 +60,3 @@
     "region": "{{env `AWS_DEFAULT_REGION`}}"
   }
 }
-
