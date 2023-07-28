@@ -8,9 +8,9 @@ setup_motd()
 
 setup_base()
 {
-    HAOS_ISO=$(blkid -L K3OS || true)
+    HAOS_ISO=$(blkid -L HAOS || true)
     if [ -n "$HAOS_ISO" ]; then
-        mount -o ro $(blkid -L K3OS) /.base
+        mount -o ro $(blkid -L HAOS) /.base
     else
         success=false
         for (( j=0; j < 5 ; j++ )); do

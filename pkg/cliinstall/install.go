@@ -69,7 +69,7 @@ func runInstall(cfg config.CloudConfig) error {
 		return err
 	}
 
-	if !cfg.K3OS.Install.Silent {
+	if !cfg.HAOS.Install.Silent {
 		val, err := questions.PromptBool("\nConfiguration\n"+"-------------\n\n"+
 			string(installBytes)+
 			"\nYour disk will be formatted and HAOS will be installed with the above configuration.\nContinue?", false)
@@ -78,14 +78,14 @@ func runInstall(cfg config.CloudConfig) error {
 		}
 	}
 
-	if cfg.K3OS.Install.ConfigURL == "" {
+	if cfg.HAOS.Install.ConfigURL == "" {
 		tempFile, err = ioutil.TempFile("/tmp", "k3os.XXXXXXXX")
 		if err != nil {
 			return err
 		}
 		defer tempFile.Close()
 
-		cfg.K3OS.Install.ConfigURL = tempFile.Name()
+		cfg.HAOS.Install.ConfigURL = tempFile.Name()
 	}
 
 	ev, err := config.ToEnv(cfg)
@@ -94,7 +94,7 @@ func runInstall(cfg config.CloudConfig) error {
 	}
 
 	if tempFile != nil {
-		cfg.K3OS.Install = nil
+		cfg.HAOS.Install = nil
 		bytes, err := yaml.Marshal(&cfg)
 		if err != nil {
 			return err
