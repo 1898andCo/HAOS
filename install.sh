@@ -5,7 +5,7 @@ PROG=$0
 PROGS="dd curl mkfs.ext4 mkfs.vfat fatlabel parted partprobe grub-install"
 DISTRO=/run/HAOS/iso
 
-if [ "$K3OS_DEBUG" = true ]; then
+if [ "$HAOS_DEBUG" = true ]; then
     set -x
 fi
 
@@ -55,7 +55,7 @@ usage()
     echo ""
     echo "Example: $PROG /dev/vda https://github.com/1898andCo/HAOSreleases/download/v0.8.0/HAOS.iso"
     echo ""
-    echo "DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the K3OS_STATE partition (/dev/vda2)"
+    echo "DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the HAOS_STATE partition (/dev/vda2)"
     echo ""
     echo "The parameters names refer to the same names used in the cmdline, refer to README.md for"
     echo "more info."
@@ -65,11 +65,11 @@ usage()
 
 do_format()
 {
-    if [ "$K3OS_INSTALL_NO_FORMAT" = "true" ]; then
-        STATE=$(blkid -L K3OS_STATE || true)
+    if [ "$HAOS_INSTALL_NO_FORMAT" = "true" ]; then
+        STATE=$(blkid -L HAOS_STATE || true)
         if [ -z "$STATE" ] && [ -n "$DEVICE" ]; then
-            tune2fs -L K3OS_STATE $DEVICE
-            STATE=$(blkid -L K3OS_STATE)
+            tune2fs -L HAOS_STATE $DEVICE
+            STATE=$(blkid -L HAOS_STATE)
         fi
 
         return 0
@@ -106,10 +106,10 @@ do_format()
     fi
     STATE=${PREFIX}${STATE_NUM}
 
-    mkfs.ext4 -F -L K3OS_STATE ${STATE}
+    mkfs.ext4 -F -L HAOS_STATE ${STATE}
     if [ -n "${BOOT}" ]; then
         mkfs.vfat -F 32 ${BOOT}
-        fatlabel ${BOOT} K3OS_GRUB
+        fatlabel ${BOOT} HAOS_GRUB
     fi
 }
 
@@ -135,15 +135,15 @@ do_copy()
         echo $DEVICE $STATE_NUM > $TARGET/HAOS/system/growpart
     fi
 
-    if [ -n "$K3OS_INSTALL_CONFIG_URL" ]; then
-        get_url "$K3OS_INSTALL_CONFIG_URL" ${TARGET}/HAOS/system/config.yaml
+    if [ -n "$HAOS_INSTALL_CONFIG_URL" ]; then
+        get_url "$HAOS_INSTALL_CONFIG_URL" ${TARGET}/HAOS/system/config.yaml
         chmod 600 ${TARGET}/HAOS/system/config.yaml
     fi
 
-    if [ "$K3OS_INSTALL_TAKE_OVER" = "true" ]; then
+    if [ "$HAOS_INSTALL_TAKE_OVER" = "true" ]; then
         touch ${TARGET}/HAOS/system/takeover
 
-        if [ "$K3OS_INSTALL_POWER_OFF" = true ] || grep -q 'HAOS.install.power_off=true' /proc/cmdline; then
+        if [ "$HAOS_INSTALL_POWER_OFF" = true ] || grep -q 'HAOS.install.power_off=true' /proc/cmdline; then
             touch ${TARGET}/HAOS/system/poweroff
         fi
     fi
@@ -151,7 +151,7 @@ do_copy()
 
 install_grub()
 {
-    if [ "$K3OS_INSTALL_DEBUG" ]; then
+    if [ "$HAOS_INSTALL_DEBUG" ]; then
         GRUB_DEBUG="HAOS.debug"
     fi
 
@@ -166,7 +166,7 @@ insmod all_video
 insmod gfxterm
 
 menuentry "HAOS Current" {
-  search.fs_label K3OS_STATE root
+  search.fs_label HAOS_STATE root
   set sqfile=/HAOS/system/kernel/current/kernel.squashfs
   loopback loop0 /\$sqfile
   set root=(\$root)
@@ -175,7 +175,7 @@ menuentry "HAOS Current" {
 }
 
 menuentry "HAOS Previous" {
-  search.fs_label K3OS_STATE root
+  search.fs_label HAOS_STATE root
   set sqfile=/HAOS/system/kernel/previous/kernel.squashfs
   loopback loop0 /\$sqfile
   set root=(\$root)
@@ -184,7 +184,7 @@ menuentry "HAOS Previous" {
 }
 
 menuentry "HAOS Rescue (current)" {
-  search.fs_label K3OS_STATE root
+  search.fs_label HAOS_STATE root
   set sqfile=/HAOS/system/kernel/current/kernel.squashfs
   loopback loop0 /\$sqfile
   set root=(\$root)
@@ -193,7 +193,7 @@ menuentry "HAOS Rescue (current)" {
 }
 
 menuentry "HAOS Rescue (previous)" {
-  search.fs_label K3OS_STATE root
+  search.fs_label HAOS_STATE root
   set sqfile=/HAOS/system/kernel/previous/kernel.squashfs
   loopback loop0 /\$sqfile
   set root=(\$root)
@@ -201,20 +201,20 @@ menuentry "HAOS Rescue (previous)" {
   initrd /HAOS/system/kernel/previous/initrd
 }
 EOF
-    if [ -z "${K3OS_INSTALL_TTY}" ]; then
+    if [ -z "${HAOS_INSTALL_TTY}" ]; then
         TTY=$(tty | sed 's!/dev/!!')
     else
-        TTY=$K3OS_INSTALL_TTY
+        TTY=$HAOS_INSTALL_TTY
     fi
     if [ -e "/dev/${TTY%,*}" ] && [ "$TTY" != tty1 ] && [ "$TTY" != console ] && [ -n "$TTY" ]; then
         sed -i "s!console=tty1!console=tty1 console=${TTY}!g" ${TARGET}/boot/grub/grub.cfg
     fi
 
-    if [ "$K3OS_INSTALL_NO_FORMAT" = "true" ]; then
+    if [ "$HAOS_INSTALL_NO_FORMAT" = "true" ]; then
         return 0
     fi
 
-    if [ "$K3OS_INSTALL_FORCE_EFI" = "true" ]; then
+    if [ "$HAOS_INSTALL_FORCE_EFI" = "true" ]; then
         GRUB_TARGET="--target=x86_64-efi"
     fi
 
@@ -235,9 +235,9 @@ get_iso()
         done
     fi
 
-    if [ -z "${ISO_DEVICE}" ] && [ -n "$K3OS_INSTALL_ISO_URL" ]; then
+    if [ -z "${ISO_DEVICE}" ] && [ -n "$HAOS_INSTALL_ISO_URL" ]; then
         TEMP_FILE=$(mktemp HAOS.XXXXXXXX.iso)
-        get_url ${K3OS_INSTALL_ISO_URL} ${TEMP_FILE}
+        get_url ${HAOS_INSTALL_ISO_URL} ${TEMP_FILE}
         ISO_DEVICE=$(losetup --show -f $TEMP_FILE)
         rm -f $TEMP_FILE
     fi
@@ -250,7 +250,7 @@ get_iso()
 
 setup_style()
 {
-    if [ "$K3OS_INSTALL_FORCE_EFI" = "true" ] || [ -e /sys/firmware/efi ]; then
+    if [ "$HAOS_INSTALL_FORCE_EFI" = "true" ] || [ -e /sys/firmware/efi ]; then
         PARTTABLE=gpt
         BOOTFLAG=esp
         if [ ! -e /sys/firmware/efi ]; then
@@ -278,7 +278,7 @@ validate_progs()
 
 validate_device()
 {
-    DEVICE=$K3OS_INSTALL_DEVICE
+    DEVICE=$HAOS_INSTALL_DEVICE
     if [ ! -b ${DEVICE} ]; then
         echo "You should use an available device. Device ${DEVICE} does not exist."
         exit 1
@@ -293,28 +293,28 @@ create_opt()
 while [ "$#" -gt 0 ]; do
     case $1 in
         --no-format)
-            K3OS_INSTALL_NO_FORMAT=true
+            HAOS_INSTALL_NO_FORMAT=true
             ;;
         --force-efi)
-            K3OS_INSTALL_FORCE_EFI=true
+            HAOS_INSTALL_FORCE_EFI=true
             ;;
         --poweroff)
-            K3OS_INSTALL_POWER_OFF=true
+            HAOS_INSTALL_POWER_OFF=true
             ;;
         --takeover)
-            K3OS_INSTALL_TAKE_OVER=true
+            HAOS_INSTALL_TAKE_OVER=true
             ;;
         --debug)
             set -x
-            K3OS_INSTALL_DEBUG=true
+            HAOS_INSTALL_DEBUG=true
             ;;
         --config)
             shift 1
-            K3OS_INSTALL_CONFIG_URL=$1
+            HAOS_INSTALL_CONFIG_URL=$1
             ;;
         --tty)
             shift 1
-            K3OS_INSTALL_TTY=$1
+            HAOS_INSTALL_TTY=$1
             ;;
         -h)
             usage
@@ -327,8 +327,8 @@ while [ "$#" -gt 0 ]; do
                 usage
             fi
             INTERACTIVE=true
-            K3OS_INSTALL_DEVICE=$1
-            K3OS_INSTALL_ISO_URL=$2
+            HAOS_INSTALL_DEVICE=$1
+            HAOS_INSTALL_ISO_URL=$2
             break
             ;;
     esac
@@ -342,12 +342,12 @@ fi
 if [ -e /etc/os-release ]; then
     source /etc/os-release
 
-    if [ -z "$K3OS_INSTALL_ISO_URL" ]; then
-        K3OS_INSTALL_ISO_URL=${ISO_URL}
+    if [ -z "$HAOS_INSTALL_ISO_URL" ]; then
+        HAOS_INSTALL_ISO_URL=${ISO_URL}
     fi
 fi
 
-if [ -z "$K3OS_INSTALL_DEVICE" ]; then
+if [ -z "$HAOS_INSTALL_DEVICE" ]; then
     usage
 fi
 
@@ -368,7 +368,7 @@ if [ -n "$INTERACTIVE" ]; then
     exit 0
 fi
 
-if [ "$K3OS_INSTALL_POWER_OFF" = true ] || grep -q 'HAOS.install.power_off=true' /proc/cmdline; then
+if [ "$HAOS_INSTALL_POWER_OFF" = true ] || grep -q 'HAOS.install.power_off=true' /proc/cmdline; then
     poweroff -f
 else
     echo " * Rebooting system in 5 seconds (CTRL+C to cancel)"
