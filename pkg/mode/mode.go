@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/rancher/1898andCo/HAOS/pkg/system"
+	"github.com/1898andCo/HAOS/pkg/system"
 )
 
 func Get(prefix ...string) (string, error) {

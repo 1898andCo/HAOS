@@ -7,7 +7,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/rancher/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/config"
 )
 
 func SetHostname(c *config.CloudConfig) error {

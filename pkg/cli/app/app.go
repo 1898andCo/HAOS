@@ -3,11 +3,11 @@ package app
 import (
 	"fmt"
 
-	"github.com/rancher/1898andCo/HAOS/pkg/cli/config"
-	"github.com/rancher/1898andCo/HAOS/pkg/cli/install"
-	"github.com/rancher/1898andCo/HAOS/pkg/cli/rc"
-	"github.com/rancher/1898andCo/HAOS/pkg/cli/upgrade"
-	"github.com/rancher/1898andCo/HAOS/pkg/version"
+	"github.com/1898andCo/HAOS/pkg/cli/config"
+	"github.com/1898andCo/HAOS/pkg/cli/install"
+	"github.com/1898andCo/HAOS/pkg/cli/rc"
+	"github.com/1898andCo/HAOS/pkg/cli/upgrade"
+	"github.com/1898andCo/HAOS/pkg/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )

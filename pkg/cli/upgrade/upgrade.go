@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/rancher/1898andCo/HAOS/pkg/system"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"golang.org/x/sys/unix"

@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
-	"github.com/rancher/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/sirupsen/logrus"
 )
 
