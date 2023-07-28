@@ -1,18 +1,20 @@
 {
   "builders": [
-      {
-          "type": "hcloud",
-          "location": "hel1",
-          "image": "ubuntu-20.04",
-          "server_type": "cx11",
-          "ssh_username": "root",
-          "snapshot_name": "rancher-k3os-{{user `k3os_version`}}-amd64-{{isotime `200601020304`}}",
-          "snapshot_labels":[
-            {
-              "name": "k3OS",
-              "version": "{{user `k3os_version`}}"
-            }]
-      }],
+    {
+      "type": "hcloud",
+      "location": "hel1",
+      "image": "ubuntu-20.04",
+      "server_type": "cx11",
+      "ssh_username": "root",
+      "snapshot_name": "rancher-k3os-{{user `k3os_version`}}-amd64-{{isotime `200601020304`}}",
+      "snapshot_labels": [
+        {
+          "name": "HAOS",
+          "version": "{{user `k3os_version`}}"
+        }
+      ]
+    }
+  ],
   "provisioners": [
     {
       "destination": "/tmp/config.yaml",
@@ -46,4 +48,3 @@
     "region": "hel1-dc2"
   }
 }
-

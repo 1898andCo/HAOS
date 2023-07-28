@@ -24,7 +24,7 @@ spec:
       # Additionally, a value of `disabled` for this label on a node will cause the controller to skip over the node.
       - {key: k3os.io/upgrade, operator: Exists}
       - {key: k3os.io/upgrade, operator: NotIn, values: ["disabled"]}
-      # This label is set by k3OS, therefore a node without it should not apply this upgrade.
+      # This label is set by HAOS, therefore a node without it should not apply this upgrade.
       - {key: k3os.io/mode, operator: Exists}
       # Additionally, do not attempt to upgrade nodes booted from "live" CDROM.
       - {key: k3os.io/mode, operator: NotIn, values: ["live"]}
@@ -103,7 +103,7 @@ spec:
       # Additionally, a value of `disabled` for this label on a node will cause the controller to skip over the node.
       - {key: k3os.io/upgrade, operator: Exists}
       - {key: k3os.io/upgrade, operator: NotIn, values: ["disabled"]}
-      # This label is set by k3OS, therefore a node without it should not apply this upgrade.
+      # This label is set by HAOS, therefore a node without it should not apply this upgrade.
       - {key: k3os.io/mode, operator: Exists}
       # Additionally, do not attempt to upgrade nodes booted from "live" CDROM.
       - {key: k3os.io/mode, operator: NotIn, values: ["live"]}
