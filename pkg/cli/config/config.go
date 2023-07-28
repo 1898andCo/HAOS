@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/rancher/1898andCo/HAOS/pkg/cc"
-	"github.com/rancher/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/cc"
+	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
