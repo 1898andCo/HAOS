@@ -8,7 +8,7 @@ FROM ${REPO}/k3os-kernel:${TAG} as kernel
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG}
+FROM ${REPO}/haos-base:${TAG}
 ARG ARCH
 
 COPY --from=kernel /output/kernel.vm.squashfs /output/k3os-kernel-vm-${ARCH}.squashfs
