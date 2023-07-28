@@ -21,5 +21,5 @@ $(ip -br addr show | grep -E -v '^(lo|flannel|cni|veth)')
 EOF
 cat >> /etc/issue << "EOF"
 
-Welcome to BLAOS (A k3OS derivative) (login with user: rancher)
+Welcome to BLAOS (A HAOS derivative) (login with user: rancher)
 EOF

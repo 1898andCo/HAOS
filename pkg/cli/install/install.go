@@ -14,7 +14,7 @@ func Command() cli.Command {
 	mode, _ := mode.Get()
 	return cli.Command{
 		Name:  "install",
-		Usage: "install k3OS",
+		Usage: "install HAOS",
 		Flags: []cli.Flag{},
 		Before: func(c *cli.Context) error {
 			if os.Getuid() != 0 {
