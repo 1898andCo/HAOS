@@ -4,10 +4,9 @@
 [![Build Status](https://drone.bohicalabs.com/api/badges/BOHICA-LABS/BLAOS/status.svg)](https://drone.bohicalabs.com/BOHICA-LABS/BLAOS)
 # HAOS
 
-HAOS is a Linux distribution designed to remove as much OS maintenance
-as possible in a Kubernetes cluster. It is specifically designed to only
-have what is needed to run [k3s](https://github.com/rancher/k3s). Additionally
-the OS is designed to be managed by `kubectl` once a cluster is bootstrapped.
+HAOS is a Linux distribution designed to harden and secure an OS that 
+in turn operates a Kubernetes cluster with as little maintenance as possible.
+Additionally the OS is designed to be managed by `kubectl` once a cluster is bootstrapped.
 Nodes only need to join a cluster and then all aspects of the OS can be managed
 from Kubernetes. Both HAOS and k3s upgrades are handled by the HAOS operator.
 
@@ -21,12 +20,12 @@ from Kubernetes. Both HAOS and k3s upgrades are handled by the HAOS operator.
 
 ## Quick Start
 
-Download the ISO from the latest [release](https://github.com/BOHICA-LABS/BLAOS/releases) and run it
+Download the ISO from the latest [release](https://github.com/1898andCo/HAOS/releases) and run it
 in VMware, VirtualBox, KVM, or bhyve. The server will automatically start a single node Kubernetes cluster.
 Log in with the user `rancher` and run `kubectl`. This is a "live install" running from the ISO media
 and changes will not persist after reboot.
 
-To copy HAOS to local disk, after logging in as `rancher` run `sudo k3os install`. Then remove the ISO
+To copy HAOS to local disk, after logging in as `rancher` run `sudo HAOS install`. Then remove the ISO
 from the virtual machine and reboot.
 
 Live install (boot from ISO) requires at least 2GB of RAM. Local install requires 1GB RAM.
@@ -35,9 +34,10 @@ Live install (boot from ISO) requires at least 2GB of RAM. Local install require
 
 Core design goals of HAOS are
 
-1. Minimal OS for running Kubernetes by way of k3s
-2. Ability to upgrade and configure using `kubectl`
-3. Versatile installation to allow easy creation of OS images.
+1. Hardened and secure OS
+2. Minimal OS for running Kubernetes by way of k3s
+3. Ability to upgrade and configure using `kubectl`
+4. Versatile installation to allow easy creation of OS images.
 
 ### File System Structure
 
@@ -47,7 +47,7 @@ look as follows
 ```
 /etc - ephemeral
 /usr - read-only (except /usr/local is writable and persistent)
-/k3os - system files
+/HAOS - system files
 /home - persistent
 /var - persistent
 /opt - persistent
@@ -66,7 +66,7 @@ The entire user space is stored in `/usr` and as read-only. The only way to chan
 change versions of HAOS. The directory `/usr/local` is a symlink to `/var/local` and therefore
 writable.
 
-#### /k3os
+#### /HAOS
 
 The HAOS directory contains the core operating system files references on boot to construct the
 file system. It contains squashfs images and binaries for HAOS, k3s, and the Linux kernel. On
@@ -87,8 +87,8 @@ kernel source is coming from Ubuntu 20.04 LTS. Some code and a lot of inspiratio
 ### Interactive Installation
 
 Interactive installation is done from booting from the ISO. The installation is done by running
-`k3os install`. The `k3os install` sub-command is only available on systems booted live.
-An installation to disk will not have `k3os install`. Follow the prompts to install HAOS to disk.
+`HAOS install`. The `HAOS install` sub-command is only available on systems booted live.
+An installation to disk will not have `HAOS install`. Follow the prompts to install HAOS to disk.
 
 ***The installation will format an entire disk. If you have a single hard disk attached to the system
 it will not ask which disk but just pick the first and only one.***
@@ -106,11 +106,11 @@ Below is a reference of all cmdline args used to automate installation
 | cmdline                 | Default | Example                                           | Description                     |
 |:------------------------|---------|---------------------------------------------------|---------------------------------|
 | k3os.mode               |         | install                                           | Boot HAOS to the installer, not an interactive session |
-| k3os.fallback_mode      |         | install                                           | If a valid K3OS_STATE partition is not found to boot from, run the installation |
+| k3os.fallback_mode      |         | install                                           | If a valid HAOS_STATE partition is not found to boot from, run the installation |
 | k3os.install.silent     | false   | true                                              | Ensure no questions will be asked |
 | k3os.install.force_efi  | false   | true                                              | Force EFI installation even when EFI is not detected |
 | k3os.install.device     |         | /dev/vda                                          | Device to partition and format (/dev/sda, /dev/vda) |
-| k3os.install.config_url |         | [https://gist.github.com/.../dweomer.yaml](https://gist.github.com/dweomer/8750d56fb21a3fbc8d888609d6e74296#file-dweomer-yaml) | The URL of the config to be installed at `/k3os/system/config.yaml` |
+| k3os.install.config_url |         | [https://gist.github.com/.../dweomer.yaml](https://gist.github.com/dweomer/8750d56fb21a3fbc8d888609d6e74296#file-dweomer-yaml) | The URL of the config to be installed at `/HAOS/system/config.yaml` |
 | k3os.install.iso_url    |         | https://github.com/1898andCo/HAOS../k3os-amd64.iso | ISO to download and install from if booting from kernel/vmlinuz and not ISO. |
 | k3os.install.no_format  |         | true                                              | Do not partition and format, assume layout exists already |
 | k3os.install.tty        | auto    | ttyS0                                             | The tty device used for console |
@@ -119,7 +119,7 @@ Below is a reference of all cmdline args used to automate installation
 
 #### Custom partition layout
 
-By default HAOS expects one partition to exist labeled `K3OS_STATE`. `K3OS_STATE` is expected to be an ext4 formatted filesystem with at least 2GB of disk space. The installer will create this
+By default HAOS expects one partition to exist labeled `HAOS_STATE`. `HAOS_STATE` is expected to be an ext4 formatted filesystem with at least 2GB of disk space. The installer will create this
 partitions and file system automatically, or you can create them manually if you have a need for an advanced file system layout.
 
 ### Bootstrapped Installation
@@ -132,7 +132,7 @@ Usage: ./install.sh [--force-efi] [--debug] [--tty TTY] [--poweroff] [--takeover
 
 Example: ./install.sh /dev/vda https://github.com/1898andCo/HAOSreleases/download/v0.10.0/k3os.iso
 
-DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the K3OS_STATE partition (/dev/vda2)
+DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the HAOS_STATE partition (/dev/vda2)
 
 The parameters names refer to the same names used in the cmdline, refer to README.md for
 more info.
@@ -140,21 +140,21 @@ more info.
 
 ### Remastering ISO
 
-To remaster the ISO all you need to do is copy `/k3os` and `/boot` from the ISO to a new folder. Then modify `/boot/grub/grub.cfg` to add whatever kernel cmdline args for auto-installation.
+To remaster the ISO all you need to do is copy `/HAOS` and `/boot` from the ISO to a new folder. Then modify `/boot/grub/grub.cfg` to add whatever kernel cmdline args for auto-installation.
 To build a new ISO just use the utility `grub-mkrescue` as follows:
 
 ```bash
 # Ubuntu: apt install grub-efi grub-pc-bin mtools xorriso
 # CentOS: dnf install grub2-efi grub2-pc mtools xorriso
 # Alpine: apk add grub-bios grub-efi mtools xorriso
-mount -o loop k3os.iso /mnt
+mount -o loop haos.iso /mnt
 mkdir -p iso/boot/grub
-cp -rf /mnt/k3os iso/
+cp -rf /mnt/HAOS iso/
 cp /mnt/boot/grub/grub.cfg iso/boot/grub/
 
 # Edit iso/boot/grub/grub.cfg
 
-grub-mkrescue -o k3os-new.iso iso/ -- -volid K3OS
+grub-mkrescue -o haos-new.iso iso/ -- -volid K3OS
 ```
 
 GRUB2 CAVEAT: Some non-Alpine installations of grub2 will create `${ISO}/boot/grub2` instead of `${ISO}/boot/grub`
@@ -177,11 +177,11 @@ In order for this to work a couple of assumptions are made. First the root (/) i
 
 If you have a custom ARMv7 or ARM64 device you can easily use an existing bootable ARM image to create a HAOS setup.
 All you must do is boot the ARM system and then extract `k3os-rootfs-arm.tar.gz` to the root (stripping one path,
-look at the example below) and then place your cloud-config at `/k3os/system/config.yaml`. For example:
+look at the example below) and then place your cloud-config at `/HAOS/system/config.yaml`. For example:
 
 ```bash
-curl -sfL https://github.com/1898andCo/HAOSreleases/download/v0.10.0/k3os-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
-cp myconfig.yaml /k3os/system/config.yaml
+curl -sfL https://github.com/1898andCo/HAOS/releases/download/v0.10.0/k3os-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
+cp myconfig.yaml /HAOS/system/config.yaml
 sync
 reboot -f
 ```
@@ -200,17 +200,17 @@ either packaged in the image, downloaded though cloud-init or managed by
 Kubernetes. The configuration file is found at
 
 ```
-/k3os/system/config.yaml
-/var/lib/rancher/k3os/config.yaml
-/var/lib/rancher/k3os/config.d/*
+/HAOS/system/config.yaml
+/var/lib/rancher/HAOS/config.yaml
+/var/lib/rancher/HAOS/config.d/*
 ```
 
-The `/k3os/system/config.yaml` file is reserved for the system installation and should not be
+The `/HAOS/system/config.yaml` file is reserved for the system installation and should not be
 modified on a running system. This file is usually populated by during the image build or
 installation process and contains important bootstrap information (such as networking or cloud-init
 data sources).
 
-The `/var/lib/rancher/k3os/config.yaml` or `config.d/*` files are intended to be used at runtime.
+The `/var/lib/rancher/HAOS/config.yaml` or `config.d/*` files are intended to be used at runtime.
 These files can be manipulated manually, through scripting, or managed with the Kubernetes operator.
 
 ### Sample `config.yaml`
@@ -354,9 +354,9 @@ the cluster.
 
 ### Automatic Upgrades
 
-Integration with [rancher/system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) has been implemented as of [v0.9.0](https://github.com/1898andCo/HAOSreleases/tag/v0.9.0).
-To enable a HAOS node to automatically upgrade from the [latest GitHub release](https://github.com/1898andCo/HAOSreleases/latest) you will need to make sure it has the label
-`k3os.io/upgrade` with value `enabled` (for HAOS versions prior to v0.11.x please use label `plan.upgrade.cattle.io/k3os-latest`). The upgrade controller will then spawn an upgrade job
+Integration with [rancher/system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) has been implemented as of [v0.9.0](https://github.com/1898andCo/HAOS/releases/tag/v0.9.0).
+To enable a HAOS node to automatically upgrade from the [latest GitHub release](https://github.com/1898andCo/HAOS/releases/latest) you will need to make sure it has the label
+`k3os.io/upgrade` with value `enabled` (for HAOS versions prior to v0.11.x please use label `plan.upgrade.cattle.io/HAOS-latest`). The upgrade controller will then spawn an upgrade job
 that will drain most pods, upgrade the HAOS content under `/k3os/system`, and then reboot. The system should come back up running the latest
 kernel and k3s version bundled with HAOS and ready to schedule pods.
 
@@ -376,12 +376,12 @@ kubectl label nodes -l k3os.io/mode plan.upgrade.cattle.io/k3os-latest=enabled #
 
 ### Manual Upgrades
 
-For single-node or development use cases, where the operator is not being used, you can upgrade the rootfs and kernel with the following commands. If you do not specify K3OS_VERSION, it will default to the latest release.
+For single-node or development use cases, where the operator is not being used, you can upgrade the rootfs and kernel with the following commands. If you do not specify HAOS_VERSION, it will default to the latest release.
 
 When using an overlay install such as on Raspberry Pi (see [ARM Overlay Installation](#arm-overlay-installation)) the original distro kernel (such as Raspbian) will continue to be used. On these systems the k3os-upgrade-kernel script will exit with a warning and perform no action.
 
 ```bash
-export K3OS_VERSION=v0.10.0
+export HAOS_VERSION=v0.10.0
 /usr/share/rancher/k3os/scripts/k3os-upgrade-rootfs
 /usr/share/rancher/k3os/scripts/k3os-upgrade-kernel
 ```
