@@ -1,7 +1,9 @@
 
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/BOHICA-LABS/BLAOS)
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/BOHICA-LABS/BLAOS?include_prereleases&label=release&sort=semver)
-[![Build Status](https://drone.bohicalabs.com/api/badges/BOHICA-LABS/BLAOS/status.svg)](https://drone.bohicalabs.com/BOHICA-LABS/BLAOS)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/1898andCo/HAOS)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/1898andCo/HAOS?include_prereleases&label=release&sort=semver)
+
+<!-- [![Build Status](https://drone.bohicalabs.com/api/badges/1898andCo/HAOS/status.svg)](https://drone.bohicalabs.com/BOHICA-LABS/BLAOS)
+ -->
 # HAOS
 
 HAOS is a Linux distribution designed to harden and secure an OS that 
@@ -130,7 +132,7 @@ This script will run the same installation as the ISO but is a bit more raw and 
 ```
 Usage: ./install.sh [--force-efi] [--debug] [--tty TTY] [--poweroff] [--takeover] [--no-format] [--config https://.../config.yaml] DEVICE ISO_URL
 
-Example: ./install.sh /dev/vda https://github.com/1898andCo/HAOSreleases/download/v0.10.0/k3os.iso
+Example: ./install.sh /dev/vda https://github.com/1898andCo/HAOS/releases/download/v0.10.0/k3os.iso
 
 DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the HAOS_STATE partition (/dev/vda2)
 
@@ -154,7 +156,7 @@ cp /mnt/boot/grub/grub.cfg iso/boot/grub/
 
 # Edit iso/boot/grub/grub.cfg
 
-grub-mkrescue -o haos-new.iso iso/ -- -volid K3OS
+grub-mkrescue -o haos-new.iso iso/ -- -volid HAOS
 ```
 
 GRUB2 CAVEAT: Some non-Alpine installations of grub2 will create `${ISO}/boot/grub2` instead of `${ISO}/boot/grub`
@@ -170,7 +172,7 @@ and run with the `--takeover` flag. This will install HAOS to the current root a
 In order for this to work a couple of assumptions are made. First the root (/) is assumed to be an ext4 partition. Also it is assumed that grub2 is installed and looking for the configuration at `/boot/grub/grub.cfg`. When running `--takeover` ensure that you also set `--no-format` and DEVICE must be set to the partition of `/`. Refer to the AWS packer template to see this mode in action. Below is any example of how to run a takeover installation.
 
 ```bash
-./install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/vda1 https://github.com/1898andCo/HAOSreleases/download/v0.10.0/k3os.iso
+./install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/vda1 https://github.com/1898andCo/HAOS/releases/download/v0.10.0/k3os.iso
 ```
 
 ### ARM Overlay Installation
@@ -181,7 +183,7 @@ look at the example below) and then place your cloud-config at `/HAOS/system/con
 
 ```bash
 curl -sfL https://github.com/1898andCo/HAOS/releases/download/v0.10.0/k3os-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
-cp myconfig.yaml /HAOS/system/config.yaml
+cp myconfig.yaml /k3os/system/config.yaml
 sync
 reboot -f
 ```
@@ -369,9 +371,9 @@ the system upgrade controller to upgrade your HAOS by following these steps:
 # apply the system-upgrade-controller manifest (once per cluster)
 kubectl apply -f https://raw.githubusercontent.com/rancher/k3os/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-controller.yaml
 # after the system-upgrade-controller pod is Ready, apply the plan manifest (once per cluster)
-kubectl apply -f https://raw.githubusercontent.com/rancher/k3os/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/k3os-latest.yaml
-# apply the `plan.upgrade.cattle.io/k3os-latest` label as described above (for every HAOS node), e.g.
-kubectl label nodes -l k3os.io/mode plan.upgrade.cattle.io/k3os-latest=enabled # this should work on any cluster with HAOS installations at v0.7.0 or greater
+kubectl apply -f https://raw.githubusercontent.com/rancher/k3os/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/HAOS-latest.yaml
+# apply the `plan.upgrade.cattle.io/HAOS-latest` label as described above (for every HAOS node), e.g.
+kubectl label nodes -l k3os.io/mode plan.upgrade.cattle.io/HAOS-latest=enabled # this should work on any cluster with HAOS installations at v0.7.0 or greater
 ```
 
 ### Manual Upgrades

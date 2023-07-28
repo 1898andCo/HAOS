@@ -37,11 +37,11 @@ setup_dirs()
 
 setup_config()
 {
-    if [ "$K3OS_MODE" = "local" ]; then
+    if [ "$HAOS_MODE" = "local" ]; then
         return 0
     fi
 
-    $K3OS_SYSTEM/k3os/current/k3os config --initrd
+    $HAOS_SYSTEM/k3os/current/k3os config --initrd
 }
 
 setup_etc
@@ -50,7 +50,7 @@ setup_etc
 
 setup_modules
 setup_users
-$K3OS_SYSTEM/k3os/current/k3os rc
+$HAOS_SYSTEM/k3os/current/k3os rc
 setup_dirs
 setup_kernel
 setup_config
