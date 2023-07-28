@@ -327,7 +327,7 @@ func doHostname() {
 	}
 
 	mac = strings.Replace(mac, ":", "", -1)
-	if err := unix.Sethostname([]byte("k3os-" + mac)); err != nil {
+	if err := unix.Sethostname([]byte("HAOS-" + mac)); err != nil {
 		log.Printf("Setting hostname failed: %v", err)
 	}
 }
