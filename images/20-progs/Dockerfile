@@ -16,7 +16,7 @@ FROM gobuild as k3os
 ARG VERSION
 COPY go.mod $GOPATH/src/github.com/rancher/k3os/
 COPY go.sum $GOPATH/src/github.com/rancher/k3os/
-COPY /pkg/ $GOPATH/src/github.com/rancher/k3os/pkg/
+COPY /pkg/ $GOPATH/src/github.com/rancher/1898andCo/HAOS/pkg/
 COPY /main.go $GOPATH/src/github.com/rancher/k3os/
 COPY /vendor/ $GOPATH/src/github.com/rancher/k3os/vendor/
 WORKDIR $GOPATH/src/github.com/rancher/k3os
@@ -27,4 +27,4 @@ COPY --from=linuxkit /output/ /output/
 COPY --from=k3os /output/ /output/
 WORKDIR /output
 RUN git clone --branch v0.7.0 https://github.com/ahmetb/kubectx.git \
- && chmod -v +x kubectx/kubectx kubectx/kubens
+  && chmod -v +x kubectx/kubectx kubectx/kubens

@@ -3,11 +3,11 @@ package app
 import (
 	"fmt"
 
-	"github.com/rancher/k3os/pkg/cli/config"
-	"github.com/rancher/k3os/pkg/cli/install"
-	"github.com/rancher/k3os/pkg/cli/rc"
-	"github.com/rancher/k3os/pkg/cli/upgrade"
-	"github.com/rancher/k3os/pkg/version"
+	"github.com/rancher/1898andCo/HAOS/pkg/cli/config"
+	"github.com/rancher/1898andCo/HAOS/pkg/cli/install"
+	"github.com/rancher/1898andCo/HAOS/pkg/cli/rc"
+	"github.com/rancher/1898andCo/HAOS/pkg/cli/upgrade"
+	"github.com/rancher/1898andCo/HAOS/pkg/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )

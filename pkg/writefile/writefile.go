@@ -7,8 +7,8 @@ import (
 	"os/exec"
 	"path"
 
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/util"
+	"github.com/rancher/1898andCo/HAOS/pkg/config"
+	"github.com/rancher/1898andCo/HAOS/pkg/util"
 	"github.com/sirupsen/logrus"
 )
 
