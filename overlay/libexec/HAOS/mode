@@ -20,12 +20,12 @@ MODE_WAIT_SECONDS=30
 
 while [ -z "$MODE" ] && (( MODE_WAIT_SECONDS > 0 )); do
 
-if [ -z "$MODE" ] && [ -n "$(blkid -L K3OS_STATE)" ]; then
+if [ -z "$MODE" ] && [ -n "$(blkid -L HAOS_STATE)" ]; then
     MODE=disk
 fi
 
-if [ -n "$K3OS_MODE" ]; then
-    MODE=$K3OS_MODE
+if [ -n "$HAOS_MODE" ]; then
+    MODE=$HAOS_MODE
 fi
 
 if [ -z "$MODE" ]; then

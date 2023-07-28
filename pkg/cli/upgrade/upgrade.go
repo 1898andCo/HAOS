@@ -27,7 +27,7 @@ func Command() cli.Command {
 		Flags: []cli.Flag{
 			cli.BoolFlag{
 				Name:        "k3os",
-				EnvVar:      "HAOS_UPGRADE_K3OS",
+				EnvVar:      "HAOS_UPGRADE_HAOS",
 				Destination: &upgradeHAOS,
 				Hidden:      true,
 			},

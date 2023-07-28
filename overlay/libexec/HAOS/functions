@@ -2,11 +2,11 @@
 set -e
 
 export SCRIPTS=/usr/libexec/k3os
-export K3OS_SYSTEM=/.base/k3os/system
+export HAOS_SYSTEM=/.base/k3os/system
 
 reinit_debug()
 {
-    if [ "$K3OS_DEBUG" = "true" ]; then
+    if [ "$HAOS_DEBUG" = "true" ]; then
         set -x
         return 0
     fi
@@ -20,7 +20,7 @@ reinit_debug()
         for x in $(cat /proc/cmdline); do
             case $x in
                 k3os.debug*)
-                    export K3OS_DEBUG=true
+                    export HAOS_DEBUG=true
                     mkdir -p /run/k3os
                     echo debug > /run/k3os/debug || true
                     ;;
@@ -28,14 +28,14 @@ reinit_debug()
         done
     fi
 
-    if [ "$K3OS_DEBUG" = "true" ]; then
+    if [ "$HAOS_DEBUG" = "true" ]; then
         set -x
     fi
 }
 
 setup_kernel()
 {
-    KERNEL=${K3OS_SYSTEM}/kernel/$(uname -r)/kernel.squashfs
+    KERNEL=${HAOS_SYSTEM}/kernel/$(uname -r)/kernel.squashfs
     if [ ! -e ${KERNEL} ]; then
         return 0
     fi
@@ -70,12 +70,12 @@ cleanup()
 {
     rm -rf /run/k3os
     unset SCRIPTS
-    unset K3OS_SYSTEM
-    if [ -n "$K3OS_MODE" ]; then
+    unset HAOS_SYSTEM
+    if [ -n "$HAOS_MODE" ]; then
         mkdir -p /run/k3os
-        echo "$K3OS_MODE" > /run/k3os/mode
+        echo "$HAOS_MODE" > /run/k3os/mode
     fi
-    unset K3OS_MODE
+    unset HAOS_MODE
 }
 
 reinit_debug
