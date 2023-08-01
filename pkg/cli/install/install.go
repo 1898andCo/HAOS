@@ -1,3 +1,6 @@
+// Package install is responsible for running the install phase of the system
+//
+// it exposes a single function Command() which returns a configured cli.Command struct
 package install
 
 import (

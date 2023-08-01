@@ -1,3 +1,4 @@
+// Package ssh is responsible for setting up the ssh keys for the system
 package ssh
 
 import (
