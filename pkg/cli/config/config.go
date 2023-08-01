@@ -1,3 +1,6 @@
+// Package config
+//
+
 package config
 
 import (
@@ -19,7 +22,7 @@ var (
 	dumpJSON     = false
 )
 
-// Command `config`
+// Command returns a configured cli.Command struct
 func Command() cli.Command {
 	return cli.Command{
 		Name:      "config",
@@ -69,7 +72,7 @@ func Command() cli.Command {
 	}
 }
 
-// Main `config`
+// Main is the main function for the config command
 func Main() error {
 	cfg, err := config.ReadConfig()
 	if err != nil {

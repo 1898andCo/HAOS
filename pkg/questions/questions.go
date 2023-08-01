@@ -1,3 +1,4 @@
+// Package questions allows the cli to ask questions to the user.
 package questions
 
 import (

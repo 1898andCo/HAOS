@@ -1,3 +1,4 @@
+// Package system abstracts the filesystem layout of the system and exposes functions to copy and move files
 package system
 
 import "path/filepath"

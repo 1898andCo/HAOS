@@ -24,6 +24,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Syntactic sugar for the bare functions below
 func ApplyModules(cfg *config.CloudConfig) error {
 	return module.LoadModules(cfg)
 }
