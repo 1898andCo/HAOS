@@ -1,3 +1,4 @@
+// Package sysctl is responsible for configuring sysctl settings
 package sysctl
 
 import (

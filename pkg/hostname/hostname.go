@@ -1,3 +1,7 @@
+// Package hostname is responsible for setting the hostname of the system and syncing /etc/hosts
+//
+// The hostname is configured in the passed in configuration struct.
+
 package hostname
 
 import (

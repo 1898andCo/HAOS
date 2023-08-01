@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ghodss/yaml"
+	"github.com/ghodss/yaml" // NOTE: why are we using ghodss/yaml instead of gopkg.in/yaml.v2?
 	"github.com/rancher/mapper/convert"
 )
 

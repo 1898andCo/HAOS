@@ -1,3 +1,8 @@
+// Package app
+//
+// It is the entrypoint for the HAOS command line interface. It is responsible for
+// initializing the CLI app and its subcommands. It also handles the global flags passed
+// to the CLI app.
 package app
 
 import (
