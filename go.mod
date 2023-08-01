@@ -3,12 +3,13 @@ module github.com/1898andCo/HAOS
 go 1.16
 
 require (
-	github.com/docker/docker v1.13.1
+	github.com/docker/docker v24.0.5+incompatible
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/ghodss/yaml v1.0.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
 	github.com/mattn/go-isatty v0.0.19
 	github.com/otiai10/copy v1.12.0
+	github.com/otiai10/curr v0.0.0-20150429015615-9b4961190c95 // indirect
 	github.com/paultag/go-modprobe v0.0.0-20180523225901-7ccf6a1b5271
 	github.com/pkg/errors v0.9.1
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
