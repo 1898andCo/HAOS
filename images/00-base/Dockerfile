@@ -6,7 +6,7 @@ RUN apk --update --no-cache add \
     bash-completion=2.11-r2 \
     blkid=2.37.4-r0 \
     busybox-initscripts=3.2-r2  \
-    ca-certificates=20191127-r5 \
+    ca-certificates=20220614-r0 \
     connman=1.39-r0 \
     conntrack-tools=1.4.6-r0 \
     coreutils=8.32-r2 \
