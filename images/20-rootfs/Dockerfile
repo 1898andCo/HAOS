@@ -14,7 +14,7 @@ FROM base as k3os-build
 ARG VERSION
 ARG ARCH
 RUN apk --update add \
-    squashfs-tools=4.4-r1
+    squashfs-tools=4.5-r0
 COPY --from=base /bin /usr/src/image/bin/
 COPY --from=base /lib /usr/src/image/lib/
 COPY --from=base /sbin /usr/src/image/sbin/
@@ -24,17 +24,17 @@ COPY --from=base /usr /usr/src/image/usr/
 # Fix up more stuff to move everything to /usr
 RUN cd /usr/src/image && \
     for i in usr/*; do \
-        if [ -e $(basename $i) ]; then \
-            tar cvf - $(basename $i) | tar xvf - -C usr && \
-            rm -rf $(basename $i) \
-        ;fi && \
-        mv $i . \
-   ;done && \
-   rmdir usr
+    if [ -e $(basename $i) ]; then \
+    tar cvf - $(basename $i) | tar xvf - -C usr && \
+    rm -rf $(basename $i) \
+    ;fi && \
+    mv $i . \
+    ;done && \
+    rmdir usr
 
 # Fix coreutils links
 RUN cd /usr/src/image/bin \
- && find -xtype l -ilname ../usr/bin/coreutils -exec ln -sf coreutils {} \;
+    && find -xtype l -ilname ../usr/bin/coreutils -exec ln -sf coreutils {} \;
 
 # Fix sudo
 RUN chmod +s /usr/src/image/bin/sudo
@@ -46,17 +46,17 @@ RUN mkdir -p /usr/src/image/src
 # setup /etc/ssl
 RUN rm -rf \
     /usr/src/image/etc/ssl \
- && mkdir -p /usr/src/image/etc/ssl/certs/ \
- && cp -rf /etc/ssl/certs/ca-certificates.crt /usr/src/image/etc/ssl/certs \
- && ln -s certs/ca-certificates.crt /usr/src/image/etc/ssl/cert.pem
+    && mkdir -p /usr/src/image/etc/ssl/certs/ \
+    && cp -rf /etc/ssl/certs/ca-certificates.crt /usr/src/image/etc/ssl/certs \
+    && ln -s certs/ca-certificates.crt /usr/src/image/etc/ssl/cert.pem
 
 # setup /usr/local
 RUN rm -rf /usr/src/image/local \
- && ln -s /var/local /usr/src/image/local
+    && ln -s /var/local /usr/src/image/local
 
 # setup /usr/libexec/kubernetes
 RUN rm -rf /usr/libexec/kubernetes \
- && ln -s /var/lib/rancher/k3s/agent/libexec/kubernetes /usr/src/image/libexec/kubernetes
+    && ln -s /var/lib/rancher/k3s/agent/libexec/kubernetes /usr/src/image/libexec/kubernetes
 
 # cleanup files hostname/hosts
 RUN rm -rf \
@@ -66,7 +66,7 @@ RUN rm -rf \
     /usr/src/image/etc/apk \
     /usr/src/image/etc/ca-certificates* \
     /usr/src/image/etc/os-release \
- && ln -s /usr/lib/os-release /usr/src/image/etc/os-release
+    && ln -s /usr/lib/os-release /usr/src/image/etc/os-release
 
 RUN rm -rf \
     /usr/src/image/sbin/apk \
