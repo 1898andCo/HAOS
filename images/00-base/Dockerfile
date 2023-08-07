@@ -69,4 +69,3 @@ RUN apk --update --no-cache add \
     && touch /usr/sbin/virt-what \
     && chmod +x /usr/sbin/virt-what
 
-#RUN apk info | sort | xargs apk version
