@@ -8,7 +8,7 @@ FROM ${REPO}/k3os-bin:${TAG} as bin
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/haos-base:${TAG} as base
+FROM ${REPO}/k3os-base:${TAG} as base
 ARG VERSION
 
 COPY --from=k3s /output/  /output/k3os/system/k3s/
