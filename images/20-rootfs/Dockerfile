@@ -1,6 +1,6 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/haos-base:${TAG} as base
+FROM ${REPO}/k3os-base:${TAG} as base
 
 ARG REPO
 ARG TAG
