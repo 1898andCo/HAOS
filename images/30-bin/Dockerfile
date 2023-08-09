@@ -8,7 +8,7 @@ FROM ${REPO}/k3os-progs:${TAG} as progs
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/haos-base:${TAG}
+FROM ${REPO}/k3os-base:${TAG}
 
 COPY --from=rootfs /output/rootfs.squashfs /usr/src/
 COPY install.sh /output/k3os-install.sh
