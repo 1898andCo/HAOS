@@ -3,7 +3,7 @@ module github.com/1898andCo/HAOS
 go 1.16
 
 require (
-	github.com/docker/docker v24.0.5+incompatible
+	github.com/docker/docker v1.13.1
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/ghodss/yaml v1.0.0
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
