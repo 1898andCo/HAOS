@@ -102,22 +102,22 @@ solutions to booting a machine with cmdline args. You can remaster the HAOS ISO,
 use qemu/kvm, or automate input with packer. The kernel and initrd are available in the HAOS release
 artifacts, along with the ISO.
 
-The cmdline value `k3os.mode=install` or `k3os.fallback_mode=install` is required to enable automated installations.
+The cmdline value `haos.mode=install` or `haos.fallback_mode=install` is required to enable automated installations.
 Below is a reference of all cmdline args used to automate installation
 
 | cmdline                 | Default | Example                                           | Description                     |
 |:------------------------|---------|---------------------------------------------------|---------------------------------|
-| k3os.mode               |         | install                                           | Boot HAOS to the installer, not an interactive session |
-| k3os.fallback_mode      |         | install                                           | If a valid HAOS_STATE partition is not found to boot from, run the installation |
-| k3os.install.silent     | false   | true                                              | Ensure no questions will be asked |
-| k3os.install.force_efi  | false   | true                                              | Force EFI installation even when EFI is not detected |
-| k3os.install.device     |         | /dev/vda                                          | Device to partition and format (/dev/sda, /dev/vda) |
-| k3os.install.config_url |         | [https://gist.github.com/.../dweomer.yaml](https://gist.github.com/dweomer/8750d56fb21a3fbc8d888609d6e74296#file-dweomer-yaml) | The URL of the config to be installed at `/HAOS/system/config.yaml` |
-| k3os.install.iso_url    |         | https://github.com/1898andCo/HAOS../k3os-amd64.iso | ISO to download and install from if booting from kernel/vmlinuz and not ISO. |
-| k3os.install.no_format  |         | true                                              | Do not partition and format, assume layout exists already |
-| k3os.install.tty        | auto    | ttyS0                                             | The tty device used for console |
-| k3os.install.debug      | false   | true                                              | Run installation with more logging and configure debug for installed system |
-| k3os.install.power_off  | false   | true                                              | Shutdown the machine after install instead of rebooting |
+| haos.mode               |         | install                                           | Boot HAOS to the installer, not an interactive session |
+| haos.fallback_mode      |         | install                                           | If a valid HAOS_STATE partition is not found to boot from, run the installation |
+| haos.install.silent     | false   | true                                              | Ensure no questions will be asked |
+| haos.install.force_efi  | false   | true                                              | Force EFI installation even when EFI is not detected |
+| haos.install.device     |         | /dev/vda                                          | Device to partition and format (/dev/sda, /dev/vda) |
+| haos.install.config_url |         | [https://gist.github.com/.../dweomer.yaml](https://gist.github.com/dweomer/8750d56fb21a3fbc8d888609d6e74296#file-dweomer-yaml) | The URL of the config to be installed at `/HAOS/system/config.yaml` |
+| haos.install.iso_url    |         | https://github.com/1898andCo/HAOS../haos-amd64.iso | ISO to download and install from if booting from kernel/vmlinuz and not ISO. |
+| haos.install.no_format  |         | true                                              | Do not partition and format, assume layout exists already |
+| haos.install.tty        | auto    | ttyS0                                             | The tty device used for console |
+| haos.install.debug      | false   | true                                              | Run installation with more logging and configure debug for installed system |
+| haos.install.power_off  | false   | true                                              | Shutdown the machine after install instead of rebooting |
 
 #### Custom partition layout
 
@@ -132,7 +132,7 @@ This script will run the same installation as the ISO but is a bit more raw and 
 ```
 Usage: ./install.sh [--force-efi] [--debug] [--tty TTY] [--poweroff] [--takeover] [--no-format] [--config https://.../config.yaml] DEVICE ISO_URL
 
-Example: ./install.sh /dev/vda https://github.com/1898andCo/HAOS/releases/download/v0.10.0/k3os.iso
+Example: ./install.sh /dev/vda https://github.com/1898andCo/HAOS/releases/download/v0.10.0/haos.iso
 
 DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the HAOS_STATE partition (/dev/vda2)
 
@@ -172,18 +172,18 @@ and run with the `--takeover` flag. This will install HAOS to the current root a
 In order for this to work a couple of assumptions are made. First the root (/) is assumed to be an ext4 partition. Also it is assumed that grub2 is installed and looking for the configuration at `/boot/grub/grub.cfg`. When running `--takeover` ensure that you also set `--no-format` and DEVICE must be set to the partition of `/`. Refer to the AWS packer template to see this mode in action. Below is any example of how to run a takeover installation.
 
 ```bash
-./install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/vda1 https://github.com/1898andCo/HAOS/releases/download/v0.10.0/k3os.iso
+./install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/vda1 https://github.com/1898andCo/HAOS/releases/download/v0.10.0/haos.iso
 ```
 
 ### ARM Overlay Installation
 
 If you have a custom ARMv7 or ARM64 device you can easily use an existing bootable ARM image to create a HAOS setup.
-All you must do is boot the ARM system and then extract `k3os-rootfs-arm.tar.gz` to the root (stripping one path,
+All you must do is boot the ARM system and then extract `haos-rootfs-arm.tar.gz` to the root (stripping one path,
 look at the example below) and then place your cloud-config at `/HAOS/system/config.yaml`. For example:
 
 ```bash
-curl -sfL https://github.com/1898andCo/HAOS/releases/download/v0.10.0/k3os-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
-cp myconfig.yaml /k3os/system/config.yaml
+curl -sfL https://github.com/1898andCo/HAOS/releases/download/v0.10.0/haos-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
+cp myconfig.yaml /haos/system/config.yaml
 sync
 reboot -f
 ```
@@ -242,7 +242,7 @@ boot_cmd:
 run_cmd:
 - "echo hello, run command"
 
-k3os:
+haos:
   data_sources:
   - aws
   - cdrom
@@ -296,13 +296,13 @@ information on how to configure Kubernetes.
 ### Kernel cmdline
 
 All configuration can be passed as kernel cmdline parameters too. The keys are dot
-separated. For example `k3os.token=TOKEN`. If the key is a slice, multiple values are set by
-repeating the key, for example `k3os.dns_nameserver=1.1.1.1 k3os.dns_nameserver=8.8.8.8`. You
+separated. For example `haos.token=TOKEN`. If the key is a slice, multiple values are set by
+repeating the key, for example `haos.dns_nameserver=1.1.1.1 haos.dns_nameserver=8.8.8.8`. You
 can use the plural or singular form of the name, just ensure you consistently use the same form. For
-map values the form `key[key]=value` form is used, for example `k3os.sysctl[kernel.printk]="4 4 1 7"`.
+map values the form `key[key]=value` form is used, for example `haos.sysctl[kernel.printk]="4 4 1 7"`.
 If the value has spaces in it ensure that the value is quoted. Boolean keys expect a value of
-`true` or `false` or no value at all means `true`. For example `k3os.install.efi` is the same
-as `k3os.install.efi=true`.
+`true` or `false` or no value at all means `true`. For example `haos.install.efi` is the same
+as `haos.install.efi=true`.
 
 ### Phases
 
@@ -323,26 +323,26 @@ are supported in each phase.
 | run_cmd              |        |      |    x    |
 | boot_cmd             |        |  x   |         |
 | init_cmd             |    x   |      |         |
-| k3os.data_sources    |        |      |    x    |
-| k3os.modules         |    x   |  x   |    x    |
-| k3os.sysctls         |    x   |  x   |    x    |
-| k3os.ntp_services    |        |  x   |    x    |
-| k3os.dns_nameservers |        |  x   |    x    |
-| k3os.wifi            |        |  x   |    x    |
-| k3os.password        |    x   |  x   |    x    |
-| k3os.server_url      |        |  x   |    x    |
-| k3os.token           |        |  x   |    x    |
-| k3os.labels          |        |  x   |    x    |
-| k3os.k3s_args        |        |  x   |    x    |
-| k3os.environment     |    x   |  x   |    x    |
-| k3os.taints          |        |  x   |    x    |
+| haos.data_sources    |        |      |    x    |
+| haos.modules         |    x   |  x   |    x    |
+| haos.sysctls         |    x   |  x   |    x    |
+| haos.ntp_services    |        |  x   |    x    |
+| haos.dns_nameservers |        |  x   |    x    |
+| haos.wifi            |        |  x   |    x    |
+| haos.password        |    x   |  x   |    x    |
+| haos.server_url      |        |  x   |    x    |
+| haos.token           |        |  x   |    x    |
+| haos.labels          |        |  x   |    x    |
+| haos.k3s_args        |        |  x   |    x    |
+| haos.environment     |    x   |  x   |    x    |
+| haos.taints          |        |  x   |    x    |
 
 ### Networking
 
 Networking is powered by `connman`. To configure networking a couple of helper keys are
-available: `k3os.dns_nameserver`, `k3os.ntp_servers`, `k3os.wifi`. Refer to the
+available: `haos.dns_nameserver`, `haos.ntp_servers`, `haos.wifi`. Refer to the
 [reference](#configuration-reference) for a full explanation of those keys. If you wish
-to configure a HTTP proxy set the `http_proxy`, and `https_proxy` fields in `k3os.environment`.
+to configure a HTTP proxy set the `http_proxy`, and `https_proxy` fields in `haos.environment`.
 All other networking configuration should be done by configuring connman directly by using the
 `write_files` key to create connman [service](https://manpages.debian.org/testing/connman/connman-service.config.5.en.html)
 files.
@@ -358,8 +358,8 @@ the cluster.
 
 Integration with [rancher/system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) has been implemented as of [v0.9.0](https://github.com/1898andCo/HAOS/releases/tag/v0.9.0).
 To enable a HAOS node to automatically upgrade from the [latest GitHub release](https://github.com/1898andCo/HAOS/releases/latest) you will need to make sure it has the label
-`k3os.io/upgrade` with value `enabled` (for HAOS versions prior to v0.11.x please use label `plan.upgrade.cattle.io/HAOS-latest`). The upgrade controller will then spawn an upgrade job
-that will drain most pods, upgrade the HAOS content under `/k3os/system`, and then reboot. The system should come back up running the latest
+`haos.io/upgrade` with value `enabled` (for HAOS versions prior to v0.11.x please use label `plan.upgrade.cattle.io/HAOS-latest`). The upgrade controller will then spawn an upgrade job
+that will drain most pods, upgrade the HAOS content under `/haos/system`, and then reboot. The system should come back up running the latest
 kernel and k3s version bundled with HAOS and ready to schedule pods.
 
 #### Pre v0.9.0
@@ -369,18 +369,18 @@ the system upgrade controller to upgrade your HAOS by following these steps:
 
 ```shell script
 # apply the system-upgrade-controller manifest (once per cluster)
-kubectl apply -f https://raw.githubusercontent.com/rancher/k3os/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-controller.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/haos/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-controller.yaml
 # after the system-upgrade-controller pod is Ready, apply the plan manifest (once per cluster)
-kubectl apply -f https://raw.githubusercontent.com/rancher/k3os/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/HAOS-latest.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/haos/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/HAOS-latest.yaml
 # apply the `plan.upgrade.cattle.io/HAOS-latest` label as described above (for every HAOS node), e.g.
-kubectl label nodes -l k3os.io/mode plan.upgrade.cattle.io/HAOS-latest=enabled # this should work on any cluster with HAOS installations at v0.7.0 or greater
+kubectl label nodes -l haos.io/mode plan.upgrade.cattle.io/HAOS-latest=enabled # this should work on any cluster with HAOS installations at v0.7.0 or greater
 ```
 
 ### Manual Upgrades
 
 For single-node or development use cases, where the operator is not being used, you can upgrade the rootfs and kernel with the following commands. If you do not specify HAOS_VERSION, it will default to the latest release.
 
-When using an overlay install such as on Raspberry Pi (see [ARM Overlay Installation](#arm-overlay-installation)) the original distro kernel (such as Raspbian) will continue to be used. On these systems the k3os-upgrade-kernel script will exit with a warning and perform no action.
+When using an overlay install such as on Raspberry Pi (see [ARM Overlay Installation](#arm-overlay-installation)) the original distro kernel (such as Raspbian) will continue to be used. On these systems the haos-upgrade-kernel script will exit with a warning and perform no action.
 
 ```bash
 export HAOS_VERSION=v0.10.0
@@ -487,7 +487,7 @@ All three keys are used to run arbitrary commands on startup in the respective p
 `boot` and `runtime`. Commands are ran after `write_files` so it is possible to write a script to
 disk and run it from these commands. That often makes it easier to do longer form setup.
 
-### `k3os.data_sources`
+### `haos.data_sources`
 
 These are the data sources used for download config from cloud provider. The valid options are:
 
@@ -504,7 +504,7 @@ These are the data sources used for download config from cloud provider. The val
 More than one can be supported at a time, for example:
 
 ```yaml
-k3os:
+haos:
   data_sources:
   - openstack
   - cdrom
@@ -512,58 +512,58 @@ k3os:
 
 When multiple data sources are specified they are probed in order and the first to provide `/run/config/userdata` will halt further processing.
 
-### `k3os.modules`
+### `haos.modules`
 
 A list of kernel modules to be loaded on start.
 
 Example
 
 ```yaml
-k3os:
+haos:
   modules:
   - kvm
   - nvme
 ```
 
-### `k3os.sysctls`
+### `haos.sysctls`
 
 Kernel sysctl to setup on start. These are the same configuration you'd typically find in `/etc/sysctl.conf`.
 Must be specified as string values.
 
 ```yaml
-k3os:
+haos:
   sysctl:
     kernel.printk: 4 4 1 7      # the YAML parser will read as a string
     kernel.kptr_restrict: "1"   # force the YAML parser to read as a string
 ```
 
-### `k3os.ntp_servers`
+### `haos.ntp_servers`
 
 **Fallback** ntp servers to use if NTP is not configured elsewhere in connman.
 
 Example
 
 ```yaml
-k3os:
+haos:
   ntp_servers:
   - 0.us.pool.ntp.org
   - 1.us.pool.ntp.org
 ```
 
-### `k3os.dns_nameservers`
+### `haos.dns_nameservers`
 
 **Fallback** DNS name servers to use if DNS is not configured by DHCP or in a connman service config.
 
 Example
 
 ```yaml
-k3os:
+haos:
   dns_nameservers:
   - 8.8.8.8
   - 1.1.1.1
 ```
 
-### `k3os.wifi`
+### `haos.wifi`
 
 Simple wifi configuration. All that is accepted is `name` and `passphrase`. If you require more
 complex configuration then you should use `write_files` to write a connman service config.
@@ -571,7 +571,7 @@ complex configuration then you should use `write_files` to write a connman servi
 Example:
 
 ```yaml
-k3os:
+haos:
   wifi:
   - name: home
     passphrase: mypassword
@@ -579,7 +579,7 @@ k3os:
     passphrase: somethingelse
 ```
 
-### `k3os.password`
+### `haos.password`
 
 The password for the `rancher` user. By default there is no password for the `rancher` user.
 If you set a password at runtime it will be reset on next boot because `/etc` is ephemeral. The
@@ -590,29 +590,29 @@ form is to just change your password on a Linux system and copy the value of the
 Example
 
 ```yaml
-k3os:
+haos:
   password: "$1$tYtghCfK$QHa51MS6MVAcfUKuOzNKt0"
 ```
 
 Or clear text
 
 ```yaml
-k3os:
+haos:
   password: supersecure
 ```
 
-### `k3os.server_url`
+### `haos.server_url`
 
 The URL of the k3s server to join as an agent.
 
 Example
 
 ```yaml
-k3os:
+haos:
   server_url: https://myserver:6443
 ```
 
-### `k3os.token`
+### `haos.token`
 
 The cluster secret or node token. If the value matches the format of a node token it will
 automatically be assumed to be a node token. Otherwise it is treated as a cluster secret.
@@ -620,18 +620,18 @@ automatically be assumed to be a node token. Otherwise it is treated as a cluste
 Example
 
 ```yaml
-k3os:
+haos:
   token: myclustersecret
 ```
 
 Or a node token
 
 ```yaml
-k3os:
+haos:
   token: "K1074ec55daebdf54ef48294b0ddf0ce1c3cb64ee7e3d0b9ec79fbc7baf1f7ddac6::node:77689533d0140c7019416603a05275d4"
 ```
 
-### `k3os.labels`
+### `haos.labels`
 
 Labels to be assigned to this node in Kubernetes on registration. After the node is first registered
 in Kubernetes the value of this setting will be ignored.
@@ -639,13 +639,13 @@ in Kubernetes the value of this setting will be ignored.
 Example
 
 ```yaml
-k3os:
+haos:
   labels:
     region: us-west-1
     somekey: somevalue
 ```
 
-### `k3os.k3s_args`
+### `haos.k3s_args`
 
 Arguments to be passed to the k3s process. The arguments should start with `server` or `agent` to be valid.
 `k3s_args` is an exec-style (aka uninterpreted) argument array which means that when specifying a flag with a value one
@@ -654,7 +654,7 @@ immediately followed the value in another entry, e.g.:
 
 ```yaml
 # K3s flags with values joined with `=` in single entry
-k3os:
+haos:
   k3s_args:
   - server
   - "--cluster-cidr=10.107.0.0/23"
@@ -666,7 +666,7 @@ k3os:
 
 ```yaml
 # K3s flags with values in following entry
-k3os:
+haos:
   k3s_args:
   - server
   - "--cluster-cidr"
@@ -678,7 +678,7 @@ k3os:
 # exec "k3s" "server" "--cluster-cidr" "10.107.0.0/23" "--service-cidr" "10.107.1.0/23" 
 ```
 
-### `k3os.environment`
+### `haos.environment`
 
 Environment variables to be set on k3s and other processes like the boot process.
 Primary use of this field is to set the http proxy.
@@ -686,19 +686,19 @@ Primary use of this field is to set the http proxy.
 Example
 
 ```yaml
-k3os:
+haos:
   environment:
     http_proxy: http://myserver
     https_proxy: http://myserver
 ```
 
-### `k3os.taints`
+### `haos.taints`
 
 Taints to set on the current node when it is first registered. After the
 node is first registered the value of this field is ignored.
 
 ```yaml
-k3os:
+haos:
   taints:
   - "key1=value1:NoSchedule"
   - "key1=value1:NoExecute"
