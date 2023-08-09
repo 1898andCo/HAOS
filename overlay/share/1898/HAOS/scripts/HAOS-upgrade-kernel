@@ -36,7 +36,7 @@ else
 	exit 1
 fi
 
-KERNEL_VERSION=$(curl -sL https://github.com/1898andCo/HAOSreleases/download/${HAOS_VERSION}/k3os-kernel-version-${ARCH})
+KERNEL_VERSION=$(curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/k3os-kernel-version-${ARCH})
 if [ -z "$KERNEL_VERSION" ]
 then
   echo "Unable to determine kernel version"
@@ -49,8 +49,8 @@ cd /k3os/system/
 mount -o remount,rw .
 cd kernel
 mkdir -vp ${KERNEL_VERSION}
-curl -sL https://github.com/1898andCo/HAOSreleases/download/${HAOS_VERSION}/k3os-initrd-${ARCH} --output ${KERNEL_VERSION}/initrd
-curl -sL https://github.com/1898andCo/HAOSreleases/download/${HAOS_VERSION}/k3os-kernel-${ARCH}.squashfs --output ${KERNEL_VERSION}/kernel.squashfs
+curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/k3os-initrd-${ARCH} --output ${KERNEL_VERSION}/initrd
+curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/k3os-kernel-${ARCH}.squashfs --output ${KERNEL_VERSION}/kernel.squashfs
 ln -nsf $(readlink current) previous
 ln -nsf ${KERNEL_VERSION} current
 sync
