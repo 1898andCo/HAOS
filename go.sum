@@ -200,9 +200,8 @@ github.com/rancher/kubernetes/staging/src/k8s.io/code-generator v1.16.3-k3s.2/go
 github.com/rancher/kubernetes/staging/src/k8s.io/component-base v1.16.3-k3s.2/go.mod h1:spPP+vRNS8EsnNNIhFCZTTuRO3XhV1WoF18HJySoZn8=
 github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99 h1:rGnt9h1Uk7Yw4qNPyGq0LWHGdPyag/+Fg/wJWSTkKx4=
 github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99/go.mod h1:zU4cm21k7ZBFVQhUu2aSH7NwouY317rLYxruOn+wdOQ=
+github.com/rancher/wrangler v0.0.0-20190426050201-5946f0eaed19 h1:seYFVntTa8thb8ja2EDqXZ6P5WvtQMf52dVO5eC/DuY=
 github.com/rancher/wrangler v0.0.0-20190426050201-5946f0eaed19/go.mod h1:snD4YYjLOsxOwXNQORUkKr0y2TOVk54yWjgZ7myL8es=
-github.com/rancher/wrangler v1.1.1 h1:wmqUwqc2M7ADfXnBCJTFkTB5ZREWpD78rnZMzmxwMvM=
-github.com/rancher/wrangler v1.1.1/go.mod h1:ioVbKupzcBOdzsl55MvEDN0R1wdGggj8iNCYGFI5JvM=
 github.com/remyoudompheng/bigfft v0.0.0-20170806203942-52369c62f446/go.mod h1:uYEyJGbgTkfkS4+E/PavXkNJcbFIpEtjt2B0KDQ5+9M=
 github.com/russross/blackfriday v1.5.2/go.mod h1:JO/DiYxRf+HjHt06OyowR9PTA263kcR/rfWxYHBV53g=
 github.com/russross/blackfriday/v2 v2.1.0 h1:JIOH55/0cWyOuilr9/qlrm0BSXldqnqwMsf35Ld67mk=
