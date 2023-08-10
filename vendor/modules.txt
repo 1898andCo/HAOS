@@ -20,6 +20,8 @@ github.com/mattn/go-shellwords
 # github.com/otiai10/copy v1.12.0
 ## explicit; go 1.18
 github.com/otiai10/copy
+# github.com/otiai10/mint v1.6.3
+## explicit; go 1.18
 # github.com/paultag/go-modprobe v0.0.0-20180523225901-7ccf6a1b5271
 ## explicit
 github.com/paultag/go-modprobe
