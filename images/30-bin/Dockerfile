@@ -12,6 +12,6 @@ FROM ${REPO}/haos-base:${TAG}
 
 COPY --from=rootfs /output/rootfs.squashfs /usr/src/
 COPY install.sh /output/haos-install.sh
-COPY --from=progs /output/haos /output/haos
-RUN echo -n "_sqmagic_" >> /output/haos
-RUN cat /usr/src/rootfs.squashfs >> /output/haos
+COPY --from=progs /output/HAOS /output/HAOS
+RUN echo -n "_sqmagic_" >> /output/HAOS
+RUN cat /usr/src/rootfs.squashfs >> /output/HAOS
