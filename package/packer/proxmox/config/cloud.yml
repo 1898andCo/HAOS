@@ -14,6 +14,6 @@ write_files:
       KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
       Subsystem   sftp    internal-sftp
 
-k3os:
+haos:
   datasource: cdrom
   password: YourSSHPasswordReplaceIt

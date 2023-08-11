@@ -1,5 +1,5 @@
 FROM scratch
-COPY build/k3os/system/ /k3os/system/
-ENV PATH /k3os/system/k3os/current:/k3os/system/k3s/current:${PATH}
-ENTRYPOINT ["k3os"]
+COPY build/haos/system/ /haos/system/
+ENV PATH /haos/system/haos/current:/haos/system/k3s/current:${PATH}
+ENTRYPOINT ["haos"]
 CMD ["help"]

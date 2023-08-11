@@ -6,9 +6,9 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/ghodss/yaml"
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/questions"
+	"github.com/ghodss/yaml"
 )
 
 func Run() error {
@@ -79,7 +79,7 @@ func runInstall(cfg config.CloudConfig) error {
 	}
 
 	if cfg.HAOS.Install.ConfigURL == "" {
-		tempFile, err = ioutil.TempFile("/tmp", "k3os.XXXXXXXX")
+		tempFile, err = ioutil.TempFile("/tmp", "haos.XXXXXXXX")
 		if err != nil {
 			return err
 		}
@@ -108,7 +108,7 @@ func runInstall(cfg config.CloudConfig) error {
 		defer os.Remove(tempFile.Name())
 	}
 
-	cmd := exec.Command("/usr/libexec/k3os/install")
+	cmd := exec.Command("/usr/libexec/haos/install")
 	cmd.Env = append(os.Environ(), ev...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout

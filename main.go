@@ -1,4 +1,3 @@
-
 package main
 
 // Copyright 2023 1898andCo, Inc
@@ -8,11 +7,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/docker/docker/pkg/mount"
-	"github.com/docker/docker/pkg/reexec"
 	"github.com/1898andCo/HAOS/pkg/cli/app"
 	"github.com/1898andCo/HAOS/pkg/enterchroot"
 	"github.com/1898andCo/HAOS/pkg/transferroot"
+	"github.com/docker/docker/pkg/mount"
+	"github.com/docker/docker/pkg/reexec"
 	"github.com/sirupsen/logrus"
 )
 
@@ -38,12 +37,12 @@ func main() {
 }
 
 func initrd() {
-	enterchroot.DebugCmdline = "k3os.debug"
+	enterchroot.DebugCmdline = "haos.debug"
 	transferroot.Relocate()
 	if err := mount.Mount("", "/", "none", "rw,remount"); err != nil {
 		logrus.Errorf("failed to remount root as rw: %v", err)
 	}
-	if err := enterchroot.Mount("./k3os/data", os.Args, os.Stdout, os.Stderr); err != nil {
+	if err := enterchroot.Mount("./haos/data", os.Args, os.Stdout, os.Stderr); err != nil {
 		logrus.Fatalf("failed to enter root: %v", err)
 	}
 }

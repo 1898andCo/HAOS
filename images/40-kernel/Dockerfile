@@ -1,10 +1,10 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-bin:${TAG} as bin
+FROM ${REPO}/haos-bin:${TAG} as bin
 
-FROM ${REPO}/k3os-kernel-stage1:${TAG} as kernel
+FROM ${REPO}/haos-kernel-stage1:${TAG} as kernel
 
-FROM ${REPO}/k3os-base:${TAG}
+FROM ${REPO}/haos-base:${TAG}
 ARG TAG
 RUN apk --update add \
     squashfs-tools=4.5-r0
@@ -30,12 +30,12 @@ RUN cd /usr/src/kernel && \
 RUN cp /usr/src/kernel/version /output/ && \
     cp /usr/src/kernel/vmlinuz /output/
 
-COPY --from=bin /output/ /usr/src/k3os/
+COPY --from=bin /output/ /usr/src/haos/
 RUN cd /usr/src/initrd && \
-    mkdir -p k3os/system/k3os/${TAG} && \
-    cp /usr/src/k3os/k3os k3os/system/k3os/${TAG} && \
-    ln -s ${TAG} k3os/system/k3os/current && \
-    ln -s /k3os/system/k3os/current/k3os init
+    mkdir -p haos/system/haos/${TAG} && \
+    cp /usr/src/haos/haos haos/system/haos/${TAG} && \
+    ln -s ${TAG} haos/system/haos/current && \
+    ln -s /haos/system/haos/current/haos init
 
 RUN cd /usr/src/initrd && \
     find . | cpio -H newc -o | gzip -c -1 > /output/initrd

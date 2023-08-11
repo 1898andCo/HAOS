@@ -10,7 +10,7 @@ fi
 
 PROC=$(uname -m)
 
-if [ ! -d /k3os/system/kernel ]
+if [ ! -d /haos/system/kernel ]
 then
   echo "This system seems to be using a custom kernel, no kernel updates available."
 	exit 1
@@ -23,7 +23,7 @@ then
 elif [[ $PROC == arm* ]] # catches armv7l and armhf
 then
 	ARCH="arm"
-	echo "k3os for 32-bit ARM architecture only provides rootfs, no kernel updates available."
+	echo "haos for 32-bit ARM architecture only provides rootfs, no kernel updates available."
 	exit 1
 else
 	echo "Unsupported CPU architecture."
@@ -33,13 +33,13 @@ fi
 echo "Kernel Upgrade complete!"
 
 echo "Starting rootfs upgrade."
-cd /k3os/system
+cd /haos/system
 mount -o remount,rw .
 
-mv ${PACKAGE}/k3os-rootfs-amd64.tar.gz ./
-tar -xzvf k3os-rootfs-amd64.tar.gz --strip-components=3 -C ./
+mv ${PACKAGE}/haos-rootfs-amd64.tar.gz ./
+tar -xzvf haos-rootfs-amd64.tar.gz --strip-components=3 -C ./
 
-rm -rf k3os-rootfs-amd64.tar.gz
+rm -rf haos-rootfs-amd64.tar.gz
 sync
 
 rm -rf ${PACKAGE}

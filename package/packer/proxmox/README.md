@@ -1,4 +1,4 @@
-# k3os on Proxmox VE
+# haos on Proxmox VE
 
 ## Quick Start
 
