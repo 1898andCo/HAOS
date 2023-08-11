@@ -33,7 +33,7 @@ RUN cp /usr/src/kernel/version /output/ && \
 COPY --from=bin /output/ /usr/src/haos/
 RUN cd /usr/src/initrd && \
     mkdir -p haos/system/haos/${TAG} && \
-    cp /usr/src/haos/haos haos/system/haos/${TAG} && \
+    cp /usr/src/haos/HAOS haos/system/haos/${TAG} && \
     ln -s ${TAG} haos/system/haos/current && \
     ln -s /haos/system/haos/current/haos init
 
