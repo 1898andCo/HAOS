@@ -5,5 +5,5 @@ depend() {
 }
 
 name="ccapply"
-command="/k3os/system/k3os/current/k3os"
+command="/haos/system/haos/current/haos"
 command_args="config"

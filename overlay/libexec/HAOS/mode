@@ -7,11 +7,11 @@ for x in $(cat /proc/cmdline); do
         rescue)
             MODE=shell
             ;;
-        k3os.mode=*)
-            MODE=${x#k3os.mode=}
+        haos.mode=*)
+            MODE=${x#haos.mode=}
             ;;
-        k3os.fallback_mode=*)
-            FALLBACK_MODE=${x#k3os.fallback_mode=}
+        haos.fallback_mode=*)
+            FALLBACK_MODE=${x#haos.fallback_mode=}
             ;;
     esac
 done
@@ -44,9 +44,9 @@ fi
 done
 
 if [ -z "$MODE" ]; then
-    pfatal "Failed to determine boot mode (did you forget to set k3os.mode?)"
+    pfatal "Failed to determine boot mode (did you forget to set haos.mode?)"
 elif [ ! -e $SCRIPTS/mode-${MODE} ]; then
     pfatal "Mode script does not exist for ${MODE}"
 else
-    echo "$MODE" > /run/k3os/mode
+    echo "$MODE" > /run/haos/mode
 fi

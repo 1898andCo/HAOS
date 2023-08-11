@@ -5,7 +5,7 @@ import "testing"
 func TestDataSource(t *testing.T) {
 	cc, err := readersToObject(func() (map[string]interface{}, error) {
 		return map[string]interface{}{
-			"k3os": map[string]interface{}{
+			"haos": map[string]interface{}{
 				"datasource": "foo",
 			},
 		}, nil

@@ -46,7 +46,7 @@ type CloudConfig struct {
 	BootManifests     []Manifest `json:"bootManifests,omitempty"`
 	WriteFiles        []File     `json:"writeFiles,omitempty"`
 	Hostname          string     `json:"hostname,omitempty"`
-	HAOS              HAOS       `json:"k3os,omitempty"`
+	HAOS              HAOS       `json:"haos,omitempty"`
 	Runcmd            []string   `json:"runCmd,omitempty"`
 	Bootcmd           []string   `json:"bootCmd,omitempty"`
 	Initcmd           []string   `json:"initCmd,omitempty"`

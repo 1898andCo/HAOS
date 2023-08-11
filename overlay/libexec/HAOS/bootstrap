@@ -32,7 +32,7 @@ setup_users()
 
 setup_dirs()
 {
-    mkdir -p /run/k3os
+    mkdir -p /run/haos
 }
 
 setup_config()
@@ -41,7 +41,7 @@ setup_config()
         return 0
     fi
 
-    $HAOS_SYSTEM/k3os/current/k3os config --initrd
+    $HAOS_SYSTEM/haos/current/haos config --initrd
 }
 
 setup_etc
@@ -50,7 +50,7 @@ setup_etc
 
 setup_modules
 setup_users
-$HAOS_SYSTEM/k3os/current/k3os rc
+$HAOS_SYSTEM/haos/current/haos rc
 setup_dirs
 setup_kernel
 setup_config

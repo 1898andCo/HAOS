@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: k3os-system
+  name: haos-system
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: k3os-upgrade
-  namespace: k3os-system
+  name: haos-upgrade
+  namespace: haos-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -19,14 +19,14 @@ roleRef:
   name: cluster-admin
 subjects:
   - kind: ServiceAccount
-    name: k3os-upgrade
-    namespace: k3os-system
+    name: haos-upgrade
+    namespace: haos-system
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: default-controller-env
-  namespace: k3os-system
+  namespace: haos-system
 data:
   SYSTEM_UPGRADE_CONTROLLER_DEBUG: "false"
   SYSTEM_UPGRADE_CONTROLLER_THREADS: "2"
@@ -42,7 +42,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: system-upgrade-controller
-  namespace: k3os-system
+  namespace: haos-system
 spec:
   selector:
     matchLabels:
@@ -57,8 +57,12 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - {key: "node-role.kubernetes.io/master", operator: In, values: ["true"]}
-      serviceAccountName: k3os-upgrade
+                  - {
+                      key: "node-role.kubernetes.io/master",
+                      operator: In,
+                      values: ["true"],
+                    }
+      serviceAccountName: haos-upgrade
       tolerations:
         - key: "CriticalAddonsOnly"
           operator: "Exists"

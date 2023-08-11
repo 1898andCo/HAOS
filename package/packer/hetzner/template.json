@@ -6,11 +6,11 @@
             "image": "ubuntu-20.04",
             "server_type": "cx11",
             "ssh_username": "root",
-            "snapshot_name": "rancher-k3os-{{user `k3os_version`}}-amd64-{{isotime `200601020304`}}",
+            "snapshot_name": "rancher-haos-{{user `haos_version`}}-amd64-{{isotime `200601020304`}}",
             "snapshot_labels": [
                 {
                     "name": "HAOS",
-                    "version": "{{user `k3os_version`}}"
+                    "version": "{{user `haos_version`}}"
                 }
             ]
         }
@@ -43,8 +43,8 @@
         }
     ],
     "variables": {
-        "iso_url": "https://github.com/1898andCo/HAOS/releases/download/v0.11.0/k3os-amd64.iso",
-        "k3os_version": "v0.11.0",
+        "iso_url": "https://github.com/1898andCo/HAOS/releases/download/v0.11.0/haos-amd64.iso",
+        "haos_version": "v0.11.0",
         "region": "hel1-dc2"
     }
 }

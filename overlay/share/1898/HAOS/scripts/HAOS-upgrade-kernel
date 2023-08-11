@@ -29,28 +29,28 @@ then
 elif [[ $PROC == arm* ]] # catches armv7l and armhf
 then
 	ARCH="arm"
-	echo "k3os for 32-bit ARM architecture only provides rootfs, no kernel updates available."
+	echo "haos for 32-bit ARM architecture only provides rootfs, no kernel updates available."
 	exit 1
 else
 	echo "Unsupported CPU architecture."
 	exit 1
 fi
 
-KERNEL_VERSION=$(curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/k3os-kernel-version-${ARCH})
+KERNEL_VERSION=$(curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/haos-kernel-version-${ARCH})
 if [ -z "$KERNEL_VERSION" ]
 then
   echo "Unable to determine kernel version"
   exit 1
 fi
 
-echo "Upgrading k3os kernel to ${KERNEL_VERSION}"
+echo "Upgrading haos kernel to ${KERNEL_VERSION}"
 
-cd /k3os/system/
+cd /haos/system/
 mount -o remount,rw .
 cd kernel
 mkdir -vp ${KERNEL_VERSION}
-curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/k3os-initrd-${ARCH} --output ${KERNEL_VERSION}/initrd
-curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/k3os-kernel-${ARCH}.squashfs --output ${KERNEL_VERSION}/kernel.squashfs
+curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/haos-initrd-${ARCH} --output ${KERNEL_VERSION}/initrd
+curl -sL https://github.com/1898andCo/HAOS/releases/download/${HAOS_VERSION}/haos-kernel-${ARCH}.squashfs --output ${KERNEL_VERSION}/kernel.squashfs
 ln -nsf $(readlink current) previous
 ln -nsf ${KERNEL_VERSION} current
 sync
