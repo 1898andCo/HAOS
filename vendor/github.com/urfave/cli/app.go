@@ -121,6 +121,7 @@ func NewApp() *App {
 		HelpName:     filepath.Base(os.Args[0]),
 		Usage:        "A new cli application",
 		UsageText:    "",
+		Version:      "0.0.0",
 		BashComplete: DefaultAppComplete,
 		Action:       helpCommand.Action,
 		Compiled:     compileTime(),
@@ -156,10 +157,6 @@ func (a *App) Setup() {
 		if (HelpFlag != BoolFlag{}) {
 			a.appendFlag(HelpFlag)
 		}
-	}
-
-	if a.Version == "" {
-		a.HideVersion = true
 	}
 
 	if !a.HideVersion {
@@ -207,7 +204,7 @@ func (a *App) Run(arguments []string) (err error) {
 		return err
 	}
 
-	err = parseIter(set, a, arguments[1:], shellComplete)
+	err = parseIter(set, a, arguments[1:])
 	nerr := normalizeFlags(a.Flags, set)
 	context := NewContext(a, set, nil)
 	if nerr != nil {
@@ -248,7 +245,7 @@ func (a *App) Run(arguments []string) (err error) {
 		return cerr
 	}
 
-	if a.After != nil && !context.shellComplete {
+	if a.After != nil {
 		defer func() {
 			if afterErr := a.After(context); afterErr != nil {
 				if err != nil {
@@ -260,9 +257,11 @@ func (a *App) Run(arguments []string) (err error) {
 		}()
 	}
 
-	if a.Before != nil && !context.shellComplete {
+	if a.Before != nil {
 		beforeErr := a.Before(context)
 		if beforeErr != nil {
+			_, _ = fmt.Fprintf(a.Writer, "%v\n\n", beforeErr)
+			_ = ShowAppHelp(context)
 			a.handleExitCoder(context, beforeErr)
 			err = beforeErr
 			return err
@@ -328,7 +327,7 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 		return err
 	}
 
-	err = parseIter(set, a, ctx.Args().Tail(), ctx.shellComplete)
+	err = parseIter(set, a, ctx.Args().Tail())
 	nerr := normalizeFlags(a.Flags, set)
 	context := NewContext(a, set, ctx)
 
@@ -374,7 +373,7 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 		return cerr
 	}
 
-	if a.After != nil && !context.shellComplete {
+	if a.After != nil {
 		defer func() {
 			afterErr := a.After(context)
 			if afterErr != nil {
@@ -388,7 +387,7 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 		}()
 	}
 
-	if a.Before != nil && !context.shellComplete {
+	if a.Before != nil {
 		beforeErr := a.Before(context)
 		if beforeErr != nil {
 			a.handleExitCoder(context, beforeErr)
