@@ -369,9 +369,9 @@ the system upgrade controller to upgrade your HAOS by following these steps:
 
 ```shell script
 # apply the system-upgrade-controller manifest (once per cluster)
-kubectl apply -f https://raw.githubusercontent.com/rancher/haos/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-controller.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/k3os/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-controller.yaml
 # after the system-upgrade-controller pod is Ready, apply the plan manifest (once per cluster)
-kubectl apply -f https://raw.githubusercontent.com/rancher/haos/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/HAOS-latest.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/k3os/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/HAOS-latest.yaml
 # apply the `plan.upgrade.cattle.io/HAOS-latest` label as described above (for every HAOS node), e.g.
 kubectl label nodes -l haos.io/mode plan.upgrade.cattle.io/HAOS-latest=enabled # this should work on any cluster with HAOS installations at v0.7.0 or greater
 ```
