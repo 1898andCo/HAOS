@@ -72,6 +72,13 @@ spec:
       containers:
         - name: system-upgrade-controller
           image: rancher/system-upgrade-controller:v0.7.0
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 512Mi
+              cpu: "0.2"
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
