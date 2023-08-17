@@ -7,7 +7,7 @@ ENV MAKEVER 2.4.4
 RUN apk --update --no-cache add \
     bash=5.1.16-r0 \
     git=2.30.6-r0 \
-    gc=10.2.1_pre1-r3 \
+    gc=8.0.4-r4 \
     musl-dev=1.2.2-r2 \
     docker \
     vim=8.2.4836-r0 \
