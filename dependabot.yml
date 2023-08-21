@@ -1,0 +1,13 @@
+version: 2
+
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: CPES-240_CPES-245_update-branding-and-kernel
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: CPES-240_CPES-245_update-branding-and-kernel
