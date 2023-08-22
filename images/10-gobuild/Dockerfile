@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine3.13 AS gobuild
+FROM golang:1.17-alpine3.13 AS gobuild
 RUN apk --update add \
     git=2.30.6-r0 \
     gcc=10.2.1_pre1-r3 \
