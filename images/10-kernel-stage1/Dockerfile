@@ -18,7 +18,9 @@ RUN apt-get --assume-yes update \
 
 ARG ARCH
 ENV KVERSION=5.4.0-73-generic
-ENV URL=https://github.com/1898andCo/HAOS-kernel/releases/tag/0.1
+ENV URL=https://github.com/rancher/k3os-kernel/releases/download/5.4.0-73.82-rancher2
+#ENV URL=https://github.com/1898andCo/HAOS-kernel/releases/tag/0.1
+
 ENV KERNEL_XZ=${URL}/kernel-generic_${ARCH}.tar.xz
 ENV KERNEL_EXTRA_XZ=${URL}/kernel-extra-generic_${ARCH}.tar.xz
 ENV KERNEL_HEADERS_XZ=${URL}/kernel-headers-generic_${ARCH}.tar.xz
