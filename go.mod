@@ -5,14 +5,13 @@ go 1.16
 require (
 	github.com/docker/docker v1.13.1
 	github.com/ghodss/yaml v1.0.0
-	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/mattn/go-isatty v0.0.19
 	github.com/otiai10/copy v1.12.0
 	github.com/paultag/go-modprobe v0.0.0-20180523225901-7ccf6a1b5271
 	github.com/pkg/errors v0.9.1
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
 	github.com/rancher/wrangler v0.7.5 // indirect
-	github.com/sirupsen/logrus v1.4.2
+	github.com/sirupsen/logrus v1.9.3
 	github.com/urfave/cli v1.22.14
 	golang.org/x/crypto v0.12.0
 	golang.org/x/sys v0.11.0
