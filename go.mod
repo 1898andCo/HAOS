@@ -13,7 +13,7 @@ require (
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
 	github.com/rancher/wrangler v0.7.5 // indirect
 	github.com/sirupsen/logrus v1.4.2
-	github.com/urfave/cli v1.22.2
+	github.com/urfave/cli v1.22.14
 	golang.org/x/crypto v0.12.0
 	golang.org/x/sys v0.11.0
 	gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
