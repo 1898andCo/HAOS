@@ -1,34 +1,25 @@
-module github.com/1898andCo/HAOS
+module github.com/rancher/k3os
 
-go 1.17
+go 1.16
 
 require (
 	github.com/docker/docker v1.13.1
-	github.com/ghodss/yaml v1.0.0
-	github.com/mattn/go-isatty v0.0.19
-	github.com/otiai10/copy v1.12.0
-	github.com/pkg/errors v0.9.1
-	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
-	github.com/sirupsen/logrus v1.9.3
-	github.com/urfave/cli v1.22.14
-	golang.org/x/crypto v0.12.0
-	golang.org/x/sys v0.11.0
-	gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
-	pault.ag/go/modprobe v0.1.2
-)
-
-require (
-	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/docker/go-units v0.4.0 // indirect
-	github.com/kr/text v0.2.0 // indirect
-	github.com/mattn/go-shellwords v1.0.5 // indirect
-	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
-	github.com/rancher/wrangler v1.1.1 // indirect
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	golang.org/x/term v0.11.0 // indirect
-	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
-	pault.ag/go/topsort v0.1.1 // indirect
+	github.com/ghodss/yaml v1.0.0
+	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
+	github.com/mattn/go-isatty v0.0.10
+	github.com/otiai10/copy v1.0.2
+	github.com/paultag/go-modprobe v0.0.0-20180523225901-7ccf6a1b5271
+	github.com/pkg/errors v0.8.1
+	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
+	github.com/rancher/wrangler v0.3.1 // indirect
+	github.com/sirupsen/logrus v1.4.2
+	github.com/stretchr/testify v1.4.0 // indirect
+	github.com/urfave/cli v1.22.2
+	golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c
+	golang.org/x/sys v0.0.0-20191127021746-63cb32ae39b2
+	gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
+	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a // indirect
 )
 
 replace (
