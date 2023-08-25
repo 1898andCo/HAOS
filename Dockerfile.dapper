@@ -8,6 +8,7 @@ RUN apk --update --no-cache add \
     bash=5.1.16-r0 \
     git=2.30.6-r0 \
     gc=8.0.4-r4 \
+    gcc \
     musl-dev=1.2.2-r2 \
     docker \
     vim=8.2.4836-r0 \
