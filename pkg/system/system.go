@@ -1,7 +1,11 @@
 // Package system abstracts the filesystem layout of the system and exposes functions to copy and move files
 package system
 
-import "path/filepath"
+import (
+	"path/filepath"
+
+	"github.com/spf13/afero"
+)
 
 const (
 	// DefaultRootDir represents where persistent installations are located
@@ -19,6 +23,7 @@ var (
 	dataDirectory  = DefaultDataDir
 	localDirectory = DefaultLocalDir
 	stateDirectory = DefaultStateDir
+	AppFs          = afero.NewOsFs()
 )
 
 // RootPath joins any number of elements into a single path underneath the persistent installation root, by default `DefaultRootDir`

@@ -2,11 +2,12 @@
 package sysctl
 
 import (
-	"io/ioutil"
 	"path"
 	"strings"
 
+	"github.com/spf13/afero"
 	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/system"
 )
 
 func ConfigureSysctl(cfg *config.CloudConfig) error {
@@ -14,7 +15,7 @@ func ConfigureSysctl(cfg *config.CloudConfig) error {
 		elements := []string{"/proc", "sys"}
 		elements = append(elements, strings.Split(k, ".")...)
 		path := path.Join(elements...)
-		if err := ioutil.WriteFile(path, []byte(v), 0644); err != nil {
+		if err := afero.WriteFile(system.AppFs, path, []byte(v), 0644); err != nil {
 			return err
 		}
 	}

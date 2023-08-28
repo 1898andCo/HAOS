@@ -2,16 +2,18 @@ package util
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
 	"path"
+
+	"github.com/1898andCo/HAOS/pkg/system"
+	"github.com/spf13/afero"
 )
 
 func WriteFileAtomic(filename string, data []byte, perm os.FileMode) error {
 	dir, file := path.Split(filename)
-	tempFile, err := ioutil.TempFile(dir, fmt.Sprintf(".%s", file))
+	tempFile, err := afero.TempFile(system.AppFs, dir, fmt.Sprintf(".%s", file))
 	if err != nil {
 		return err
 	}
@@ -34,7 +36,7 @@ func HTTPDownloadToFile(url, dest string) error {
 		return err
 	}
 	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := afero.ReadAll(res.Body)
 	if err != nil {
 		return err
 	}
@@ -50,7 +52,7 @@ func HTTPLoadBytes(url string) ([]byte, error) {
 			return nil, fmt.Errorf("non-200 http response: %d", resp.StatusCode)
 		}
 
-		bytes, err := ioutil.ReadAll(resp.Body)
+		bytes, err := afero.ReadAll(resp.Body)
 		if err != nil {
 			return nil, err
 		}

@@ -2,14 +2,15 @@ package writefile
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path"
 
 	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/1898andCo/HAOS/pkg/util"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/afero"
 )
 
 func WriteFiles(cfg *config.CloudConfig) {
@@ -44,12 +45,12 @@ func WriteFile(f *config.File, root string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	var tmp *os.File
+	var tmp afero.File
 	// create a temporary file in the same directory to ensure it's on the same filesystem
-	if tmp, err = ioutil.TempFile(d, "wfs-temp"); err != nil {
+	if tmp, err = afero.TempFile(system.AppFs, d, "wfs-temp"); err != nil {
 		return "", err
 	}
-	if err := ioutil.WriteFile(tmp.Name(), []byte(f.Content), perm); err != nil {
+	if err := afero.WriteFile(system.AppFs, tmp.Name(), []byte(f.Content), perm); err != nil {
 		return "", err
 	}
 	if err := tmp.Close(); err != nil {

@@ -3,14 +3,16 @@ package manifests
 import (
 	"crypto/sha256"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"path/filepath"
 	"strings"
 
-	"github.com/pkg/errors"
 	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/system"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
+	
+	"github.com/spf13/afero"
 )
 
 const (
@@ -41,7 +43,7 @@ func ApplyBootManifests(cfg *config.CloudConfig) error {
 				retries++
 				continue
 			}
-			data, err = ioutil.ReadAll(resp.Body)
+			data, err = afero.ReadAll(resp.Body)
 			if err != nil {
 				errors.Wrap(err, "failed reading manifest URL body")
 				return err
@@ -62,7 +64,7 @@ func ApplyBootManifests(cfg *config.CloudConfig) error {
 	}
 	for file, data := range filesToWrite {
 		p := filepath.Join(manifestsDir, file)
-		if err := ioutil.WriteFile(p, data, 0600); err != nil {
+		if err := afero.WriteFile(system.AppFs, p, data, 0600); err != nil {
 			return err
 		}
 

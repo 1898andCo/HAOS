@@ -5,13 +5,13 @@ package rc
 import (
 	"encoding/csv"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-
+	"github.com/spf13/afero"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/urfave/cli"
 	"golang.org/x/sys/unix"
 )
@@ -117,7 +117,7 @@ func cgroupList() []string {
 
 // write a file, eg sysfs
 func write(path string, value string) {
-	err := ioutil.WriteFile(path, []byte(value), 0600)
+	err := afero.WriteFile(system.AppFs, path, []byte(value), 0600)
 	if err != nil {
 		log.Printf("cannot write to %s: %v", path, err)
 	}
@@ -125,7 +125,7 @@ func write(path string, value string) {
 
 // read a file, eg sysfs, strip whitespace, empty string if does not exist
 func read(path string) string {
-	data, err := ioutil.ReadFile(path)
+	data, err := afero.ReadFile(system.AppFs, path)
 	if err != nil {
 		return ""
 	}
@@ -135,7 +135,7 @@ func read(path string) string {
 // read a directory
 func readdir(path string) []string {
 	names := []string{}
-	files, err := ioutil.ReadDir(path)
+	files, err := afero.ReadDir(system.AppFs, path)
 	if err != nil {
 		log.Printf("cannot read directory %s: %v", path, err)
 		return names

@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"strings"
@@ -12,7 +11,9 @@ import (
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/mode"
 	"github.com/1898andCo/HAOS/pkg/questions"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/1898andCo/HAOS/pkg/util"
+	"github.com/spf13/afero"
 )
 
 func Ask(cfg *config.CloudConfig) (bool, error) {
@@ -192,12 +193,12 @@ func AskPassword(cfg *config.CloudConfig) error {
 		return nil
 	}
 
-	oldShadow, err := ioutil.ReadFile("/etc/shadow")
+	oldShadow, err := afero.ReadFile(system.AppFs, "/etc/shadow")
 	if err != nil {
 		return err
 	}
 	defer func() {
-		ioutil.WriteFile("/etc/shadow", oldShadow, 0640)
+		afero.WriteFile(system.AppFs, "/etc/shadow", oldShadow, 0640)
 	}()
 
 	cmd := exec.Command("chpasswd")
