@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"syscall"
+
+	"github.com/1898andCo/HAOS/pkg/system"
 )
 
 const defaultPlaceholder = "value"
@@ -339,7 +341,7 @@ func flagFromFileEnv(filePath, envName string) (val string, ok bool) {
 	}
 	for _, fileVar := range strings.Split(filePath, ",") {
 		if fileVar != "" {
-			if data, err := ioutil.ReadFile(fileVar); err == nil {
+			if data, err := afero.ReadFile(system.AppFs, fileVar); err == nil {
 				return string(data), true
 			}
 		}

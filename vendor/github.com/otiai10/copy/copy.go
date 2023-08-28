@@ -3,10 +3,11 @@ package copy
 import (
 	"io"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/1898andCo/HAOS/pkg/system"
 )
 
 type timespec struct {
@@ -173,7 +174,7 @@ func dcopy(srcdir, destdir string, info os.FileInfo, opt Options) (err error) {
 			contents = append(contents, info)
 		}
 	} else {
-		contents, err = ioutil.ReadDir(srcdir)
+		contents, err = afero.ReadDir(system.AppFs, srcdir)
 	}
 
 	if err != nil {

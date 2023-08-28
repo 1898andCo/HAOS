@@ -10,6 +10,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
 	github.com/sirupsen/logrus v1.9.3
+	github.com/spf13/afero v1.2.2
 	github.com/urfave/cli v1.22.14
 	golang.org/x/crypto v0.12.0
 	golang.org/x/sys v0.11.0
@@ -24,6 +25,7 @@ require (
 	github.com/rancher/wrangler v0.7.5 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	golang.org/x/term v0.11.0 // indirect
+	golang.org/x/text v0.12.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a // indirect
 )
