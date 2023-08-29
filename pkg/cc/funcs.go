@@ -22,7 +22,7 @@ import (
 	"github.com/1898andCo/HAOS/pkg/version"
 	"github.com/1898andCo/HAOS/pkg/writefile"
 	"github.com/sirupsen/logrus"
-	
+
 	"github.com/spf13/afero"
 )
 
@@ -229,7 +229,7 @@ func ApplyWifi(cfg *config.CloudConfig) error {
 	buf.WriteString("Tethering=false\n")
 
 	if buf.Len() > 0 {
-		if err := os.MkdirAll("/var/lib/connman", 0755); err != nil {
+		if err := system.AppFs.MkdirAll("/var/lib/connman", 0755); err != nil {
 			return fmt.Errorf("failed to mkdir /var/lib/connman: %v", err)
 		}
 		if err := afero.WriteFile(system.AppFs, "/var/lib/connman/settings", buf.Bytes(), 0644); err != nil {

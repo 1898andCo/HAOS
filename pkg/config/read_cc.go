@@ -6,10 +6,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/spf13/afero"
 	"github.com/1898andCo/HAOS/pkg/system"
-	"github.com/ghodss/yaml" // NOTE: why are we using ghodss/yaml instead of gopkg.in/yaml.v2?
+	"github.com/ghodss/yaml"
 	"github.com/rancher/mapper/convert"
+	"github.com/spf13/afero"
 )
 
 const (
