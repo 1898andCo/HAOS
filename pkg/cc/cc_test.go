@@ -10,22 +10,6 @@ import (
 	"github.com/spf13/afero"
 )
 
-/*
-	ApplyModules,
-	ApplySysctls,
-	ApplyHostname,
-	ApplyDNS,
-	ApplyWifi,
-	ApplyPassword,
-	ApplySSHKeysWithNet,
-	ApplyWriteFiles,
-	ApplyBootManifests,
-	ApplyEnvironment,
-	ApplyRuncmd,
-	ApplyInstall,
-	ApplyK3SInstall,
-*/
-
 var Cconfig config.CloudConfig = config.CloudConfig{
 	Runcmd:            []string{"echo 'runcmd test'"},
 	Bootcmd:           []string{"echo 'bootcmd test'"},
@@ -119,7 +103,7 @@ func TestApplyHostname(t *testing.T) {
 func TestApplyPassword(t *testing.T) {
 	setupFS()
 	system.AppFs.MkdirAll("/etc", 0755)
-	afero.WriteFile(system.AppFs, "/etc/passwd", []byte("root:x:0:0:root:/root:/bin/bash"), 0644)
+	//afero.WriteFile(system.AppFs, "/etc/passwd", []byte("root:x:0:0:root:/root:/bin/bash"), 0644)
 	testFunc(t, cc.ApplyPassword, "ApplyPassword()")
 }
 
@@ -149,3 +133,23 @@ func TestApplyInitcmd(t *testing.T) {
 func TestApplyWriteFiles(t *testing.T) {
 	testFunc(t, cc.ApplyWriteFiles, "ApplyWriteFiles()")
 }
+
+func TestApplyBootManifests(t *testing.T) {
+	testFunc(t, cc.ApplyBootManifests, "ApplyBootManifests()")
+}
+
+func TestApplyEnviromnent(t *testing.T) {
+	testFunc(t, cc.ApplyEnvironment, "ApplyEnvironment()")
+}
+
+func TestApplyInstall(t *testing.T) {
+	testFunc(t, cc.ApplyInstall, "ApplyInstall()")
+}
+
+// func TestApplyK3SInstall(t *testing.T) {
+// 	setupFS()
+// 	system.AppFs.MkdirAll("/sbin/k3s", 0755)
+// 	system.AppFs.MkdirAll("/usr/libexec/haos", 0755)
+// 	afero.WriteFile(system.AppFs, "/usr/libexec/haos/k3s-install.sh", []byte(""), 0755)
+// 	testFunc(t, cc.ApplyK3SInstall, "ApplyK3SInstall()")
+// }
