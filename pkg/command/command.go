@@ -7,20 +7,35 @@ import (
 	"os/exec"
 	"strings"
 
+	"context"
+
 	"github.com/sirupsen/logrus"
 )
 
-func ExecuteCommand(commands []string) error {
+type Shell interface {
+	Execute(ctx context.Context, cmd string) (output []byte, err error)
+}
+
+type LocalShell struct{}
+
+func (LocalShell) Execute(ctx context.Context, cmd string) ([]byte, error) {
+	wrapperCmd := exec.CommandContext(ctx, "sh", "-c", cmd)
+	return wrapperCmd.CombinedOutput()
+}
+
+var DefaultShell Shell = LocalShell{}
+
+func ExecuteCommand(commands []string) ([]string, error) {
+	var results []string
 	for _, cmd := range commands {
 		logrus.Debugf("running cmd `%s`", cmd)
-		c := exec.Command("sh", "-c", cmd)
-		c.Stdout = os.Stdout
-		c.Stderr = os.Stderr
-		if err := c.Run(); err != nil {
-			return fmt.Errorf("failed to run %s: %v", cmd, err)
+		out, err := DefaultShell.Execute(context.Background(), cmd)
+		if err != nil {
+			return results, fmt.Errorf("failed to run %s: %v", cmd, err)
 		}
+		results = append(results, string(out))
 	}
-	return nil
+	return results, nil
 }
 
 func SetPassword(password string) error {

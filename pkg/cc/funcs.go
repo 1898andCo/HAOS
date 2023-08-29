@@ -44,15 +44,18 @@ func ApplyPassword(cfg *config.CloudConfig) error {
 }
 
 func ApplyRuncmd(cfg *config.CloudConfig) error {
-	return command.ExecuteCommand(cfg.Runcmd)
+	_, err := command.ExecuteCommand(cfg.Runcmd)
+	return err
 }
 
 func ApplyBootcmd(cfg *config.CloudConfig) error {
-	return command.ExecuteCommand(cfg.Bootcmd)
+	_, err := command.ExecuteCommand(cfg.Bootcmd)
+	return err
 }
 
 func ApplyInitcmd(cfg *config.CloudConfig) error {
-	return command.ExecuteCommand(cfg.Initcmd)
+	_, err := command.ExecuteCommand(cfg.Initcmd)
+	return err
 }
 
 func ApplyWriteFiles(cfg *config.CloudConfig) error {
