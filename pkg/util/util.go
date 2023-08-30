@@ -17,17 +17,17 @@ func WriteFileAtomic(filename string, data []byte, perm os.FileMode) error {
 	if err != nil {
 		return err
 	}
-	defer os.Remove(tempFile.Name())
+	defer system.AppFs.Remove(tempFile.Name())
 	if _, err := tempFile.Write(data); err != nil {
 		return err
 	}
 	if err := tempFile.Close(); err != nil {
 		return err
 	}
-	if err := os.Chmod(tempFile.Name(), perm); err != nil {
+	if err := system.AppFs.Chmod(tempFile.Name(), perm); err != nil {
 		return err
 	}
-	return os.Rename(tempFile.Name(), filename)
+	return system.AppFs.Rename(tempFile.Name(), filename)
 }
 
 func HTTPDownloadToFile(url, dest string) error {
