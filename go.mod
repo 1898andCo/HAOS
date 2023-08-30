@@ -11,8 +11,8 @@ require (
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
 	github.com/sirupsen/logrus v1.9.3
 	github.com/urfave/cli v1.22.14
-	golang.org/x/crypto v0.12.0
 	golang.org/x/sys v0.11.0
+	golang.org/x/term v0.11.0
 	gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
 	pault.ag/go/modprobe v0.1.2
 )
@@ -23,7 +23,6 @@ require (
 	github.com/mattn/go-shellwords v1.0.5 // indirect
 	github.com/rancher/wrangler v0.7.5 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	golang.org/x/term v0.11.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a // indirect
 )
