@@ -29,7 +29,7 @@ func (LocalShell) Execute(ctx context.Context, cmd string) ([]byte, error) {
 
 // Set the default shell to be the local shell.
 // This will be oveeridden in tests
-var DefaultShell Shell = &LocalShell{}
+var DefaultShell Shell = LocalShell{}
 
 func ExecuteCommand(commands []string) ([]string, error) {
 	var results []string
