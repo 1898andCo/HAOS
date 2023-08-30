@@ -12,10 +12,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Wrap the exec call in a struct so that we can mock it in our tests.
 type Shell interface {
+	// Execute runs the given command and returns the output and error.
 	Execute(ctx context.Context, cmd string) (output []byte, err error)
 }
 
+// LocalShell is the default shell that executes commands locally, basically
+// calling `sh -c <cmd>` at the end of the day.
 type LocalShell struct{}
 
 func (LocalShell) Execute(ctx context.Context, cmd string) ([]byte, error) {
@@ -23,7 +27,9 @@ func (LocalShell) Execute(ctx context.Context, cmd string) ([]byte, error) {
 	return wrapperCmd.CombinedOutput()
 }
 
-var DefaultShell Shell = LocalShell{}
+// Set the default shell to be the local shell.
+// This will be oveeridden in tests
+var DefaultShell Shell = &LocalShell{}
 
 func ExecuteCommand(commands []string) ([]string, error) {
 	var results []string
