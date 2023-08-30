@@ -64,7 +64,7 @@ func HTTPLoadBytes(url string) ([]byte, error) {
 }
 
 func ExistsAndExecutable(path string) bool {
-	info, err := os.Stat(path)
+	info, err := system.AppFs.Stat(path)
 	if err != nil {
 		return false
 	}
@@ -78,7 +78,7 @@ func RunScript(path string, arg ...string) error {
 		return nil
 	}
 
-	script, err := os.Open(path)
+	script, err := system.AppFs.Open(path)
 	if err != nil {
 		return err
 	}
@@ -100,13 +100,13 @@ func RunScript(path string, arg ...string) error {
 }
 
 func EnsureDirectoryExists(dir string) error {
-	info, err := os.Stat(dir)
+	info, err := system.AppFs.Stat(dir)
 	if err == nil {
 		if !info.IsDir() {
 			return fmt.Errorf("%s is not a directory", dir)
 		}
 	} else {
-		err = os.MkdirAll(dir, 0755)
+		err = system.AppFs.MkdirAll(dir, 0755)
 		if err != nil {
 			return err
 		}

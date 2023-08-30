@@ -16,14 +16,23 @@ func setupFS() {
 
 func TestWriteFiles(t *testing.T) {
 	setupFS()
+	system.AppFs.MkdirAll("/tmp", 0755)
 	cfg := mocks.NewCloudConfig()
 	cfg.WriteFiles = []config.File{
 		{
-			Path:               "/etc/test",
-			Content:            "test",
-			Owner:              "root",
-			RawFilePermissions: "0644",
+			Path:    "/tmp/test",
+			Content: "test",
 		},
 	}
 	writefile.WriteFiles(cfg)
+	t.Logf("cfg: %v", cfg.WriteFiles)
+	// test to see if the files got written to the in-mem filesystem
+	content, err := afero.ReadFile(system.AppFs, cfg.WriteFiles[0].Path)
+	t.Logf("content: %s", content)
+	if err != nil {
+		t.Errorf("failed to read file: %v", err)
+	}
+	if string(content) != cfg.WriteFiles[0].Content {
+		t.Errorf("unexpected content: %s", content)
+	}
 }
