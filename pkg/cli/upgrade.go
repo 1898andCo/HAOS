@@ -1,4 +1,4 @@
-package upgrade
+package cli
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ var (
 )
 
 // Command is the `upgrade` sub-command, it performs upgrades to HAOS.
-func Command() cli.Command {
+func UpgradeCommand() cli.Command {
 	return cli.Command{
 		Name:  "upgrade",
 		Usage: "perform upgrades",

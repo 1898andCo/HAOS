@@ -1,7 +1,7 @@
 // Package install is responsible for running the install phase of the system
 //
 // it exposes a single function Command() which returns a configured cli.Command struct
-package install
+package cli
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-func Command() cli.Command {
+func InstallCommand() cli.Command {
 	mode, _ := mode.Get()
 	return cli.Command{
 		Name:  "install",

@@ -1,17 +1,13 @@
-// Package app
+// Package cli
 //
 // It is the entrypoint for the HAOS command line interface. It is responsible for
 // initializing the CLI app and its subcommands. It also handles the global flags passed
 // to the CLI app.
-package app
+package cli
 
 import (
 	"fmt"
 
-	"github.com/1898andCo/HAOS/pkg/cli/config"
-	"github.com/1898andCo/HAOS/pkg/cli/install"
-	"github.com/1898andCo/HAOS/pkg/cli/rc"
-	"github.com/1898andCo/HAOS/pkg/cli/upgrade"
 	"github.com/1898andCo/HAOS/pkg/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -22,7 +18,7 @@ var (
 )
 
 // New CLI App
-func New() *cli.App {
+func NewApp() *cli.App {
 	app := cli.NewApp()
 	app.Name = "haos"
 	app.Usage = "Booting to k3s so you don't have to"
@@ -41,10 +37,10 @@ func New() *cli.App {
 	}
 
 	app.Commands = []cli.Command{
-		rc.Command(),
-		config.Command(),
-		install.Command(),
-		upgrade.Command(),
+		RCCommand(),
+		ConfigCommand(),
+		InstallCommand(),
+		UpgradeCommand(),
 	}
 
 	app.Before = func(c *cli.Context) error {

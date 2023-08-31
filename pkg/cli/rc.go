@@ -1,4 +1,4 @@
-package rc
+package cli
 
 // forked from https://github.com/linuxkit/linuxkit
 
@@ -16,7 +16,7 @@ import (
 	"golang.org/x/sys/unix"
 )
 
-func Command() cli.Command {
+func RCCommand() cli.Command {
 	return cli.Command{
 		Name:  "rc",
 		Usage: "early phase \"run commands\" / \"run control\"",

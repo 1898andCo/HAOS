@@ -1,7 +1,7 @@
 // Package config
 //
 
-package config
+package cli
 
 import (
 	"encoding/json"
@@ -23,7 +23,7 @@ var (
 )
 
 // Command returns a configured cli.Command struct
-func Command() cli.Command {
+func ConfigCommand() cli.Command {
 	return cli.Command{
 		Name:      "config",
 		Usage:     "configure HAOS",
