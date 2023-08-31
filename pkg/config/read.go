@@ -97,6 +97,7 @@ func merge(readers ...reader) (map[string]interface{}, error) {
 		if err != nil {
 			return nil, err
 		}
+		// TODO: ToInternal NEVER returns error
 		if err := schema.Mapper.ToInternal(newData); err != nil {
 			return nil, err
 		}
