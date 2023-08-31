@@ -3,9 +3,13 @@ package cc
 import (
 	"bufio"
 	"bytes"
+	"crypto/sha256"
 	"fmt"
+	"net/http"
 	"os"
 	"os/exec"
+	"path"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -13,26 +17,61 @@ import (
 	"github.com/1898andCo/HAOS/pkg/command"
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/hostname"
-	"github.com/1898andCo/HAOS/pkg/manifests"
 	"github.com/1898andCo/HAOS/pkg/mode"
-	"github.com/1898andCo/HAOS/pkg/module"
 	"github.com/1898andCo/HAOS/pkg/ssh"
-	"github.com/1898andCo/HAOS/pkg/sysctl"
 	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/1898andCo/HAOS/pkg/version"
 	"github.com/1898andCo/HAOS/pkg/writefile"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
+	"pault.ag/go/modprobe"
 
 	"github.com/spf13/afero"
 )
 
+const (
+	procModulesFile = "/proc/modules"
+	retryMax        = 5
+	manifestsDir    = "/var/lib/rancher/k3s/server/manifests"
+)
+
 // Syntactic sugar for the bare functions below
 func ApplyModules(cfg *config.CloudConfig) error {
-	return module.LoadModules(cfg)
+	loaded := map[string]bool{}
+	f, err := os.Open(procModulesFile)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	sc := bufio.NewScanner(f)
+	for sc.Scan() {
+		loaded[strings.SplitN(sc.Text(), " ", 2)[0]] = true
+	}
+	modules := cfg.HAOS.Modules
+	for _, m := range modules {
+		if loaded[m] {
+			continue
+		}
+		params := strings.SplitN(m, " ", -1)
+		logrus.Debugf("module %s with parameters [%s] is loading", m, params)
+		if err := modprobe.Load(params[0], strings.Join(params[1:], " ")); err != nil {
+			return fmt.Errorf("could not load module %s with parameters [%s], err %v", m, params, err)
+		}
+		logrus.Debugf("module %s is loaded", m)
+	}
+	return sc.Err()
 }
 
 func ApplySysctls(cfg *config.CloudConfig) error {
-	return sysctl.ConfigureSysctl(cfg)
+	for k, v := range cfg.HAOS.Sysctls {
+		elements := []string{"/proc", "sys"}
+		elements = append(elements, strings.Split(k, ".")...)
+		path := path.Join(elements...)
+		if err := afero.WriteFile(system.AppFs, path, []byte(v), 0644); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func ApplyHostname(cfg *config.CloudConfig) error {
@@ -65,8 +104,55 @@ func ApplyWriteFiles(cfg *config.CloudConfig) error {
 
 // Applys the settings for cloud Config (CC) for manifests
 func ApplyBootManifests(cfg *config.CloudConfig) error {
-	manifests.ApplyBootManifests(cfg)
-	return nil
+	manifests := cfg.BootManifests
+	if len(manifests) == 0 {
+		return nil
+	}
+	filesToWrite := make(map[string][]byte)
+	var err error
+	for _, m := range manifests {
+		var data []byte
+		retries := 0
+		for retryMax > retries {
+			resp, err := http.Get(m.URL)
+			if err != nil {
+				logrus.Errorf("manifest download failed for %q, retrying [%d/%d]", m.URL, retries, retryMax)
+				retries++
+				continue
+			}
+			defer resp.Body.Close()
+			if resp.StatusCode != http.StatusOK {
+				logrus.Errorf("manifest download returned non-200 status code for %q, retrying [%d/%d]", m.URL, retries, retryMax)
+				retries++
+				continue
+			}
+			data, err = afero.ReadAll(resp.Body)
+			if err != nil {
+				errors.Wrap(err, "failed reading manifest URL body")
+				return err
+			}
+			if len(data) == 0 {
+				return errors.New("empty manifest for %q")
+			}
+			if m.SHA256 != "" {
+				sum := sha256.Sum256(data)
+				if fmt.Sprintf("%x", sum) != m.SHA256 {
+					return fmt.Errorf("sha256 failed for manifest: %s", m.URL)
+				}
+			}
+			name := m.URL[strings.LastIndex(m.URL, "/")+1:]
+			filesToWrite[name] = data
+			break
+		}
+	}
+	for file, data := range filesToWrite {
+		p := filepath.Join(manifestsDir, file)
+		if err := afero.WriteFile(system.AppFs, p, data, 0600); err != nil {
+			return err
+		}
+
+	}
+	return err
 }
 
 func ApplySSHKeys(cfg *config.CloudConfig) error {
