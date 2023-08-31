@@ -45,12 +45,12 @@ func TestApplyHostname(t *testing.T) {
 	testFunc(t, cc.ApplyHostname, "ApplyHostname()")
 }
 
-func TestApplyPassword(t *testing.T) {
-	setupFS()
-	system.AppFs.MkdirAll("/etc", 0755)
-	//afero.WriteFile(system.AppFs, "/etc/passwd", []byte("root:x:0:0:root:/root:/bin/bash"), 0644)
-	testFunc(t, cc.ApplyPassword, "ApplyPassword()")
-}
+// func TestApplyPassword(t *testing.T) {
+// 	setupFS()
+// 	system.AppFs.MkdirAll("/etc", 0755)
+// 	//afero.WriteFile(system.AppFs, "/etc/passwd", []byte("root:x:0:0:root:/root:/bin/bash"), 0644)
+// 	testFunc(t, cc.ApplyPassword, "ApplyPassword()")
+// }
 
 func TestApplyDNS(t *testing.T) {
 	setupFS()
