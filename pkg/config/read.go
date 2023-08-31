@@ -7,13 +7,13 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/spf13/afero"
 	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/ghodss/yaml"
 	"github.com/rancher/mapper"
 	"github.com/rancher/mapper/convert"
 	merge2 "github.com/rancher/mapper/convert/merge"
 	"github.com/rancher/mapper/values"
+	"github.com/spf13/afero"
 )
 
 var (
