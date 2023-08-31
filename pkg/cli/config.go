@@ -91,5 +91,5 @@ func Main() error {
 		return json.NewEncoder(os.Stdout).Encode(&cfg)
 	}
 
-	return cc.RunApply(&cfg)
+	return cc.RunApply(&cfg, nil)
 }
