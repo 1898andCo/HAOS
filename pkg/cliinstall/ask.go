@@ -13,6 +13,7 @@ import (
 	"github.com/1898andCo/HAOS/pkg/questions"
 	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/1898andCo/HAOS/pkg/util"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 )
 
@@ -28,6 +29,8 @@ func Ask(cfg *config.CloudConfig) (bool, error) {
 
 func isInstall(cfg *config.CloudConfig) (bool, error) {
 	mode, err := mode.Get()
+	logrus.Infof("mode: %s", mode)
+	logrus.Info(err)
 	if err != nil {
 		return false, err
 	}
