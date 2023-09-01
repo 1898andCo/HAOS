@@ -11,16 +11,15 @@ import (
 
 func TestRunApply(t *testing.T) {
 	system.AppFs = afero.NewMemMapFs()
-
+	system.AppFs.MkdirAll("/etc", 0755)
+	afero.WriteFile(system.AppFs,"/etc/enviromnent", []byte("TEST=1"), 0644)
 	cfg := mocks.NewCloudConfig()
-	err := cc.RunApply(cfg, cc.ApplyModules, cc.ApplySysctls, cc.ApplyDNS, cc.ApplyWifi)
+	err := cc.RunApply(cfg, cc.ApplyModules, cc.ApplySysctls, cc.ApplyDNS, cc.ApplyWifi, cc.ApplyEnvironment)
 	//cc.ApplyHostname,
-	//cc.ApplyWifi,
 	//cc.ApplyPassword,
 	//cc.ApplySSHKeysWithNet,
 	//cc.ApplyWriteFiles,
 	//cc.ApplyBootManifests,
-	//cc.ApplyEnvironment,
 	//cc.ApplyRuncmd,
 	//cc.ApplyInstall,
 	//cc.ApplyK3SInstall
