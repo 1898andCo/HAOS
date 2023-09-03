@@ -1,13 +1,18 @@
+// Package app
+//
+// It is the entrypoint for the HAOS command line interface. It is responsible for
+// initializing the CLI app and its subcommands. It also handles the global flags passed
+// to the CLI app.
 package app
 
 import (
 	"fmt"
 
-	"github.com/rancher/k3os/pkg/cli/config"
-	"github.com/rancher/k3os/pkg/cli/install"
-	"github.com/rancher/k3os/pkg/cli/rc"
-	"github.com/rancher/k3os/pkg/cli/upgrade"
-	"github.com/rancher/k3os/pkg/version"
+	"github.com/1898andCo/HAOS/pkg/cli/config"
+	"github.com/1898andCo/HAOS/pkg/cli/install"
+	"github.com/1898andCo/HAOS/pkg/cli/rc"
+	"github.com/1898andCo/HAOS/pkg/cli/upgrade"
+	"github.com/1898andCo/HAOS/pkg/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -19,7 +24,7 @@ var (
 // New CLI App
 func New() *cli.App {
 	app := cli.NewApp()
-	app.Name = "k3os"
+	app.Name = "haos"
 	app.Usage = "Booting to k3s so you don't have to"
 	app.Version = version.Version
 	cli.VersionPrinter = func(c *cli.Context) {
@@ -30,7 +35,7 @@ func New() *cli.App {
 		cli.BoolFlag{
 			Name:        "debug",
 			Usage:       "Turn on debug logs",
-			EnvVar:      "K3OS_DEBUG",
+			EnvVar:      "HAOS_DEBUG",
 			Destination: &Debug,
 		},
 	}

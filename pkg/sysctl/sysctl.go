@@ -1,3 +1,4 @@
+// Package sysctl is responsible for configuring sysctl settings
 package sysctl
 
 import (
@@ -5,11 +6,11 @@ import (
 	"path"
 	"strings"
 
-	"github.com/rancher/k3os/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/config"
 )
 
 func ConfigureSysctl(cfg *config.CloudConfig) error {
-	for k, v := range cfg.K3OS.Sysctls {
+	for k, v := range cfg.HAOS.Sysctls {
 		elements := []string{"/proc", "sys"}
 		elements = append(elements, strings.Split(k, ".")...)
 		path := path.Join(elements...)

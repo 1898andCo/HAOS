@@ -1,3 +1,6 @@
+// Package config
+//
+
 package config
 
 import (
@@ -5,8 +8,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/rancher/k3os/pkg/cc"
-	"github.com/rancher/k3os/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/cc"
+	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -19,11 +22,11 @@ var (
 	dumpJSON     = false
 )
 
-// Command `config`
+// Command returns a configured cli.Command struct
 func Command() cli.Command {
 	return cli.Command{
 		Name:      "config",
-		Usage:     "configure k3OS",
+		Usage:     "configure HAOS",
 		ShortName: "cfg",
 		// Aliases: []string{
 		// 	"ccapply",
@@ -69,7 +72,7 @@ func Command() cli.Command {
 	}
 }
 
-// Main `config`
+// Main is the main function for the config command
 func Main() error {
 	cfg, err := config.ReadConfig()
 	if err != nil {

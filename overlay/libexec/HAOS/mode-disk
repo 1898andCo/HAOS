@@ -1,0 +1,166 @@
+#!/bin/bash
+
+TARGET=/run/HAOS/target
+
+source /usr/lib/os-release
+
+grow()
+{
+    parted $1 resizepart $2 100%
+    partprobe $1
+    sleep 2
+    e2fsck -f $3
+    resize2fs $3
+}
+
+setup_mounts()
+{
+    mkdir -p $TARGET
+    mount -L HAOS_STATE $TARGET
+
+    if [ -e $TARGET/HAOS/system/growpart ]; then
+        read DEV NUM < $TARGET/HAOS/system/growpart
+        if [ ! -e "${DEV}${NUM}" ]; then
+            # /dev/sda2 => /dev/sda2
+            # /dev/nvme0n1p2 => /dev/nvme0n1p2
+            PART=$(blkid -L HAOS_STATE)
+
+            # /dev/sda2 => /dev/sda
+            # /dev/nvme0n1p2 => /dev/nvme0n1
+            DEV=$(echo "$PART" | sed -r 's/((\d+)p)?\d+$/\2/')
+
+            # /dev/sda2 => 2
+            # /dev/nvme0n1p2 => 2
+            NUM=$(echo "$PART" | sed 's!.*[^0-9]!!')
+        fi
+        if [ -e "${PART:=${DEV}${NUM}}" ]; then
+            umount $TARGET
+            grow $DEV $NUM $PART || true
+            mount -L HAOS_STATE $TARGET
+        fi
+        rm -f $TARGET/HAOS/system/growpart
+    fi
+}
+
+setup_kernel_squashfs()
+{
+    KER_SRC="/.base/HAOS/system/kernel/$(uname -r)/kernel.squashfs"
+    KER_DEST="$TARGET/HAOS/system/kernel/$(uname -r)/kernel.squashfs"
+    if [ -e $KER_SRC ] && [ ! -e $KER_DEST ]; then
+        mkdir -p $(dirname ${KER_DEST})
+        cp -r $KER_SRC $KER_DEST
+    fi
+}
+
+setup_HAOS()
+{
+    if [ -e $TARGET/HAOS/system/HAOS/current/HAOS ]; then
+        return 0
+    fi
+
+    HAOS_SRC=/.base/HAOS/system/HAOS/current/HAOS
+    HAOS_FILE=$TARGET/HAOS/system/HAOS/${VERSION_ID}/HAOS
+
+    if [ ! -e ${HAOS_SRC} ]; then
+        return 0
+    fi
+
+    if [ ! -e ${HAOS_FILE} ]; then
+        mkdir -p $(dirname ${HAOS_FILE}.tmp)
+        cp -f ${HAOS_SRC} ${HAOS_FILE}.tmp
+        mv -f ${HAOS_FILE}.tmp ${HAOS_FILE}
+    fi
+
+    ln -sf ${VERSION_ID} $TARGET/HAOS/system/HAOS/current
+}
+
+setup_init()
+{
+    if [ -e $TARGET/sbin/init ]; then
+        return 0
+    fi
+
+    mkdir -p $TARGET/sbin
+    ln -sf ../HAOS/system/HAOS/current/HAOS $TARGET/sbin/init
+}
+
+setup_k3s()
+{
+    if [ -e $TARGET/HAOS/system/k3s/current/k3s ]; then
+        return 0
+    fi
+
+    for i in $(ls -drt $TARGET/HAOS/system/k3s/*); do
+        if [ ! -L "$i" ]; then
+            LATEST=$i
+            break
+        fi
+    done
+
+    if [ -e "${LATEST}" ]; then
+        ln -sf $(basename "${LATEST}") $TARGET/HAOS/system/k3s/current
+        return 0
+    fi
+}
+
+takeover()
+{
+    if [ ! -e HAOS/system/takeover ]; then
+        return 0
+    fi
+
+    touch HAOS/system/factory-reset
+
+    if [ -L sbin ]; then
+      rm -f sbin
+    fi
+
+    for i in *; do
+        case $i in
+            boot|HAOS|sbin)
+                ;;
+            *)
+                rm -rf $i
+        esac
+    done
+    for i in sbin/*; do
+        case $i in
+            sbin/init|sbin/k3s|sbin/HAOS)
+                ;;
+            *)
+                rm -rf "$i"
+        esac
+    done
+
+    rm -rf boot/[^g]*
+    rm -f HAOS/system/takeover
+    rm -rf HAOS/data
+    sync
+    
+    if [ -e HAOS/system/poweroff ]; then
+        rm -f HAOS/system/poweroff
+        poweroff -f
+    else
+        reboot -f
+    fi
+}
+
+setup_mounts
+setup_HAOS
+setup_kernel_squashfs
+setup_init
+setup_k3s
+
+cd $TARGET
+
+takeover || true
+
+if [ -e HAOS/system/factory-reset ] || [ -e HAOS/system/ephemeral ]; then
+    rm -rf HAOS/data HAOS/system/factory-reset
+fi
+
+losetup -d /dev/loop0 || true
+mount --make-rprivate /
+mkdir -p .root
+pivot_root . .root
+HAOS_MODE=local exec /sbin/init

@@ -1,3 +1,4 @@
+// Package ssh is responsible for setting up the ssh keys for the system
 package ssh
 
 import (
@@ -11,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/util"
+	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/util"
 	"github.com/sirupsen/logrus"
 )
 

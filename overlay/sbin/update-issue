@@ -2,10 +2,6 @@
 
 . /etc/os-release
 cat > /etc/issue << "COW"
-888b. 8       db    .d88b. .d88b.
-8wwwP 8      dPYb   8P  Y8 YPwww.
-8   b 8     dPwwYb  8b  d8     d8
-888P' 8888 dP    Yb `Y88P' `Y88P'
 8   8              8                      8       db              8 w
 8www8 .d88 8d8b .d88 .d88b 8d8b. .d88b .d88      dPYb   88b. 88b. 8 w .d88 8d8b. .d8b .d88b
 8   8 8  8 8P   8  8 8.dP' 8P Y8 8.dP' 8  8     dPwwYb  8  8 8  8 8 8 8  8 8P Y8 8    8.dP'
@@ -24,5 +20,5 @@ $(ip -br addr show | grep -E -v '^(lo|flannel|cni|veth)')
 EOF
 cat >> /etc/issue << "EOF"
 
-Welcome to BLAOS (A k3OS derivative) (login with user: rancher)
+Welcome to HAOS (A haos derivative) (login with user: rancher)
 EOF

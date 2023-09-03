@@ -1,0 +1,21 @@
+#!/bin/bash
+
+setup_ssh()
+{
+    if [ ! -e /var/lib/rancher/haos/ssh ]; then
+        mkdir -p /var/lib/rancher/haos
+        cp -rf /etc/ssh /var/lib/rancher/haos/ssh
+    fi
+    rm -rf /etc/ssh
+    ln -s /var/lib/rancher/haos/ssh /etc/ssh
+}
+
+setup_rancher_node()
+{
+    mkdir -p /etc/rancher
+    mkdir -p /var/lib/rancher/haos/node
+    ln -s /var/lib/rancher/haos/node /etc/rancher/
+}
+
+setup_ssh
+setup_rancher_node

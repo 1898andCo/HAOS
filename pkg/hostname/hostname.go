@@ -1,3 +1,7 @@
+// Package hostname is responsible for setting the hostname of the system and syncing /etc/hosts
+//
+// The hostname is configured in the passed in configuration struct.
+
 package hostname
 
 import (
@@ -7,7 +11,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/rancher/k3os/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/config"
 )
 
 func SetHostname(c *config.CloudConfig) error {

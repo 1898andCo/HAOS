@@ -1,6 +1,6 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG} AS base
+FROM ${REPO}/haos-base:${TAG} AS base
 RUN apk --update --no-cache add \
     grub-bios=2.04-r2 \
     open-vm-tools=11.2.0-r0 \

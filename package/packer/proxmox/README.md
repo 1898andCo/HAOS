@@ -1,4 +1,4 @@
-# k3os on Proxmox VE
+# haos on Proxmox VE
 
 ## Quick Start
 
@@ -10,4 +10,4 @@ packer build -var-file=vars.json template.json
 
 ## Notes
 
-Can define IP and other parameter on config/cloud.yml, according to [Configuration Reference](https://github.com/rancher/k3os/blob/master/README.md#configuration-reference)
+Can define IP and other parameter on config/cloud.yml, according to [Configuration Reference](https://github.com/1898andCo/HAOS/blob/master/README.md#configuration-reference)

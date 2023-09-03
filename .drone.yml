@@ -33,7 +33,7 @@ steps:
       USERNAME:
         from_secret: drone_upload_username
     commands:
-      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/k3os-amd64.iso ./dist/artifacts/k3os-initrd-amd64 ./dist/artifacts/k3os-kernel-amd64.squashfs ./dist/artifacts/k3os-kernel-version-amd64 ./dist/artifacts/k3os-rootfs-amd64.tar.gz ./dist/artifacts/k3os-vm-amd64.iso ./dist/artifacts/update-amd64.run ./dist/artifacts/update-vm-amd64.run"
+      - "tar -czvf /tmp/$DRONE_COMMIT.tar.gz ./dist/artifacts/haos-amd64.iso ./dist/artifacts/haos-initrd-amd64 ./dist/artifacts/haos-kernel-amd64.squashfs ./dist/artifacts/haos-kernel-version-amd64 ./dist/artifacts/haos-rootfs-amd64.tar.gz ./dist/artifacts/haos-vm-amd64.iso ./dist/artifacts/update-amd64.run ./dist/artifacts/update-vm-amd64.run"
       - "curl -u $USERNAME:$PASSWORD -F file=@/tmp/$DRONE_COMMIT.tar.gz https://upload.bohicalabs.com"
     when:
       event:
@@ -43,7 +43,7 @@ steps:
         exclude:
           - master
       repo:
-        - BOHICA-LABS/BLAOS
+        - 1898andCo/HAOS
 
   - name: create releaselog
     image: quay.io/git-chglog/git-chglog:latest
@@ -89,7 +89,7 @@ steps:
         from_secret: docker_username
     when:
       repo:
-        - BOHICA-LABS/BLAOS
+        - 1898andCo/HAOS
       ref:
         - refs/head/master
         - refs/tags/*
@@ -211,4 +211,4 @@ trigger:
     - refs/head/master
     - refs/tags/*
   repo:
-    - BOHICA-LABS/BLAOS
+    - 1898andCo/HAOS

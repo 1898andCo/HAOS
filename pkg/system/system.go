@@ -1,16 +1,17 @@
+// Package system abstracts the filesystem layout of the system and exposes functions to copy and move files
 package system
 
 import "path/filepath"
 
 const (
 	// DefaultRootDir represents where persistent installations are located
-	DefaultRootDir = "/k3os/system"
+	DefaultRootDir = "/HAOS/system"
 	// DefaultDataDir represents where persistent state is located
-	DefaultDataDir = "/k3os/data"
+	DefaultDataDir = "/HAOS/data"
 	// DefaultLocalDir represents where local, persistent configuration is located
-	DefaultLocalDir = "/var/lib/rancher/k3os"
+	DefaultLocalDir = "/var/lib/1898andCo/haos"
 	// DefaultStateDir represents where ephemeral state is located
-	DefaultStateDir = "/run/k3os"
+	DefaultStateDir = "/run/HAOS"
 )
 
 var (

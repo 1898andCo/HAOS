@@ -1,4 +1,4 @@
-# k3OS on Vagrant
+# HAOS on Vagrant
 
 ## Quick Start
 
@@ -39,8 +39,8 @@ config.vm.provision 'shell',
   inline: <<-SHELL
 mkdir -p /mnt
 mount /dev/sda1 /mnt
-cat <<EOF > /mnt/k3os/system/config.yaml
-k3os:
+cat <<EOF > /mnt/haos/system/config.yaml
+haos:
   token: EbvX0V38syjPQBZJ71tb9EIHbyL5mISBqDSTa2aJt7LSCF1JEW
   password: rancher
 EOF
@@ -48,6 +48,6 @@ reboot
 SHELL
 ```
 
-The above example also shows how the k3OS config can be changed. When
+The above example also shows how the HAOS config can be changed. When
 you do so, you have to set the password to `rancher`. If this is not the
 case, vagrant will not be able to login.
