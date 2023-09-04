@@ -7,8 +7,6 @@ import (
 	"github.com/1898andCo/HAOS/pkg/cc"
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/mocks"
-	"github.com/1898andCo/HAOS/pkg/system"
-	"github.com/spf13/afero"
 )
 
 var cconfig = mocks.NewCloudConfig()
@@ -24,14 +22,8 @@ func testFunc(t *testing.T, f func(cfg *config.CloudConfig) error, label string)
 	}
 }
 
-func setupFS() {
-	system.AppFs = afero.NewMemMapFs()
-}
-
 func TestApplyModules(t *testing.T) {
-	setupFS()
-	system.AppFs.MkdirAll("/proc", 0755)
-	afero.WriteFile(system.AppFs, "/proc/modules", []byte("test"), 0644)
+
 	testFunc(t, cc.ApplyModules, "ApplyModules()")
 }
 
@@ -53,13 +45,11 @@ func TestApplyHostname(t *testing.T) {
 // }
 
 func TestApplyDNS(t *testing.T) {
-	setupFS()
-	system.AppFs.MkdirAll("/etc/connman/", 0755)
+
 	testFunc(t, cc.ApplyDNS, "ApplyDNS()")
 }
 
 func TestApplyWifi(t *testing.T) {
-	setupFS()
 	testFunc(t, cc.ApplyWifi, "ApplyWifi()")
 }
 
