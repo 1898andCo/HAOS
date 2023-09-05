@@ -1,12 +1,12 @@
-FROM golang:1.17-alpine3.13 AS gobuild
+FROM golang:1.17.0-alpine
 RUN apk --update add \
-    git=2.30.6-r0 \
-    gcc=10.2.1_pre1-r3 \
-    linux-headers=5.7.8-r0 \
-    musl-dev=1.2.2-r2 \
-    make=4.3-r0 \
-    libseccomp=2.5.1-r1 \
-    libseccomp-dev=2.5.1-r1 \
+    git \
+    gcc \
+    linux-headers \
+    musl-dev \
+    make \
+    libseccomp \
+    libseccomp-dev \
     bash=5.1.16-r0 
 COPY gobuild /usr/bin/
 RUN rm -f /bin/sh && ln -s /bin/bash /bin/sh

@@ -8,15 +8,15 @@ FROM ${REPO}/haos-base:${TAG} as base
 ARG VERSION
 ARG ARCH
 RUN apk --update add \
-    xorriso=1.5.2-r0 \
-    grub=2.04-r2 \
-    grub-efi=2.04-r2 \
-    mtools=4.0.26-r0 \
-    libvirt=6.10.0-r1 \
+    xorriso \
+    grub \
+    grub-efi \
+    mtools \
+    libvirt \
     qemu-img=5.2.0-r3
-RUN if [ "$ARCH" == "amd64" ]; then \
+RUN if [ "$ARCH"  \
     apk add qemu-system-x86_64 grub-bios ovmf \
-    ;elif [ "$ARCH" == "arm64" ]; then \
+    ;elif [ "$ARCH"  \
     apk add qemu-system-aarch64 \
     ;fi
 RUN ln -s /usr/bin/qemu-system-* /usr/bin/qemu-system

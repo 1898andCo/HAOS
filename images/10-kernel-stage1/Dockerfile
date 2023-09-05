@@ -4,12 +4,12 @@ FROM ubuntu:focal
 
 RUN apt-get --assume-yes update \
     && apt-get --assume-yes install \
-    curl=7.68.0-1ubuntu2.19 \
-    initramfs-tools=0.136ubuntu6.7\
-    kmod=27-1ubuntu2.1 \
-    lz4=1.9.2-2ubuntu0.20.04.1  \
-    rsync=3.1.3-8ubuntu0.5 \
-    xz-utils=5.2.4-1ubuntu1.1 \
+    curl \
+    initramfs-tools \
+    kmod \
+    lz4 \
+    rsync \
+    xz-utils \
     && echo 'r8152' >> /etc/initramfs-tools/modules \
     && echo 'hfs' >> /etc/initramfs-tools/modules \
     && echo 'hfsplus' >> /etc/initramfs-tools/modules \
