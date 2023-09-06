@@ -1,7 +1,7 @@
 ### BASE ###
 FROM alpine:3.16 as base
 ARG ARCH
-RUN  /bin/sh -c apk --update --no-cache add \
+RUN apk --update --no-cache add \
     bash=5.1.16-r0 \ 
     bash-completion=2.11-r2 \
     blkid=2.37.4-r0 \
@@ -54,16 +54,17 @@ RUN  /bin/sh -c apk --update --no-cache add \
     smartmontools=7.2-r1 \
     sudo=1.9.12-r1 \
     tar=1.34-r0 \
-    tzdata util-linux=2.37.4-r0 \
+    tzdata \
+    util-linux=2.37.4-r0 \
     vim=8.2.4836-r0 \
     wireguard-tools=1.0.20200827-r1 \
     wpa_supplicant=2.9-r11 \
     xfsprogs=5.10.0-r0 \
     xz=5.2.5-r1 
+
 RUN mv -vf /etc/conf.d/qemu-guest-agent /etc/conf.d/qemu-guest-agent.orig && \
     mv -vf /etc/conf.d/rngd /etc/conf.d/rngd.orig && \
     mv -vf /etc/conf.d/udev-settle /etc/conf.d/udev-settle.orig && \
     # replicate the default "no idea, friend" behavior of virt-what
     touch /usr/sbin/virt-what && \
     chmod +x /usr/sbin/virt-what # buildkit
-
