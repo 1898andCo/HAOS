@@ -13,10 +13,13 @@ RUN apk --update add \
     grub-efi \
     mtools \
     libvirt \
-    qemu-img=5.2.0-r3
-RUN if [ "$ARCH"  \
-    apk add qemu-system-x86_64 grub-bios ovmf \
-    ;elif [ "$ARCH"  \
+    qemu-img=7.0.0-r0
+RUN if [ "$ARCH" == "amd64" ]; then \
+    apk --update add \ 
+    qemu-system-x86_64 \
+    grub-bios \
+    ovmf \
+    ;elif [ "$ARCH" == "arm64" ]; then  \
     apk add qemu-system-aarch64 \
     ;fi
 RUN ln -s /usr/bin/qemu-system-* /usr/bin/qemu-system
