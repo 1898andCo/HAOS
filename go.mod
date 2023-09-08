@@ -3,9 +3,11 @@ module github.com/1898andCo/HAOS
 go 1.17
 
 require (
-	github.com/docker/docker v1.13.1
+	github.com/docker/docker v17.10.0-ce+incompatible
 	github.com/ghodss/yaml v1.0.0
 	github.com/mattn/go-isatty v0.0.19
+	github.com/moby/sys/mount v0.3.3
+	github.com/moby/sys/mountinfo v0.6.2
 	github.com/otiai10/copy v1.12.0
 	github.com/pkg/errors v0.9.1
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
