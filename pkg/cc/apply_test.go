@@ -18,14 +18,6 @@ func TestMain(m *testing.M) {
 func TestRunApply(t *testing.T) {
 	cfg := mocks.NewCloudConfig()
 	err := cc.RunApply(cfg, cc.ApplyModules, cc.ApplySysctls, cc.ApplyDNS, cc.ApplyWifi, cc.ApplyEnvironment)
-	//cc.ApplyHostname,
-	//cc.ApplyPassword,
-	//cc.ApplySSHKeysWithNet,
-	//cc.ApplyWriteFiles,
-	//cc.ApplyBootManifests,
-	//cc.ApplyRuncmd,
-	//cc.ApplyInstall,
-	//cc.ApplyK3SInstall
 
 	if err != nil {
 		t.Errorf("RunApply() error = %v", err)

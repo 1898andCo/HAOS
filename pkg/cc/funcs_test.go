@@ -1,12 +1,13 @@
 package cc_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/1898andCo/HAOS/pkg/cc"
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/mocks"
+	"github.com/1898andCo/HAOS/pkg/system"
+	"github.com/spf13/afero"
 )
 
 var cconfig = mocks.NewCloudConfig()
@@ -14,11 +15,7 @@ var cconfig = mocks.NewCloudConfig()
 func testFunc(t *testing.T, f func(cfg *config.CloudConfig) error, label string) {
 	err := f(cconfig)
 	if err != nil {
-		if fmt.Sprintf("%s", err) == "operation not permitted" {
-			t.Logf("%s error = %v, wantErr %v", label, err, false)
-		} else {
-			t.Errorf("%s error = %v, wantErr %v", label, err, false)
-		}
+		t.Errorf("%s error = %v, wantErr %v", label, err, false)
 	}
 }
 
@@ -34,15 +31,22 @@ func TestApplySysctls(t *testing.T) {
 }
 
 func TestApplyHostname(t *testing.T) {
-	testFunc(t, cc.ApplyHostname, "ApplyHostname()")
+	err := cc.ApplyHostname(mocks.NewCloudConfig())
+	if err == nil {
+		t.Error("Expected operation not permitted error, got nil")
+	}
 }
 
-// func TestApplyPassword(t *testing.T) {
-// 	setupFS()
-// 	system.AppFs.MkdirAll("/etc", 0755)
-// 	//afero.WriteFile(system.AppFs, "/etc/passwd", []byte("root:x:0:0:root:/root:/bin/bash"), 0644)
-// 	testFunc(t, cc.ApplyPassword, "ApplyPassword()")
-// }
+// bad test, only tests a crappy fail case
+func TestApplyPassword(t *testing.T) {
+	system.AppFs = afero.NewMemMapFs()
+	system.AppFs.MkdirAll("/etc", 0755)
+	afero.WriteFile(system.AppFs, "/etc/passwd", []byte("root:x:0:0:root:/root:/bin/bash"), 0644)
+	err := cc.ApplyPassword(mocks.NewCloudConfig())
+	if err == nil {
+		t.Error("Expected Authentication token manipulation error, got nil")
+	}
+}
 
 func TestApplyDNS(t *testing.T) {
 
