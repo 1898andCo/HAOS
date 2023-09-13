@@ -19,8 +19,8 @@ RUN apk --update add \
 RUN if [ "$ARCH" == "amd64" ]; then \
     apk --update add \ 
     qemu-system-x86_64=7.1.0-r7 \
-    grub-bios=2.06-r2 \
-    ovmf=0.0.202202-r1 \
+    grub-bios=2.06-r8 \
+    ovmf=0.0.202208-r0 \
     ;elif [ "$ARCH" == "arm64" ]; then  \
     apk add qemu-system-aarch647.1.0-r7 \
     ;fi
