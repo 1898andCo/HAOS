@@ -13,7 +13,7 @@ RUN apk --update add \
     xorriso=1.5.4-r2 \
     grub=2.06-r8 \
     grub-efi=2.06-r8 \
-    mtools=-4.0.42-r0 \
+    mtools=4.0.42-r0 \
     libvirt=8.9.0-r4 \
     qemu-img=7.1.0-r7
 RUN if [ "$ARCH" == "amd64" ]; then \
