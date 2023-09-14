@@ -2,14 +2,15 @@ package writefile
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
-	"os/exec"
 	"path"
 
+	"github.com/1898andCo/HAOS/pkg/command"
 	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/1898andCo/HAOS/pkg/util"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/afero"
 )
 
 func WriteFiles(cfg *config.CloudConfig) {
@@ -36,7 +37,7 @@ func WriteFile(f *config.File, root string) (string, error) {
 	}
 	p := path.Join(root, f.Path)
 	d := path.Dir(p)
-	logrus.Infof("writing file to %q", d)
+	logrus.Infof("writing file to %q", p)
 	if err := util.EnsureDirectoryExists(d); err != nil {
 		return "", err
 	}
@@ -44,25 +45,26 @@ func WriteFile(f *config.File, root string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	var tmp *os.File
+	var tmp afero.File
 	// create a temporary file in the same directory to ensure it's on the same filesystem
-	if tmp, err = ioutil.TempFile(d, "wfs-temp"); err != nil {
+	if tmp, err = afero.TempFile(system.AppFs, d, "wfs-temp"); err != nil {
 		return "", err
 	}
-	if err := ioutil.WriteFile(tmp.Name(), []byte(f.Content), perm); err != nil {
+	if err := afero.WriteFile(system.AppFs, tmp.Name(), []byte(f.Content), perm); err != nil {
+		logrus.Infof("failed to write file %s: %v", tmp.Name(), err)
 		return "", err
 	}
 	if err := tmp.Close(); err != nil {
 		return "", err
 	}
 	// ensure the permissions are as requested (since WriteFile can be affected by sticky bit)
-	if err := os.Chmod(tmp.Name(), perm); err != nil {
+	if err := system.AppFs.Chmod(tmp.Name(), perm); err != nil {
 		return "", err
 	}
 	if f.Owner != "" {
 		// we shell out since we don't have a way to look up unix groups natively
-		cmd := exec.Command("chown", f.Owner, tmp.Name())
-		if err := cmd.Run(); err != nil {
+		_, err := command.ExecuteCommand([]string{"chown", f.Owner, tmp.Name()})
+		if err != nil {
 			return "", err
 		}
 	}
