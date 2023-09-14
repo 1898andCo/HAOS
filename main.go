@@ -10,8 +10,8 @@ import (
 	"github.com/1898andCo/HAOS/pkg/cli"
 	"github.com/1898andCo/HAOS/pkg/enterchroot"
 	"github.com/1898andCo/HAOS/pkg/transferroot"
-	"github.com/docker/docker/pkg/mount"
 	"github.com/docker/docker/pkg/reexec"
+	"github.com/moby/sys/mount"
 	"github.com/sirupsen/logrus"
 )
 

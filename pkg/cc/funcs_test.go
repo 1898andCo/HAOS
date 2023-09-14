@@ -6,7 +6,6 @@ import (
 	"github.com/1898andCo/HAOS/pkg/cc"
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/mocks"
-	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/spf13/afero"
 )
 
@@ -39,10 +38,9 @@ func TestApplyHostname(t *testing.T) {
 
 // bad test, only tests a crappy fail case
 func TestApplyPassword(t *testing.T) {
-	system.AppFs = afero.NewMemMapFs()
-	system.AppFs.MkdirAll("/etc", 0755)
-	afero.WriteFile(system.AppFs, "/etc/passwd", []byte("root:x:0:0:root:/root:/bin/bash"), 0644)
-	err := cc.ApplyPassword(mocks.NewCloudConfig())
+	cfg := mocks.NewCloudConfig()
+	err := cc.ApplyPassword(cfg)
+	afero.WriteFile(cfg.Fs, "/etc/passwd", []byte("root:x:0:0:root:/root:/bin/bash"), 0644)
 	if err == nil {
 		t.Error("Expected Authentication token manipulation error, got nil")
 	}
@@ -84,11 +82,3 @@ func TestApplyEnviromnent(t *testing.T) {
 func TestApplyInstall(t *testing.T) {
 	testFunc(t, cc.ApplyInstall, "ApplyInstall()")
 }
-
-// func TestApplyK3SInstall(t *testing.T) {
-// 	setupFS()
-// 	system.AppFs.MkdirAll("/sbin/k3s", 0755)
-// 	system.AppFs.MkdirAll("/usr/libexec/haos", 0755)
-// 	afero.WriteFile(system.AppFs, "/usr/libexec/haos/k3s-install.sh", []byte(""), 0755)
-// 	testFunc(t, cc.ApplyK3SInstall, "ApplyK3SInstall()")
-// }

@@ -1,15 +1,14 @@
 package mocks
 
 import (
-	"testing"
-
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/spf13/afero"
 )
 
-func MockFs(m *testing.M) afero.Fs {
+func NewCloudConfig() *config.CloudConfig {
 	fs := afero.NewMemMapFs()
 	fs.MkdirAll("/etc", 0755)
+	fs.MkdirAll("/tmp", 0755)
 	fs.MkdirAll("/lib", 0755)
 	fs.MkdirAll("/libexec/HAOS", 0755)
 	fs.MkdirAll("/sbin", 0755)
@@ -18,10 +17,6 @@ func MockFs(m *testing.M) afero.Fs {
 	fs.MkdirAll("/proc", 0755)
 	fs.MkdirAll("/etc/connman/", 0755)
 	afero.WriteFile(fs, "/proc/modules", []byte("test"), 0644)
-	return fs
-}
-
-func NewCloudConfig() *config.CloudConfig {
 	var cc = &config.CloudConfig{
 		Runcmd:            []string{"echo 'runcmd test'"},
 		Bootcmd:           []string{"echo 'bootcmd test'"},
@@ -43,6 +38,7 @@ func NewCloudConfig() *config.CloudConfig {
 			},
 		},
 		Hostname: "testhostname",
+		Fs:       fs,
 		HAOS: config.HAOS{
 			DataSources: []string{},
 			Modules:     []string{},

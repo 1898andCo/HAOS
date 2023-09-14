@@ -7,7 +7,6 @@ import (
 
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/questions"
-	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/ghodss/yaml"
 
 	"github.com/spf13/afero"
@@ -81,7 +80,7 @@ func runInstall(cfg config.CloudConfig) error {
 	}
 
 	if cfg.HAOS.Install.ConfigURL == "" {
-		tempFile, err = afero.TempFile(system.AppFs, "/tmp", "haos.XXXXXXXX")
+		tempFile, err = afero.TempFile(cfg.Fs, "/tmp", "haos.XXXXXXXX")
 		if err != nil {
 			return err
 		}
