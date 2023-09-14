@@ -1,18 +1,24 @@
 package config
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+
+	"github.com/sirupsen/logrus"
+)
 
 func TestDataSource(t *testing.T) {
 	cc, err := readersToObject(func() (map[string]interface{}, error) {
 		return map[string]interface{}{
-			"haos": map[string]interface{}{
-				"datasource": "foo",
+			"HAOS": map[string]interface{}{
+				"Datasources": []string{"foo"},
 			},
 		}, nil
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
+	logrus.Info(cc.HAOS)
 	if len(cc.HAOS.DataSources) != 1 {
 		t.Fatal("no datasources")
 	}
@@ -23,12 +29,12 @@ func TestDataSource(t *testing.T) {
 
 func TestAuthorizedKeys(t *testing.T) {
 	c1 := map[string]interface{}{
-		"ssh_authorized_keys": []string{
+		"SSHAuthorizedKeys": []string{
 			"one...",
 		},
 	}
 	c2 := map[string]interface{}{
-		"ssh_authorized_keys": []string{
+		"SSHAuthorizedKeys": []string{
 			"two...",
 		},
 	}
@@ -40,8 +46,9 @@ func TestAuthorizedKeys(t *testing.T) {
 			return c2, nil
 		},
 	)
+	logrus.Infof("%+v", cc)
 	if len(cc.SSHAuthorizedKeys) != 1 {
-		t.Fatal(err, "got %d keys, expected 2", len(cc.SSHAuthorizedKeys))
+		t.Fatal(err, fmt.Sprintf("got %d keys, expected 2", len(cc.SSHAuthorizedKeys)))
 	}
 	if err != nil {
 		t.Fatal(err)

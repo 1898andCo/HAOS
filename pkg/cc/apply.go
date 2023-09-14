@@ -32,8 +32,9 @@ func runApplies(cfg *config.CloudConfig, appliers ...applier) error {
 }
 
 // RunApply runs all current configuration 'run' functions using the passed in config
-func RunApply(cfg *config.CloudConfig) error {
-	return runApplies(cfg,
+// the second parameter allows override of the functions run, used mainly for tests
+func RunApply(cfg *config.CloudConfig, run ...applier) error {
+	list := []applier{
 		ApplyModules,
 		ApplySysctls,
 		ApplyHostname,
@@ -47,7 +48,12 @@ func RunApply(cfg *config.CloudConfig) error {
 		ApplyRuncmd,
 		ApplyInstall,
 		ApplyK3SInstall,
-	)
+	}
+	if run != nil {
+		list = run
+	}
+	return runApplies(cfg, list...)
+
 }
 
 // InstallApply runs all current configuration 'install' functions using the passed in config

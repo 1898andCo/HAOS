@@ -3,7 +3,6 @@ package ssh
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -13,8 +12,11 @@ import (
 	"time"
 
 	"github.com/1898andCo/HAOS/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/1898andCo/HAOS/pkg/util"
 	"github.com/sirupsen/logrus"
+
+	"github.com/spf13/afero"
 )
 
 const (
@@ -23,7 +25,7 @@ const (
 )
 
 func SetAuthorizedKeys(cfg *config.CloudConfig, withNet bool) error {
-	bytes, err := ioutil.ReadFile("/etc/passwd")
+	bytes, err := afero.ReadFile(system.AppFs, "/etc/passwd")
 	if err != nil {
 		return err
 	}
@@ -88,7 +90,7 @@ func getKey(key string, withNet bool) (string, error) {
 	if resp.StatusCode/100 > 2 {
 		return "", fmt.Errorf("%s %s", resp.Proto, resp.Status)
 	}
-	bytes, err := ioutil.ReadAll(resp.Body)
+	bytes, err := afero.ReadAll(resp.Body)
 	return string(bytes), err
 }
 
@@ -117,7 +119,7 @@ func authorizeSSHKey(key, file string, uid, gid int, withNet bool) error {
 	} else if err != nil {
 		return err
 	}
-	bytes, err := ioutil.ReadFile(file)
+	bytes, err := afero.ReadFile(system.AppFs, file)
 	if err != nil {
 		return err
 	}

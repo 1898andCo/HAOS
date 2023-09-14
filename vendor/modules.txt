@@ -45,6 +45,10 @@ github.com/russross/blackfriday/v2
 # github.com/sirupsen/logrus v1.9.3
 ## explicit; go 1.13
 github.com/sirupsen/logrus
+# github.com/spf13/afero v1.2.2
+## explicit
+github.com/spf13/afero
+github.com/spf13/afero/mem
 # github.com/urfave/cli v1.22.14
 ## explicit; go 1.11
 github.com/urfave/cli
@@ -57,6 +61,10 @@ golang.org/x/sys/windows
 # golang.org/x/term v0.12.0
 ## explicit; go 1.17
 golang.org/x/term
+# golang.org/x/text v0.12.0
+## explicit; go 1.17
+golang.org/x/text/transform
+golang.org/x/text/unicode/norm
 # gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
 ## explicit
 gopkg.in/freddierice/go-losetup.v1
