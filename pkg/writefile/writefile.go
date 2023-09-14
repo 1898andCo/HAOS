@@ -2,12 +2,10 @@ package writefile
 
 import (
 	"fmt"
-	"os"
 	"path"
 
 	"github.com/1898andCo/HAOS/pkg/command"
 	"github.com/1898andCo/HAOS/pkg/config"
-	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/1898andCo/HAOS/pkg/util"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
@@ -22,7 +20,7 @@ func WriteFiles(cfg *config.CloudConfig) {
 		}
 		f.Content = string(c)
 		f.Encoding = ""
-		p, err := WriteFile(&f, "/")
+		p, err := WriteFile(&f, "/", cfg.Fs)
 		if err != nil {
 			logrus.WithFields(logrus.Fields{"err": err, "path": p}).Errorln("failed to write file")
 			continue
@@ -31,7 +29,7 @@ func WriteFiles(cfg *config.CloudConfig) {
 	}
 }
 
-func WriteFile(f *config.File, root string) (string, error) {
+func WriteFile(f *config.File, root string, fs afero.Fs) (string, error) {
 	if f.Encoding != "" {
 		return "", fmt.Errorf("unable to write file with encoding %s", f.Encoding)
 	}
@@ -47,10 +45,10 @@ func WriteFile(f *config.File, root string) (string, error) {
 	}
 	var tmp afero.File
 	// create a temporary file in the same directory to ensure it's on the same filesystem
-	if tmp, err = afero.TempFile(system.AppFs, d, "wfs-temp"); err != nil {
+	if tmp, err = afero.TempFile(fs, d, "wfs-temp"); err != nil {
 		return "", err
 	}
-	if err := afero.WriteFile(system.AppFs, tmp.Name(), []byte(f.Content), perm); err != nil {
+	if err := afero.WriteFile(fs, tmp.Name(), []byte(f.Content), perm); err != nil {
 		logrus.Infof("failed to write file %s: %v", tmp.Name(), err)
 		return "", err
 	}
@@ -58,7 +56,7 @@ func WriteFile(f *config.File, root string) (string, error) {
 		return "", err
 	}
 	// ensure the permissions are as requested (since WriteFile can be affected by sticky bit)
-	if err := system.AppFs.Chmod(tmp.Name(), perm); err != nil {
+	if err := fs.Chmod(tmp.Name(), perm); err != nil {
 		return "", err
 	}
 	if f.Owner != "" {
@@ -68,7 +66,7 @@ func WriteFile(f *config.File, root string) (string, error) {
 			return "", err
 		}
 	}
-	if err := os.Rename(tmp.Name(), p); err != nil {
+	if err := fs.Rename(tmp.Name(), p); err != nil {
 		return "", err
 	}
 	return p, nil

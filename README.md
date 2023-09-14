@@ -704,6 +704,11 @@ haos:
   - "key1=value1:NoExecute"
 ```
 
+## Development
+
+Please install the git hooks by running `./install-hooks`. This will ensure that
+the code is formatted correctly and that the commit message is formatted correctly.
+
 ## License
 
 Copyright (c) 2014-2020 [Rancher Labs, Inc.](http://rancher.com)

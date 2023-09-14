@@ -78,6 +78,7 @@ func readersToObject(readers ...reader) (CloudConfig, error) {
 		HAOS: HAOS{
 			Install: &Install{},
 		},
+		Fs: system.AppFs,
 	}
 
 	data, err := merge(readers...)
