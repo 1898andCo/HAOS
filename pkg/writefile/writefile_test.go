@@ -10,29 +10,28 @@ import (
 	"github.com/spf13/afero"
 )
 
-func setupFS() {
-	system.AppFs = afero.NewMemMapFs()
-}
-
 func TestWriteFiles(t *testing.T) {
-	setupFS()
-	system.AppFs.MkdirAll("/tmp", 0755)
+	fs := system.AppFs
+	defer func() { system.AppFs = fs }()
 	cfg := mocks.NewCloudConfig()
+	path := "/tmp/test"
 	cfg.WriteFiles = []config.File{
 		{
-			Path:    "/tmp/test",
-			Content: "test",
+			Path:     path,
+			Content:  "Zm9vYmFy",
+			Encoding: "base64",
 		},
 	}
-	writefile.WriteFiles(cfg)
+	expected := "foobar"
 	t.Logf("cfg: %v", cfg.WriteFiles)
+	writefile.WriteFiles(cfg)
 	// test to see if the files got written to the in-mem filesystem
-	content, err := afero.ReadFile(system.AppFs, cfg.WriteFiles[0].Path)
+	content, err := afero.ReadFile(cfg.Fs, path)
 	t.Logf("content: %s", content)
 	if err != nil {
 		t.Errorf("failed to read file: %v", err)
 	}
-	if string(content) != cfg.WriteFiles[0].Content {
+	if string(content) != expected {
 		t.Errorf("unexpected content: %s", content)
 	}
 }

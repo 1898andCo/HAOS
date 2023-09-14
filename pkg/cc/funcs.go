@@ -19,7 +19,6 @@ import (
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/mode"
 	"github.com/1898andCo/HAOS/pkg/ssh"
-	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/1898andCo/HAOS/pkg/version"
 	"github.com/1898andCo/HAOS/pkg/writefile"
 	"github.com/pkg/errors"
@@ -67,7 +66,7 @@ func ApplySysctls(cfg *config.CloudConfig) error {
 		elements := []string{"/proc", "sys"}
 		elements = append(elements, strings.Split(k, ".")...)
 		path := path.Join(elements...)
-		if err := afero.WriteFile(system.AppFs, path, []byte(v), 0644); err != nil {
+		if err := afero.WriteFile(cfg.Fs, path, []byte(v), 0644); err != nil {
 			return err
 		}
 	}
@@ -82,10 +81,10 @@ func ApplyHostname(cfg *config.CloudConfig) error {
 	if err := syscall.Sethostname([]byte(hostname)); err != nil {
 		return err
 	}
-	return syncHostname()
+	return syncHostname(cfg)
 }
 
-func syncHostname() error {
+func syncHostname(cfg *config.CloudConfig) error {
 	hostname, err := os.Hostname()
 	if err != nil {
 		return err
@@ -93,12 +92,11 @@ func syncHostname() error {
 	if hostname == "" {
 		return nil
 	}
-
-	if err := afero.WriteFile(system.AppFs, "/etc/hostname", []byte(hostname+"\n"), 0644); err != nil {
+	if err := afero.WriteFile(cfg.Fs, "/etc/hostname", []byte(hostname+"\n"), 0644); err != nil {
 		return err
 	}
 
-	hosts, err := os.Open("/etc/hosts")
+	hosts, err := cfg.Fs.Open("/etc/hosts")
 	if err != nil {
 		return err
 	}
@@ -114,7 +112,7 @@ func syncHostname() error {
 		}
 		content += line + "\n"
 	}
-	return afero.WriteFile(system.AppFs, "/etc/hosts", []byte(content), 0600)
+	return afero.WriteFile(cfg.Fs, "/etc/hosts", []byte(content), 0600)
 }
 
 func ApplyPassword(cfg *config.CloudConfig) error {
@@ -186,7 +184,7 @@ func ApplyBootManifests(cfg *config.CloudConfig) error {
 	}
 	for file, data := range filesToWrite {
 		p := filepath.Join(manifestsDir, file)
-		if err := afero.WriteFile(system.AppFs, p, data, 0600); err != nil {
+		if err := afero.WriteFile(cfg.Fs, p, data, 0600); err != nil {
 			return err
 		}
 
@@ -215,7 +213,7 @@ func ApplyK3SNoRestart(cfg *config.CloudConfig) error {
 }
 
 func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
-	mode, err := mode.Get()
+	mode, err := mode.Get(cfg)
 	if err != nil {
 		return err
 	}
@@ -301,7 +299,7 @@ func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
 }
 
 func ApplyInstall(cfg *config.CloudConfig) error {
-	mode, err := mode.Get()
+	mode, err := mode.Get(cfg)
 	if err != nil {
 		return err
 	}
@@ -337,7 +335,7 @@ func ApplyDNS(cfg *config.CloudConfig) error {
 		buf.WriteString("\n")
 	}
 
-	err := afero.WriteFile(system.AppFs, "/etc/connman/main.conf", buf.Bytes(), 0644)
+	err := afero.WriteFile(cfg.Fs, "/etc/connman/main.conf", buf.Bytes(), 0644)
 	if err != nil {
 		return fmt.Errorf("failed to write /etc/connman/main.conf: %v", err)
 	}
@@ -357,10 +355,10 @@ func ApplyWifi(cfg *config.CloudConfig) error {
 	buf.WriteString("Tethering=false\n")
 
 	if buf.Len() > 0 {
-		if err := system.AppFs.MkdirAll("/var/lib/connman", 0755); err != nil {
+		if err := cfg.Fs.MkdirAll("/var/lib/connman", 0755); err != nil {
 			return fmt.Errorf("failed to mkdir /var/lib/connman: %v", err)
 		}
-		if err := afero.WriteFile(system.AppFs, "/var/lib/connman/settings", buf.Bytes(), 0644); err != nil {
+		if err := afero.WriteFile(cfg.Fs, "/var/lib/connman/settings", buf.Bytes(), 0644); err != nil {
 			return fmt.Errorf("failed to write to /var/lib/connman/settings: %v", err)
 		}
 	}
@@ -386,7 +384,7 @@ func ApplyWifi(cfg *config.CloudConfig) error {
 	}
 
 	if buf.Len() > 0 {
-		return afero.WriteFile(system.AppFs, "/var/lib/connman/cloud-config.config", buf.Bytes(), 0644)
+		return afero.WriteFile(cfg.Fs, "/var/lib/connman/cloud-config.config", buf.Bytes(), 0644)
 	}
 
 	return nil
@@ -404,7 +402,7 @@ func ApplyDataSource(cfg *config.CloudConfig) error {
 	buf.WriteString(args)
 	buf.WriteString("\"\n")
 
-	if err := afero.WriteFile(system.AppFs, "/etc/conf.d/cloud-config", buf.Bytes(), 0644); err != nil {
+	if err := afero.WriteFile(cfg.Fs, "/etc/conf.d/cloud-config", buf.Bytes(), 0644); err != nil {
 		return fmt.Errorf("failed to write to /etc/conf.d/cloud-config: %v", err)
 	}
 
@@ -416,7 +414,7 @@ func ApplyEnvironment(cfg *config.CloudConfig) error {
 		return nil
 	}
 	env := make(map[string]string, len(cfg.HAOS.Environment))
-	if buf, err := afero.ReadFile(system.AppFs, "/etc/environment"); err == nil {
+	if buf, err := afero.ReadFile(cfg.Fs, "/etc/environment"); err == nil {
 		scanner := bufio.NewScanner(bytes.NewReader(buf))
 		for scanner.Scan() {
 			line := scanner.Text()
@@ -449,7 +447,7 @@ func ApplyEnvironment(cfg *config.CloudConfig) error {
 		buf.WriteString(strconv.Quote(val))
 		buf.WriteString("\n")
 	}
-	if err := afero.WriteFile(system.AppFs, "/etc/environment", buf.Bytes(), 0644); err != nil {
+	if err := afero.WriteFile(cfg.Fs, "/etc/environment", buf.Bytes(), 0644); err != nil {
 		return fmt.Errorf("failed to write to /etc/environment: %v", err)
 	}
 

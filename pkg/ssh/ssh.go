@@ -25,7 +25,7 @@ const (
 )
 
 func SetAuthorizedKeys(cfg *config.CloudConfig, withNet bool) error {
-	bytes, err := afero.ReadFile(system.AppFs, "/etc/passwd")
+	bytes, err := afero.ReadFile(cfg.Fs, "/etc/passwd")
 	if err != nil {
 		return err
 	}

@@ -8,13 +8,18 @@ import (
 	"os"
 
 	"github.com/1898andCo/HAOS/pkg/cliinstall"
+	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/mode"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
 func InstallCommand() cli.Command {
-	mode, _ := mode.Get()
+	cfg := &config.CloudConfig{
+		Fs: system.AppFs,
+	}
+	mode, _ := mode.Get(cfg)
 	return cli.Command{
 		Name:  "install",
 		Usage: "install HAOS",
