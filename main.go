@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/1898andCo/HAOS/pkg/cli/app"
+	"github.com/1898andCo/HAOS/pkg/cli"
 	"github.com/1898andCo/HAOS/pkg/enterchroot"
 	"github.com/1898andCo/HAOS/pkg/transferroot"
 	"github.com/docker/docker/pkg/mount"
@@ -21,7 +21,7 @@ func main() {
 	reexec.Register("enter-root", enterchroot.Enter)
 
 	if !reexec.Init() {
-		app := app.New()
+		app := cli.NewApp()
 		args := []string{app.Name}
 		path := filepath.Base(os.Args[0])
 		if path != app.Name && app.Command(path) != nil {
