@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/docker/docker/pkg/mount"
+	"github.com/moby/sys/mount"
 	"github.com/otiai10/copy"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"

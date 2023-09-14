@@ -7,17 +7,22 @@ ARG TAG
 FROM ${REPO}/haos-base:${TAG} as base
 ARG VERSION
 ARG ARCH
+
+
 RUN apk --update add \
-    xorriso=1.5.2-r0 \
-    grub=2.04-r2 \
-    grub-efi=2.04-r2 \
-    mtools=4.0.26-r0 \
-    libvirt=6.10.0-r1 \
-    qemu-img=5.2.0-r3
+    xorriso=1.5.4-r2 \
+    grub=2.06-r8 \
+    grub-efi=2.06-r8 \
+    mtools=4.0.42-r0 \
+    libvirt=8.9.0-r4 \
+    qemu-img=7.1.0-r7
 RUN if [ "$ARCH" == "amd64" ]; then \
-    apk add qemu-system-x86_64 grub-bios ovmf \
-    ;elif [ "$ARCH" == "arm64" ]; then \
-    apk add qemu-system-aarch64 \
+    apk --update add \ 
+    qemu-system-x86_64=7.1.0-r7 \
+    grub-bios=2.06-r8 \
+    ovmf=0.0.202208-r0 \
+    ;elif [ "$ARCH" == "arm64" ]; then  \
+    apk add qemu-system-aarch647.1.0-r7 \
     ;fi
 RUN ln -s /usr/bin/qemu-system-* /usr/bin/qemu-system
 RUN qemu-img create -f qcow2 /hd.img 40G

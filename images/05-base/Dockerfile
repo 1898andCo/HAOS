@@ -2,9 +2,10 @@ ARG REPO
 ARG TAG
 FROM ${REPO}/haos-base:${TAG} AS base
 RUN apk --update --no-cache add \
-    grub-bios=2.04-r2 \
-    open-vm-tools=11.2.0-r0 \
-    open-vm-tools-deploypkg=11.2.0-r0 \
-    open-vm-tools-guestinfo=11.2.0-r0 \
-    open-vm-tools-static=11.2.0-r0 \
-    open-vm-tools-vmbackup=11.2.0-r0
+    grub-bios=2.06-r8 \
+    open-vm-tools=12.1.0-r0 \
+    open-vm-tools-deploypkg=12.1.0-r0 \
+    open-vm-tools-guestinfo=12.1.0-r0 \
+    open-vm-tools-static=12.1.0-r0 \
+    open-vm-tools-vmbackup=12.1.0-r0
+RUN apk list --installed
