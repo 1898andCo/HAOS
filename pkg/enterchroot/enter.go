@@ -3,7 +3,6 @@ package enterchroot
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -12,11 +11,14 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/docker/docker/pkg/mount"
 	"github.com/docker/docker/pkg/reexec"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sys/unix"
+
+	"github.com/spf13/afero"
 	"gopkg.in/freddierice/go-losetup.v1"
 )
 
@@ -62,7 +64,7 @@ func isDebug() bool {
 		return false
 	}
 
-	bytes, err := ioutil.ReadFile("/proc/cmdline")
+	bytes, err := afero.ReadFile(system.AppFs, "/proc/cmdline")
 	if err != nil {
 		// ignore error
 		return false
@@ -304,7 +306,7 @@ func checkSquashfs() error {
 }
 
 func inProcFS() bool {
-	bytes, err := ioutil.ReadFile("/proc/filesystems")
+	bytes, err := afero.ReadFile(system.AppFs, "/proc/filesystems")
 	if err != nil {
 		logrus.Errorf("Failed to read /proc/filesystems: %v", err)
 		return false

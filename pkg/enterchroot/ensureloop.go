@@ -2,14 +2,16 @@ package enterchroot
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/docker/docker/pkg/mount"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sys/unix"
+	
+	"github.com/spf13/afero"
 )
 
 func mountProc() error {
@@ -25,7 +27,7 @@ func mountProc() error {
 }
 
 func mountDev() error {
-	if files, err := ioutil.ReadDir("/dev"); err == nil && len(files) > 2 {
+	if files, err := afero.ReadDir(system.AppFs, "/dev"); err == nil && len(files) > 2 {
 		return nil
 	}
 	logrus.Debug("mkdir /dev")

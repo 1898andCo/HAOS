@@ -2,30 +2,32 @@ package util
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
 	"path"
+
+	"github.com/1898andCo/HAOS/pkg/system"
+	"github.com/spf13/afero"
 )
 
 func WriteFileAtomic(filename string, data []byte, perm os.FileMode) error {
 	dir, file := path.Split(filename)
-	tempFile, err := ioutil.TempFile(dir, fmt.Sprintf(".%s", file))
+	tempFile, err := afero.TempFile(system.AppFs, dir, fmt.Sprintf(".%s", file))
 	if err != nil {
 		return err
 	}
-	defer os.Remove(tempFile.Name())
+	defer system.AppFs.Remove(tempFile.Name())
 	if _, err := tempFile.Write(data); err != nil {
 		return err
 	}
 	if err := tempFile.Close(); err != nil {
 		return err
 	}
-	if err := os.Chmod(tempFile.Name(), perm); err != nil {
+	if err := system.AppFs.Chmod(tempFile.Name(), perm); err != nil {
 		return err
 	}
-	return os.Rename(tempFile.Name(), filename)
+	return system.AppFs.Rename(tempFile.Name(), filename)
 }
 
 func HTTPDownloadToFile(url, dest string) error {
@@ -34,7 +36,7 @@ func HTTPDownloadToFile(url, dest string) error {
 		return err
 	}
 	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := afero.ReadAll(res.Body)
 	if err != nil {
 		return err
 	}
@@ -50,7 +52,7 @@ func HTTPLoadBytes(url string) ([]byte, error) {
 			return nil, fmt.Errorf("non-200 http response: %d", resp.StatusCode)
 		}
 
-		bytes, err := ioutil.ReadAll(resp.Body)
+		bytes, err := afero.ReadAll(resp.Body)
 		if err != nil {
 			return nil, err
 		}
@@ -62,7 +64,7 @@ func HTTPLoadBytes(url string) ([]byte, error) {
 }
 
 func ExistsAndExecutable(path string) bool {
-	info, err := os.Stat(path)
+	info, err := system.AppFs.Stat(path)
 	if err != nil {
 		return false
 	}
@@ -76,7 +78,7 @@ func RunScript(path string, arg ...string) error {
 		return nil
 	}
 
-	script, err := os.Open(path)
+	script, err := system.AppFs.Open(path)
 	if err != nil {
 		return err
 	}
@@ -98,13 +100,13 @@ func RunScript(path string, arg ...string) error {
 }
 
 func EnsureDirectoryExists(dir string) error {
-	info, err := os.Stat(dir)
+	info, err := system.AppFs.Stat(dir)
 	if err == nil {
 		if !info.IsDir() {
 			return fmt.Errorf("%s is not a directory", dir)
 		}
 	} else {
-		err = os.MkdirAll(dir, 0755)
+		err = system.AppFs.MkdirAll(dir, 0755)
 		if err != nil {
 			return err
 		}

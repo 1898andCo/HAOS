@@ -2,13 +2,15 @@ package cliinstall
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 
 	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/1898andCo/HAOS/pkg/questions"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/ghodss/yaml"
+
+	"github.com/spf13/afero"
 )
 
 func Run() error {
@@ -61,7 +63,7 @@ func runCCApply() error {
 func runInstall(cfg config.CloudConfig) error {
 	var (
 		err      error
-		tempFile *os.File
+		tempFile afero.File
 	)
 
 	installBytes, err := config.PrintInstall(cfg)
@@ -79,7 +81,7 @@ func runInstall(cfg config.CloudConfig) error {
 	}
 
 	if cfg.HAOS.Install.ConfigURL == "" {
-		tempFile, err = ioutil.TempFile("/tmp", "haos.XXXXXXXX")
+		tempFile, err = afero.TempFile(system.AppFs, "/tmp", "haos.XXXXXXXX")
 		if err != nil {
 			return err
 		}
