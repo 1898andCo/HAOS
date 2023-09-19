@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+curl -sL https://github.com/megastep/makeself/releases/download/release-${MAKEVER}/makeself-${MAKEVER}.run --output makeself-${MAKEVER}.run &&
+    chmod 755 makeself-${MAKEVER}.run &&
+    ./makeself-${MAKEVER}.run &&
+    cd makeself-${MAKEVER} &&
+    mv *.sh /usr/bin &&
+    makeself.sh --version
+
+sh scripts/ci
