@@ -11,4 +11,5 @@ curl -sL https://github.com/megastep/makeself/releases/download/release-${MAKEVE
     mv *.sh /usr/bin &&
     makeself.sh --version
 
+cd /go/src/github.com/1898andco/HAOS
 sh scripts/ci
