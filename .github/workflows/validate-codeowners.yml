@@ -3,7 +3,7 @@ on: [pull_request]
 
 jobs:
   validate-codeowners:
-    runs-on: [self-hosted, Ubuntu, Common]
+    runs-on: ubuntu-latest
     steps:
     - name: "Checkout source code at current commit"
       uses: actions/checkout@v3
