@@ -5,15 +5,15 @@ package cli
 import (
 	"encoding/csv"
 	"fmt"
+	"github.com/1898andCo/HAOS/pkg/system"
+	"github.com/spf13/afero"
+	"github.com/urfave/cli"
+	"golang.org/x/sys/unix"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"github.com/spf13/afero"
-	"github.com/1898andCo/HAOS/pkg/system"
-	"github.com/urfave/cli"
-	"golang.org/x/sys/unix"
 )
 
 func RCCommand() cli.Command {
