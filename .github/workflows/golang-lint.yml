@@ -1,4 +1,4 @@
-name: golangci-lint
+name: Golang Linting
 on: [push]
 
 permissions:
@@ -6,7 +6,7 @@ permissions:
 
 jobs:
   golangci:
-    name: lint
+    name: Go Linting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
