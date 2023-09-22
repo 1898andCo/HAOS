@@ -1,15 +1,17 @@
 name: Changelog 
 
-on:
+on: 
   pull_request:
     types: [ opened ]
+  push:
+      branches: [ '**' ]    
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Run Changelog 
         uses: saadmk11/changelog-ci@v1.1.2
