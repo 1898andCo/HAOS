@@ -1,3 +1,4 @@
+# Responsible for publishing the Docker image to Docker Hub
 name: Publish Docker image
 
 on:

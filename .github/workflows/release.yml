@@ -1,10 +1,11 @@
+# Responsible for packaging and releasing the application
 name: Release
 
 on:
   push:
     branches:
-      - master
-      - develop
+      - master  # release
+      - develop # release candidate
 
 jobs:
   build:

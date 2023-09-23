@@ -1,3 +1,4 @@
+# Responsible for validating the CODEOWNERS file
 name: Validate Codeowners
 on:
   push:
