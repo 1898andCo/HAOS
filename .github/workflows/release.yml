@@ -1,4 +1,4 @@
-name: Production Release
+name: Release
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Create Release
-        run: make
+        run: make ci 
       - name: Release
         uses: softprops/action-gh-release@v1
         env:
