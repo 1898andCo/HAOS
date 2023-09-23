@@ -1,3 +1,4 @@
+# Responsible for building and testing the application's Go code.
 name: Golang Build and Unit Tests
 on: [push]
 

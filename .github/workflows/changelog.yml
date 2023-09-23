@@ -1,3 +1,6 @@
+# Responsible for generating changelog
+# TODO: this is not grouping things properly.
+# NOTE: uses the file `changelog-ci-config.json` in the root of the repo
 name: Changelog 
 
 on: 
