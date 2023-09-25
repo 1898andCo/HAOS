@@ -16,8 +16,6 @@
         {
             "title": "Code Improvements",
             "labels": [
-                "improvements",
-                "enhancement",
                 "refactor",
                 "chore"
             ]
@@ -25,7 +23,8 @@
         {
             "title": "New Features",
             "labels": [
-                "feature"
+                "feature",
+                "feat"
             ]
         },
         {

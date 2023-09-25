@@ -19,4 +19,4 @@ jobs:
       name: "Full check of CODEOWNERS"
       with:
         checks: "syntax,owners,duppatterns"
-        github_access_token: "${{ secrets.GITHUB_TOKEN }}"
+        github_access_token: "${{ github.token }}"

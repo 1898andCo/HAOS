@@ -6,6 +6,7 @@ on:
     branches:
       - master  # release
       - develop # release candidate
+      - workflow-test # for testing
 
 jobs:
   build:
