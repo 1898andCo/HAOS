@@ -2,6 +2,7 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master  # release
@@ -16,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Create Release
-        run: make ci 
+        run: make  
       - name: Release
         uses: softprops/action-gh-release@v1
         env:

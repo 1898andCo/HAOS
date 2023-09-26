@@ -2,6 +2,7 @@
 name: Validate Codeowners
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   validate-codeowners:
