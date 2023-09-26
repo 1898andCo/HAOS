@@ -2,11 +2,6 @@
 name: Validate Codeowners
 on:
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - develop
 
 jobs:
   validate-codeowners:
@@ -18,5 +13,5 @@ jobs:
     - uses: mszostok/codeowners-validator@v0.7.1
       name: "Full check of CODEOWNERS"
       with:
-        checks: "syntax,owners,duppatterns"
-        github_access_token: "${{ secrets.GITHUB_TOKEN }}"
+        checks: "syntax,files,duppatterns"
+        github_access_token: "${{ github.token }}"
