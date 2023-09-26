@@ -1,7 +1,9 @@
 # Responsible for linting the codebase. Comments will be 
 # added to the PR if any linting errors are found.
 name: Golang Linting
-on: [push]
+on:
+    push:
+    workflow_dispatch:
 
 permissions:
   contents: read
