@@ -1,7 +1,8 @@
 # Responsible for building and testing the application's Go code.
 name: Golang Build and Unit Tests
-on: [push]
-
+on:
+    push:
+    workflow_dispatch:
 jobs:
   golang:
     runs-on: ubuntu-latest
