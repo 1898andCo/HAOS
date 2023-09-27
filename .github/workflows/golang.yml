@@ -1,4 +1,5 @@
 # Responsible for building and testing the application's Go code.
+# Runs: build, test, lint
 name: Golang Build and Unit Tests
 on:
     push:
