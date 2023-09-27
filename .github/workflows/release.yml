@@ -18,12 +18,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Create Release
         run: make  
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        with:
-            files: ./dist/*
-            tag_name: ${{ github.ref }}
-            body: Release ${{ github.ref }} ${{ github.event.head_commit.message }}
-            draft: ${{ github.ref == 'refs/heads/develop'}}
+#      - name: Release
+#        uses: softprops/action-gh-release@v1
+#        env:
+#            GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+#        with:
+#            files: ./dist/*
+#            tag_name: ${{ github.ref }}
+#            body: Release ${{ github.ref }} ${{ github.event.head_commit.message }}
+#            draft: ${{ github.ref == 'refs/heads/develop'}}
