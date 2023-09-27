@@ -12,6 +12,10 @@ on:
             description: 'Tag to generate changelog for'
             required: true
             default: 'latest'
+        ref:
+            description: 'Ref to generate changelog for'
+            required: true
+            default: 'master'
 
 jobs:
   write-changelog:
@@ -31,7 +35,7 @@ jobs:
       - name: Commit CHANGELOG.md
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          branch: ${{ github.ref_name }}
-          commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
+          branch: ${{ inputs.ref }}
+          commit_message: 'docs: update CHANGELOG.md for ${{ inputs.ref }}:${{ inputs.tag }} [skip ci]'
           file_pattern: CHANGELOG.md
 
