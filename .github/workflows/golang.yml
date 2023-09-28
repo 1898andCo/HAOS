@@ -1,12 +1,11 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go
-
-on: [push]
-
+# Responsible for building and testing the application's Go code.
+# Runs: build, test, lint
+name: Golang Build and Unit Tests
+on:
+    push:
+    workflow_dispatch:
 jobs:
-  build:
+  golang:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,3 +20,6 @@ jobs:
 
       - name: Test
         run: go test -v ./...
+
+      - name: Lint
+        uses: reviewdog/action-golangci-lint@v2

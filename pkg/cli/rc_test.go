@@ -13,7 +13,7 @@ func TestRCCommand(t *testing.T) {
 	if expected != actual {
 		t.Errorf("Expected %s, got %s", expected, actual)
 	}
-	expected =  "early phase \"run commands\" / \"run control\""
+	expected = "early phase \"run commands\" / \"run control\""
 	actual = commandResult.Usage
 	if expected != actual {
 		t.Errorf("Expected %s, got %s", expected, actual)
