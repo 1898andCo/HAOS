@@ -1,0 +1,10 @@
+name: Changelog
+description: Create changelog
+inputs:
+  tag:  # tag to make changelog since
+    description: 'previous tag'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.tag }}
