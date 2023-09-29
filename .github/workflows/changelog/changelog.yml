@@ -5,11 +5,11 @@ name: Changelog
 
 on: 
   pull_request:
-    types: [ opened ]
+    branches: [ "CCMP-248" ]
   workflow_dispatch:
     inputs:
         tag:
-            description: 'Tag to generate changelog for'
+            description: 'Tag to generate changelog since'
             required: true
             default: 'latest'
         ref:
