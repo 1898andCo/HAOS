@@ -1,9 +1,9 @@
 name: SBOM
 
-on: [push] # temporary, will only be on releases
+on: [release]
 
 jobs:
-  build:
+  SBOM:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
