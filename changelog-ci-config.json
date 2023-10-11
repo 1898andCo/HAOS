@@ -28,6 +28,13 @@
             ]
         },
         {
+            "title": "Workflow/CI",
+            "labels": [
+                "workflow",
+                "ci"
+            ]
+        },
+        {
             "title": "Documentation Updates",
             "labels": [
                 "docs",
