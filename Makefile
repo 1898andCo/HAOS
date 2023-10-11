@@ -1,5 +1,6 @@
 # additional scripts are kept in the scripts directory
 TARGETS := $(shell ls scripts)
+
 # one make target per script
 .PHONY: $(TARGETS)
 $(TARGETS):

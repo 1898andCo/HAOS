@@ -5,9 +5,9 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/moby/sys/mount"
 	"github.com/moby/sys/mountinfo"
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sys/unix"
