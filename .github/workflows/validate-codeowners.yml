@@ -3,7 +3,7 @@ name: Validate Codeowners
 on:
   push:
     branches:
-      - main
+      - develop
       - master
   workflow_dispatch:
 
