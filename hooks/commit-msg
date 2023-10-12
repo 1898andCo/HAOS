@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+
+config=commit-msg.config.json
+
+# set variables
+types=(
+    "build"
+    "ci"
+    "docs"
+    "feat"
+    "fix"
+    "perf"
+    "refactor"
+    "style"
+    "test"
+    "chore"
+    "workflow"
+    "libs"
+)
+min_length=3
+max_length=72
+regexp="^("
+for type in "${types[@]}"; do
+    regexp="${regexp}$type|"
+done
+regexp="${regexp})(\(.+\))?: "
+regexp="${regexp}.{$min_length,$max_length}$"
+msg=$(head -1 $1)
+if [[ ! $msg =~ $regexp ]]; then
+    echo -e "\n\e[1m\e[31m[INVALID COMMIT MESSAGE]"
+    echo -e "------------------------\033[0m\e[0m"
+    echo -e "\e[1mValid types:\e[0m \e[34m${types[@]}\033[0m"
+    echo -e "\e[1mMax length (first line):\e[0m \e[34m$max_length\033[0m"
+    echo -e "\e[1mMin length (first line):\e[0m \e[34m$min_length\033[0m\n"
+
+    # exit with an error
+    exit 1
+fi
+
+# This catches duplicate Signed-off-by lines.
+
+test "" = "$(grep '^Signed-off-by: ' "$1" |
+    sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
+    echo >&2 Duplicate Signed-off-by lines.
+    exit 1
+}
