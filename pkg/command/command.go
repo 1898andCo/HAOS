@@ -27,8 +27,9 @@ func (LocalShell) Execute(ctx context.Context, cmd string) ([]byte, error) {
 	return wrapperCmd.CombinedOutput()
 }
 
+// DefaultShell will be overridden in tests
 // Set the default shell to be the local shell.
-// This will be oveeridden in tests
+// TODO: still not happy with this pattern
 var DefaultShell Shell = LocalShell{}
 
 func ExecuteCommand(commands []string) ([]string, error) {

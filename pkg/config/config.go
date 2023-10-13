@@ -59,7 +59,6 @@ func (c *CloudConfig) InitFs(fs afero.Fs) {
 	c.Fs = fs
 }
 
-
 type File struct {
 	Encoding           string `json:"encoding"`
 	Content            string `json:"content"`

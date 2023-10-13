@@ -1,0 +1,41 @@
+# Responsible for generating changelog
+# TODO: this is not grouping things properly.
+# NOTE: uses the file `changelog-ci-config.json` in the root of the repo
+name: Changelog 
+
+on: 
+  pull_request:
+    types: [ opened ]
+  workflow_dispatch:
+    inputs:
+        tag:
+            description: 'Tag to generate changelog for'
+            required: true
+            default: 'latest'
+        ref:
+            description: 'Ref to generate changelog for'
+            required: true
+            default: 'master'
+
+jobs:
+  write-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ inputs.tag }}
+
+      - name: Commit CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: ${{ inputs.ref }}
+          commit_message: 'docs: update CHANGELOG.md for ${{ inputs.ref }}:${{ inputs.tag }} [skip ci]'
+          file_pattern: CHANGELOG.md    
+
