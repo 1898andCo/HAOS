@@ -4,18 +4,9 @@
 name: Changelog 
 
 on: 
-  pull_request:
-    types: [ opened ]
-  workflow_dispatch:
-    inputs:
-        tag:
-            description: 'Tag to generate changelog for'
-            required: true
-            default: 'latest'
-        ref:
-            description: 'Ref to generate changelog for'
-            required: true
-            default: 'master'
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
   write-changelog:
@@ -30,12 +21,22 @@ jobs:
         uses: requarks/changelog-action@v1
         with:
           token: ${{ github.token }}
-          tag: ${{ inputs.tag }}
+          tag: ${{ github.ref_name }}
 
+      - name: Create Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: true
+          draft: false
+          makeLatest: true
+          name: ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.changes }}
+          token: ${{ github.token }}
+          
       - name: Commit CHANGELOG.md
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          branch: ${{ inputs.ref }}
-          commit_message: 'docs: update CHANGELOG.md for ${{ inputs.ref }}:${{ inputs.tag }} [skip ci]'
+          branch: ${{ github.base_ref}}
+          commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
           file_pattern: CHANGELOG.md    
 
