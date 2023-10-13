@@ -13,7 +13,7 @@ func NewCloudConfig() *config.CloudConfig {
 	fs.MkdirAll("/libexec/HAOS", 0755)
 	fs.MkdirAll("/sbin", 0755)
 	fs.MkdirAll("/share", 0755)
-	afero.WriteFile(fs, "/etc/enviromnent", []byte("TEST=1"), 0644)
+	afero.WriteFile(fs, "/etc/environment", []byte("TEST=1"), 0644)
 	fs.MkdirAll("/proc", 0755)
 	fs.MkdirAll("/etc/connman/", 0755)
 	afero.WriteFile(fs, "/proc/modules", []byte("test"), 0644)

@@ -30,5 +30,4 @@ func TestInstallCommand(t *testing.T) {
 		t.Errorf("Expected Action not to be nil")
 	}
 
-
 }

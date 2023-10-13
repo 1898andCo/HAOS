@@ -1,0 +1,20 @@
+# Responsible for packaging and releasing the application
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master  # release
+      - develop # release candidate
+      - workflow-test # for testing
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: make build-package
+
