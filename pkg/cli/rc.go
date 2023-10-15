@@ -10,8 +10,9 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"github.com/spf13/afero"
+
 	"github.com/1898andCo/HAOS/pkg/system"
+	"github.com/spf13/afero"
 	"github.com/urfave/cli"
 	"golang.org/x/sys/unix"
 )

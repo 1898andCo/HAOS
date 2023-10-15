@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cp $(dirname $0)/../hooks/commit-msg .git/hooks/commit-msg
