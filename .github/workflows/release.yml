@@ -81,14 +81,14 @@ jobs:
           asset_name: haos-kernel-version-amd64
           asset_content_type: application/octet-stream
 
-      - name: Upload haos-kernel-vm-amd64
+      - name: Upload haos-kernel-vm-amd64.squashfs
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/haos-kernel-vm-amd64
-          asset_name: haos-kernel-vm-amd6
+          asset_path: ./dist/artifacts/haos-kernel-vm-amd64.squashfs
+          asset_name: haos-kernel-vm-amd6.squashfs
           asset_content_type: application/octet-stream
 
       - name: Upload haos-rootfs-amd64.tar.gz
