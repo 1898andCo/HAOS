@@ -1,18 +1,17 @@
 package shellwords
 
 import (
+	"bytes"
 	"errors"
 	"os"
-	"regexp"
 	"strings"
+	"unicode"
 )
 
 var (
 	ParseEnv      bool = false
 	ParseBacktick bool = false
 )
-
-var envRe = regexp.MustCompile(`\$({[a-zA-Z0-9_]+}|[a-zA-Z0-9_]+)`)
 
 func isSpace(r rune) bool {
 	switch r {
@@ -27,19 +26,79 @@ func replaceEnv(getenv func(string) string, s string) string {
 		getenv = os.Getenv
 	}
 
-	return envRe.ReplaceAllStringFunc(s, func(s string) string {
-		s = s[1:]
-		if s[0] == '{' {
-			s = s[1 : len(s)-1]
+	var buf bytes.Buffer
+	rs := []rune(s)
+	for i := 0; i < len(rs); i++ {
+		r := rs[i]
+		if r == '\\' {
+			i++
+			if i == len(rs) {
+				break
+			}
+			buf.WriteRune(rs[i])
+			continue
+		} else if r == '$' {
+			i++
+			if i == len(rs) {
+				buf.WriteRune(r)
+				break
+			}
+			if rs[i] == 0x7b {
+				i++
+				p := i
+				for ; i < len(rs); i++ {
+					r = rs[i]
+					if r == '\\' {
+						i++
+						if i == len(rs) {
+							return s
+						}
+						continue
+					}
+					if r == 0x7d || (!unicode.IsLetter(r) && r != '_' && !unicode.IsDigit(r)) {
+						break
+					}
+				}
+				if r != 0x7d {
+					return s
+				}
+				if i > p {
+					buf.WriteString(getenv(s[p:i]))
+				}
+			} else {
+				p := i
+				for ; i < len(rs); i++ {
+					r := rs[i]
+					if r == '\\' {
+						i++
+						if i == len(rs) {
+							return s
+						}
+						continue
+					}
+					if !unicode.IsLetter(r) && r != '_' && !unicode.IsDigit(r) {
+						break
+					}
+				}
+				if i > p {
+					buf.WriteString(getenv(s[p:i]))
+					i--
+				} else {
+					buf.WriteString(s[p:])
+				}
+			}
+		} else {
+			buf.WriteRune(r)
 		}
-		return getenv(s)
-	})
+	}
+	return buf.String()
 }
 
 type Parser struct {
 	ParseEnv      bool
 	ParseBacktick bool
 	Position      int
+	Dir           string
 
 	// If ParseEnv is true, use this for getenv.
 	// If nil, use os.Getenv.
@@ -51,8 +110,17 @@ func NewParser() *Parser {
 		ParseEnv:      ParseEnv,
 		ParseBacktick: ParseBacktick,
 		Position:      0,
+		Dir:           "",
 	}
 }
+
+type argType int
+
+const (
+	argNo argType = iota
+	argSingle
+	argQuoted
+)
 
 func (p *Parser) Parse(line string) ([]string, error) {
 	args := []string{}
@@ -61,13 +129,16 @@ func (p *Parser) Parse(line string) ([]string, error) {
 	backtick := ""
 
 	pos := -1
-	got := false
+	got := argNo
 
+	i := -1
 loop:
-	for i, r := range line {
+	for _, r := range line {
+		i++
 		if escaped {
 			buf += string(r)
 			escaped = false
+			got = argSingle
 			continue
 		}
 
@@ -84,13 +155,23 @@ loop:
 			if singleQuoted || doubleQuoted || backQuote || dollarQuote {
 				buf += string(r)
 				backtick += string(r)
-			} else if got {
+			} else if got != argNo {
 				if p.ParseEnv {
-					buf = replaceEnv(p.Getenv, buf)
+					if got == argSingle {
+						parser := &Parser{ParseEnv: false, ParseBacktick: false, Position: 0, Dir: p.Dir}
+						strs, err := parser.Parse(replaceEnv(p.Getenv, buf))
+						if err != nil {
+							return nil, err
+						}
+						args = append(args, strs...)
+					} else {
+						args = append(args, replaceEnv(p.Getenv, buf))
+					}
+				} else {
+					args = append(args, buf)
 				}
-				args = append(args, buf)
 				buf = ""
-				got = false
+				got = argNo
 			}
 			continue
 		}
@@ -100,11 +181,11 @@ loop:
 			if !singleQuoted && !doubleQuoted && !dollarQuote {
 				if p.ParseBacktick {
 					if backQuote {
-						out, err := shellRun(backtick)
+						out, err := shellRun(backtick, p.Dir)
 						if err != nil {
 							return nil, err
 						}
-						buf = out
+						buf = buf[:len(buf)-len(backtick)] + out
 					}
 					backtick = ""
 					backQuote = !backQuote
@@ -117,15 +198,11 @@ loop:
 			if !singleQuoted && !doubleQuoted && !backQuote {
 				if p.ParseBacktick {
 					if dollarQuote {
-						out, err := shellRun(backtick)
+						out, err := shellRun(backtick, p.Dir)
 						if err != nil {
 							return nil, err
 						}
-						if r == ')' {
-							buf = buf[:len(buf)-len(backtick)-2] + out
-						} else {
-							buf = buf[:len(buf)-len(backtick)-1] + out
-						}
+						buf = buf[:len(buf)-len(backtick)-2] + out
 					}
 					backtick = ""
 					dollarQuote = !dollarQuote
@@ -146,20 +223,26 @@ loop:
 			}
 		case '"':
 			if !singleQuoted && !dollarQuote {
+				if doubleQuoted {
+					got = argQuoted
+				}
 				doubleQuoted = !doubleQuoted
 				continue
 			}
 		case '\'':
 			if !doubleQuoted && !dollarQuote {
+				if singleQuoted {
+					got = argQuoted
+				}
 				singleQuoted = !singleQuoted
 				continue
 			}
 		case ';', '&', '|', '<', '>':
-			if !(escaped || singleQuoted || doubleQuoted || backQuote) {
+			if !(escaped || singleQuoted || doubleQuoted || backQuote || dollarQuote) {
 				if r == '>' && len(buf) > 0 {
 					if c := buf[0]; '0' <= c && c <= '9' {
 						i -= 1
-						got = false
+						got = argNo
 					}
 				}
 				pos = i
@@ -167,18 +250,28 @@ loop:
 			}
 		}
 
-		got = true
+		got = argSingle
 		buf += string(r)
 		if backQuote || dollarQuote {
 			backtick += string(r)
 		}
 	}
 
-	if got {
+	if got != argNo {
 		if p.ParseEnv {
-			buf = replaceEnv(p.Getenv, buf)
+			if got == argSingle {
+				parser := &Parser{ParseEnv: false, ParseBacktick: false, Position: 0, Dir: p.Dir}
+				strs, err := parser.Parse(replaceEnv(p.Getenv, buf))
+				if err != nil {
+					return nil, err
+				}
+				args = append(args, strs...)
+			} else {
+				args = append(args, replaceEnv(p.Getenv, buf))
+			}
+		} else {
+			args = append(args, buf)
 		}
-		args = append(args, buf)
 	}
 
 	if escaped || singleQuoted || doubleQuoted || backQuote || dollarQuote {
@@ -190,6 +283,35 @@ loop:
 	return args, nil
 }
 
+func (p *Parser) ParseWithEnvs(line string) (envs []string, args []string, err error) {
+	_args, err := p.Parse(line)
+	if err != nil {
+		return nil, nil, err
+	}
+	envs = []string{}
+	args = []string{}
+	parsingEnv := true
+	for _, arg := range _args {
+		if parsingEnv && isEnv(arg) {
+			envs = append(envs, arg)
+		} else {
+			if parsingEnv {
+				parsingEnv = false
+			}
+			args = append(args, arg)
+		}
+	}
+	return envs, args, nil
+}
+
+func isEnv(arg string) bool {
+	return len(strings.Split(arg, "=")) == 2
+}
+
 func Parse(line string) ([]string, error) {
 	return NewParser().Parse(line)
+}
+
+func ParseWithEnvs(line string) (envs []string, args []string, err error) {
+	return NewParser().ParseWithEnvs(line)
 }
