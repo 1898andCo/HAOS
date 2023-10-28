@@ -53,8 +53,15 @@ jobs:
           body: ${{ steps.changelog.outputs.changes }}
 
 
+
       - name: Build and package
         run:  make build-package
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+            path: ./dist/artifacts
+            artifact-name: haos_sbom.spdx        
 
       - name: Upload haos-amd64.iso
         uses: actions/upload-release-asset@v1
