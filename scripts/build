@@ -4,7 +4,7 @@ set -e
 source $(dirname $0)/version
 source $(dirname $0)/images
 cd $(dirname $0)/..
-curl -L -s -v https://github.com/replicatedhq/kots/releases/download/v1.101.0/kots_linux_amd64.tar.gz  --output kots_linux_amd64.tar.gz
+curl -L -s  https://github.com/replicatedhq/kots/releases/download/v1.101.0/kots_linux_amd64.tar.gz  --output kots_linux_amd64.tar.gz
 tar -zxf kots_linux_amd64.tar.gz kots
 mv kots images/06-base/kots
 rm -rf kots_linux_amd64.tar.gz
