@@ -1,27 +1,4 @@
-# Version: 2.0.3
 
-* [#7](https://github.com/1898andCo/HAOS/pull/7): Cpes 240 cpes 245 update branding and kernel
-* [#8](https://github.com/1898andCo/HAOS/pull/8): chore(deps): bump github.com/rancher/wrangler from 0.3.1 to 0.7.5
-* [#10](https://github.com/1898andCo/HAOS/pull/10): chore(deps): bump github.com/docker/docker from 1.13.1 to 20.10.24+incompatible
-* [#12](https://github.com/1898andCo/HAOS/pull/12): chore(deps): bump golang from 1.16-alpine3.13 to 1.17-alpine3.13
-* [#13](https://github.com/1898andCo/HAOS/pull/13): chore(deps): bump github.com/mattn/go-isatty from 0.0.10 to 0.0.19
-* [#15](https://github.com/1898andCo/HAOS/pull/15): chore(deps): bump golang.org/x/crypto from 0.0.0-20191122220453-ac88ee75c92c to 0.12.0
-* [#17](https://github.com/1898andCo/HAOS/pull/17): chore(deps): bump github.com/rancher/wrangler from 0.3.1 to 0.7.5
-* [#18](https://github.com/1898andCo/HAOS/pull/18): chore(deps): bump github.com/sirupsen/logrus from 1.4.2 to 1.9.3
-* [#19](https://github.com/1898andCo/HAOS/pull/19): chore(deps): bump github.com/otiai10/copy from 1.0.2 to 1.12.0
-* [#20](https://github.com/1898andCo/HAOS/pull/20): chore(deps): bump github.com/urfave/cli from 1.22.2 to 1.22.14
-* [#21](https://github.com/1898andCo/HAOS/pull/21): CPES-240 CPES-245 update branding, packages and libraries
-* [#23](https://github.com/1898andCo/HAOS/pull/23): Ccmp 257 Improve unit testing in the golang code
-* [#25](https://github.com/1898andCo/HAOS/pull/25): chore(deps): bump golang.org/x/term from 0.11.0 to 0.12.0
-* [#26](https://github.com/1898andCo/HAOS/pull/26): Develop
-* [#28](https://github.com/1898andCo/HAOS/pull/28): Ccmp 261 - address docker image vulnerabilities
-* [#29](https://github.com/1898andCo/HAOS/pull/29): CCMP 262 feature: creating workflow for build and test on deploy
-* [#30](https://github.com/1898andCo/HAOS/pull/30): Develop
-* [#31](https://github.com/1898andCo/HAOS/pull/31): Develop
-
-
-<a name="unreleased"></a>
-## [Unreleased]
 
 ### Documentation Improvements
 - **changelog:** auto changelog update v1.6.0-v1.20.7-k3s1 [CI SKIP]

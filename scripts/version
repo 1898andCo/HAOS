@@ -18,9 +18,7 @@ if [ -z "$ARCH" ]; then
 fi
 
 ARCH=${ARCH:-"amd64"}
-TAG=${TAG:-"${VERSION}-${ARCH}"}
-REPO=${REPO:-1898andco}
 
-if echo $TAG | grep -q dirty; then
-    TAG=dev
-fi
+K3s_VERSION="$(grep 'ENV VERSION' images/10-k3s/Dockerfile | cut -d ' ' -f3)"
+TAG=${TAG:-"${VERSION}-${ARCH}-${K3s_VERSION}"}
+REPO=${REPO:-1898andco}

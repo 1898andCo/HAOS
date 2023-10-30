@@ -1,20 +1,144 @@
 # Responsible for packaging and releasing the application
 name: Release
-
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - master  # release
-      - develop # release candidate
-      - workflow-test # for testing
+    tags:
+      - 'v*'
 
 jobs:
   build:
-    name: Create Release
-    runs-on: ubuntu-latest
+    name: Release
+    runs-on: self-hosted 
     steps:
-    - uses: actions/checkout@v3
-    - name: Install dependencies
-      run: make build-package
 
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Get previous tag
+        id: previousTag
+        run: |
+          name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1)
+          echo "previousTag: $name"
+          echo "previousTag=$name" >> $GITHUB_ENV
+
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          toTag: ${{ github.ref }}
+          fromTag: ${{ env.previousTag }}
+          writeToFile: true
+        continue-on-error: true
+
+      - name: Commit CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: ${{ github.base_ref}}
+          commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
+          file_pattern: CHANGELOG.md   
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.changes }}
+
+
+
+      - name: Build and package
+        run:  make build-package
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+            path: ./dist/artifacts
+            artifact-name: haos_sbom.spdx        
+
+      - name: Upload haos-amd64.iso
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-amd64.iso
+          asset_name: haos-amd64.iso
+          asset_content_type: application/octet-stream
+
+      - name: Upload haos-initrd-amd64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-initrd-amd64
+          asset_name: haos-initrd-amd64
+          asset_content_type: application/octet-stream
+
+      - name: Upload haos-kernel-amd64.squashfs
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-kernel-amd64.squashfs
+          asset_name: haos-kernel-amd64.squashfs
+          asset_content_type: application/octet-stream
+
+      - name: Upload haos-kernel-version-amd64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-kernel-version-amd64
+          asset_name: haos-kernel-version-amd64
+          asset_content_type: application/octet-stream
+
+      - name: Upload haos-kernel-vm-amd64.squashfs
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-kernel-vm-amd64.squashfs
+          asset_name: haos-kernel-vm-amd6.squashfs
+          asset_content_type: application/octet-stream
+
+      - name: Upload haos-rootfs-amd64.tar.gz
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-rootfs-amd64.tar.gz
+          asset_name: haos-rootfs-amd64.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload haos-vm-amd64-iso
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-vm-amd64.iso
+          asset_name: haos-vm-amd64.iso
+          asset_content_type: application/octet-stream
+
+      - name: Upload haos-vmlinuz-amd64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-vmlinuz-amd64
+          asset_name: haos-vmlinuz-amd64
+          asset_content_type: application/octet-stream
