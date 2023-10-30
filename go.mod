@@ -3,7 +3,7 @@ module github.com/1898andCo/HAOS
 go 1.17
 
 require (
-	github.com/docker/docker v24.0.6+incompatible
+	github.com/docker/docker v24.0.7+incompatible
 	github.com/ghodss/yaml v1.0.0
 	github.com/mattn/go-isatty v0.0.19
 	github.com/moby/sys/mount v0.3.3
