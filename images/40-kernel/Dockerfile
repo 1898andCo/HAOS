@@ -7,7 +7,7 @@ FROM ${REPO}/k3os-kernel-stage1:${TAG} as kernel
 FROM ${REPO}/k3os-base:${TAG}
 ARG TAG
 RUN apk --update add \
-    squashfs-tools=4.4-r1
+    squashfs-tools=4.5-r0
 COPY --from=kernel /output/ /usr/src/kernel/
 
 RUN mkdir -p /usr/src/initrd/lib && \
@@ -36,6 +36,6 @@ RUN cd /usr/src/initrd && \
     cp /usr/src/k3os/k3os k3os/system/k3os/${TAG} && \
     ln -s ${TAG} k3os/system/k3os/current && \
     ln -s /k3os/system/k3os/current/k3os init
-    
+
 RUN cd /usr/src/initrd && \
     find . | cpio -H newc -o | gzip -c -1 > /output/initrd
