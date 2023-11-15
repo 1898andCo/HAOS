@@ -1,0 +1,16 @@
+name: SBOM
+
+on: [release]
+
+jobs:
+  SBOM:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build/Package
+        run: make build && make package
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+            file: ./dist/images.tar
