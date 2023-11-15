@@ -3,18 +3,18 @@ ARG TAG
 FROM ubuntu:focal
 
 RUN apt-get --assume-yes update \
- && apt-get --assume-yes install \
-    curl=7.68.0-1ubuntu2.5 \
-    initramfs-tools=0.136ubuntu6.6\
-    kmod=27-1ubuntu2 \
-    lz4=1.9.2-2ubuntu0.20.04.1 \
-    rsync=3.1.3-8 \
-    xz-utils=5.2.4-1 \
- && echo 'r8152' >> /etc/initramfs-tools/modules \
- && echo 'hfs' >> /etc/initramfs-tools/modules \
- && echo 'hfsplus' >> /etc/initramfs-tools/modules \
- && echo 'nls_utf8' >> /etc/initramfs-tools/modules \
- && echo 'nls_iso8859_1' >> /etc/initramfs-tools/modules
+    && apt-get --assume-yes install \
+    curl \
+    initramfs-tools\
+    kmod \
+    lz4 \
+    rsync \
+    xz-utils \
+    && echo 'r8152' >> /etc/initramfs-tools/modules \
+    && echo 'hfs' >> /etc/initramfs-tools/modules \
+    && echo 'hfsplus' >> /etc/initramfs-tools/modules \
+    && echo 'nls_utf8' >> /etc/initramfs-tools/modules \
+    && echo 'nls_iso8859_1' >> /etc/initramfs-tools/modules
 
 ARG ARCH
 ENV KVERSION=5.4.0-73-generic
