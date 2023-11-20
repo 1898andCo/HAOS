@@ -45,7 +45,7 @@ RUN apk --update --no-cache add \
     openssh-client=9.1_p1-r4 \
     openssh-server=9.1_p1-r4 \
     parted=3.5-r0 \
-    procps=3.3.17-r2 \
+    procps=3.3.17-r3 \
     qemu-guest-agent=7.1.0-r7 \
     rng-tools=6.15-r1 \
     rsync=3.2.7-r0 \
