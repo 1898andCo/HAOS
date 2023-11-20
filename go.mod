@@ -1,4 +1,4 @@
-module github.com/rancher/k3os
+module github.com/1898andCo/HAOS
 
 go 1.16
 

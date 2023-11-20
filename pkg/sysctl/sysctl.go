@@ -5,7 +5,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/rancher/k3os/pkg/config"
+	"github.com/1898andCo/HAOS/pkg/config"
 )
 
 func ConfigureSysctl(cfg *config.CloudConfig) error {

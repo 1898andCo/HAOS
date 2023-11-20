@@ -1,20 +1,18 @@
 #!/bin/bash
 
-setup_ssh()
-{
-    if [ ! -e /var/lib/rancher/k3os/ssh ]; then
-        mkdir -p /var/lib/rancher/k3os
-        cp -rf /etc/ssh /var/lib/rancher/k3os/ssh
+setup_ssh() {
+    if [ ! -e /var/lib/1898andCo/HAOS/ssh ]; then
+        mkdir -p /var/lib/1898andCo/HAOS
+        cp -rf /etc/ssh /var/lib/1898andCo/HAOS/ssh
     fi
     rm -rf /etc/ssh
-    ln -s /var/lib/rancher/k3os/ssh /etc/ssh
+    ln -s /var/lib/1898andCo/HAOS/ssh /etc/ssh
 }
 
-setup_rancher_node()
-{
+setup_rancher_node() {
     mkdir -p /etc/rancher
-    mkdir -p /var/lib/rancher/k3os/node
-    ln -s /var/lib/rancher/k3os/node /etc/rancher/
+    mkdir -p /var/lib/1898andCo/HAOS/node
+    ln -s /var/lib/1898andCo/HAOS/node /etc/rancher/
 }
 
 setup_ssh
