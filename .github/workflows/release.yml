@@ -55,7 +55,7 @@ jobs:
 
 
       - name: Build and package
-        run:  make build-package
+        run:  make release
 
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
