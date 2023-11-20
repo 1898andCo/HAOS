@@ -126,7 +126,7 @@ partitions and file system automatically, or you can create them manually if you
 
 ### Bootstrapped Installation
 
-You can install HAOS to a block device from any modern Linux distribution. Just download and run [install.sh](https://raw.githubusercontent.com/rancher/k3os/master/install.sh).
+You can install HAOS to a block device from any modern Linux distribution. Just download and run [install.sh](https://raw.githubusercontent.com/1898andCo/HAOS/master/install.sh).
 This script will run the same installation as the ISO but is a bit more raw and will not prompt for configuration.
 
 ```
@@ -166,7 +166,7 @@ on the path instead of `grub-mkrescue`.*
 
 ### Takeover Installation
 
-A special mode of installation is designed to install to a current running Linux system. This only works on ARM64 and x86_64. Download [install.sh](https://raw.githubusercontent.com/rancher/k3os/master/install.sh)
+A special mode of installation is designed to install to a current running Linux system. This only works on ARM64 and x86_64. Download [install.sh](https://raw.githubusercontent.com/1898andCo/HAOS/master/install.sh)
 and run with the `--takeover` flag. This will install HAOS to the current root and override the grub.cfg. After you reboot the system HAOS will then delete all files on the root partition that are not HAOS and then shutdown. This mode is particularly handy when creating cloud images. This way you can use an existing base image like Ubuntu and install HAOS over the top, snapshot, and create a new image.
 
 In order for this to work a couple of assumptions are made. First the root (/) is assumed to be an ext4 partition. Also it is assumed that grub2 is installed and looking for the configuration at `/boot/grub/grub.cfg`. When running `--takeover` ensure that you also set `--no-format` and DEVICE must be set to the partition of `/`. Refer to the AWS packer template to see this mode in action. Below is any example of how to run a takeover installation.
@@ -384,15 +384,15 @@ When using an overlay install such as on Raspberry Pi (see [ARM Overlay Installa
 
 ```bash
 export HAOS_VERSION=v0.10.0
-/usr/share/rancher/k3os/scripts/k3os-upgrade-rootfs
-/usr/share/rancher/k3os/scripts/k3os-upgrade-kernel
+/usr/share/1898andCo/HAOS/scripts/k3os-upgrade-rootfs
+/usr/share/1898andCo/HAOS/scripts/k3os-upgrade-kernel
 ```
 
 You should always remember to backup your data first, and reboot after upgrading.
 
 #### Manual Upgrade Scripts Have Been DEPRECATED
 
-These scripts have been deprecated as of v0.9.0 are still on the system at `/usr/share/rancher/k3os/scripts`.
+These scripts have been deprecated as of v0.9.0 are still on the system at `/usr/share/1898andCo/HAOS/scripts`.
 
 ## Building
 
@@ -400,7 +400,7 @@ To build HAOS you just need Docker and then run `make`. All artifacts will be pu
 If you are running on Linux you can run `./scripts/run` to run a VM of HAOS in the terminal. To exit
 the instance type `CTRL+a c` to get the qemu console and then `q` for quit.
 
-The source for the kernel is in `https://github.com/rancher/k3os-kernel` and similarly you
+The source for the kernel is in `https://github.com/1898andCo/HAOS-kernel` and similarly you
 just need to have Docker and run `make` to compile the kernel.
 
 ## Configuration Reference

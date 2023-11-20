@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/1898andCo/HAOS/pkg/config"
 	"github.com/pkg/errors"
-	"github.com/rancher/k3os/pkg/config"
 	"github.com/sirupsen/logrus"
 )
 

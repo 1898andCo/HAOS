@@ -9,30 +9,27 @@ if [ "$K3OS_DEBUG" = true ]; then
     set -x
 fi
 
-get_url()
-{
+get_url() {
     FROM=$1
     TO=$2
     case $FROM in
-        ftp*|http*|tftp*)
-            n=0
-            attempts=5
-            until [ "$n" -ge "$attempts" ]
-            do
-                curl -o $TO -fL ${FROM} && break
-                n=$((n+1))
-                echo "Failed to download, retry attempt ${n} out of ${attempts}"
-                sleep 2
-            done
-            ;;
-        *)
-            cp -f $FROM $TO
-            ;;
+    ftp* | http* | tftp*)
+        n=0
+        attempts=5
+        until [ "$n" -ge "$attempts" ]; do
+            curl -o $TO -fL ${FROM} && break
+            n=$((n + 1))
+            echo "Failed to download, retry attempt ${n} out of ${attempts}"
+            sleep 2
+        done
+        ;;
+    *)
+        cp -f $FROM $TO
+        ;;
     esac
 }
 
-cleanup2()
-{
+cleanup2() {
     if [ -n "${TARGET}" ]; then
         umount ${TARGET}/boot/efi || true
         umount ${TARGET} || true
@@ -42,18 +39,16 @@ cleanup2()
     umount $DISTRO || true
 }
 
-cleanup()
-{
+cleanup() {
     EXIT=$?
     cleanup2 2>/dev/null || true
     return $EXIT
 }
 
-usage()
-{
+usage() {
     echo "Usage: $PROG [--force-efi] [--debug] [--tty TTY] [--poweroff] [--takeover] [--no-format] [--config https://.../config.yaml] DEVICE ISO_URL"
     echo ""
-    echo "Example: $PROG /dev/vda https://github.com/rancher/k3os/releases/download/v0.8.0/k3os.iso"
+    echo "Example: $PROG /dev/vda https://github.com/1898andCo/HAOS/releases/download/v0.8.0/k3os.iso"
     echo ""
     echo "DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the K3OS_STATE partition (/dev/vda2)"
     echo ""
@@ -63,8 +58,7 @@ usage()
     exit 1
 }
 
-do_format()
-{
+do_format() {
     if [ "$K3OS_INSTALL_NO_FORMAT" = "true" ]; then
         STATE=$(blkid -L K3OS_STATE || true)
         if [ -z "$STATE" ] && [ -n "$DEVICE" ]; then
@@ -113,8 +107,7 @@ do_format()
     fi
 }
 
-do_mount()
-{
+do_mount() {
     TARGET=/run/k3os/target
     mkdir -p ${TARGET}
     mount ${STATE} ${TARGET}
@@ -128,11 +121,10 @@ do_mount()
     mount -o ro ${ISO_DEVICE} ${DISTRO} || mount -o ro ${ISO_DEVICE%?} ${DISTRO}
 }
 
-do_copy()
-{
+do_copy() {
     tar cf - -C ${DISTRO} k3os | tar xvf - -C ${TARGET}
     if [ -n "$STATE_NUM" ]; then
-        echo $DEVICE $STATE_NUM > $TARGET/k3os/system/growpart
+        echo $DEVICE $STATE_NUM >$TARGET/k3os/system/growpart
     fi
 
     if [ -n "$K3OS_INSTALL_CONFIG_URL" ]; then
@@ -149,14 +141,13 @@ do_copy()
     fi
 }
 
-install_grub()
-{
+install_grub() {
     if [ "$K3OS_INSTALL_DEBUG" ]; then
         GRUB_DEBUG="k3os.debug"
     fi
 
     mkdir -p ${TARGET}/boot/grub
-    cat > ${TARGET}/boot/grub/grub.cfg << EOF
+    cat >${TARGET}/boot/grub/grub.cfg <<EOF
 set default=0
 set timeout=10
 
@@ -221,8 +212,7 @@ EOF
     grub-install ${GRUB_TARGET} --boot-directory=${TARGET}/boot --removable ${DEVICE}
 }
 
-get_iso()
-{
+get_iso() {
     ISO_DEVICE=$(blkid -L K3OS || true)
     if [ -z "${ISO_DEVICE}" ]; then
         for i in $(lsblk -o NAME,TYPE -n | grep -w disk | awk '{print $1}'); do
@@ -248,8 +238,7 @@ get_iso()
     fi
 }
 
-setup_style()
-{
+setup_style() {
     if [ "$K3OS_INSTALL_FORCE_EFI" = "true" ] || [ -e /sys/firmware/efi ]; then
         PARTTABLE=gpt
         BOOTFLAG=esp
@@ -262,8 +251,7 @@ setup_style()
     fi
 }
 
-validate_progs()
-{
+validate_progs() {
     for i in $PROGS; do
         if [ ! -x "$(which $i)" ]; then
             MISSING="${MISSING} $i"
@@ -276,8 +264,7 @@ validate_progs()
     fi
 }
 
-validate_device()
-{
+validate_device() {
     DEVICE=$K3OS_INSTALL_DEVICE
     if [ ! -b ${DEVICE} ]; then
         echo "You should use an available device. Device ${DEVICE} does not exist."
@@ -285,52 +272,51 @@ validate_device()
     fi
 }
 
-create_opt()
-{
+create_opt() {
     mkdir -p "${TARGET}/k3os/data/opt"
 }
 
 while [ "$#" -gt 0 ]; do
     case $1 in
-        --no-format)
-            K3OS_INSTALL_NO_FORMAT=true
-            ;;
-        --force-efi)
-            K3OS_INSTALL_FORCE_EFI=true
-            ;;
-        --poweroff)
-            K3OS_INSTALL_POWER_OFF=true
-            ;;
-        --takeover)
-            K3OS_INSTALL_TAKE_OVER=true
-            ;;
-        --debug)
-            set -x
-            K3OS_INSTALL_DEBUG=true
-            ;;
-        --config)
-            shift 1
-            K3OS_INSTALL_CONFIG_URL=$1
-            ;;
-        --tty)
-            shift 1
-            K3OS_INSTALL_TTY=$1
-            ;;
-        -h)
+    --no-format)
+        K3OS_INSTALL_NO_FORMAT=true
+        ;;
+    --force-efi)
+        K3OS_INSTALL_FORCE_EFI=true
+        ;;
+    --poweroff)
+        K3OS_INSTALL_POWER_OFF=true
+        ;;
+    --takeover)
+        K3OS_INSTALL_TAKE_OVER=true
+        ;;
+    --debug)
+        set -x
+        K3OS_INSTALL_DEBUG=true
+        ;;
+    --config)
+        shift 1
+        K3OS_INSTALL_CONFIG_URL=$1
+        ;;
+    --tty)
+        shift 1
+        K3OS_INSTALL_TTY=$1
+        ;;
+    -h)
+        usage
+        ;;
+    --help)
+        usage
+        ;;
+    *)
+        if [ "$#" -gt 2 ]; then
             usage
-            ;;
-        --help)
-            usage
-            ;;
-        *)
-            if [ "$#" -gt 2 ]; then
-                usage
-            fi
-            INTERACTIVE=true
-            K3OS_INSTALL_DEVICE=$1
-            K3OS_INSTALL_ISO_URL=$2
-            break
-            ;;
+        fi
+        INTERACTIVE=true
+        K3OS_INSTALL_DEVICE=$1
+        K3OS_INSTALL_ISO_URL=$2
+        break
+        ;;
     esac
     shift 1
 done

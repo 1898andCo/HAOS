@@ -8,8 +8,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/ghodss/yaml"
-	"github.com/rancher/k3os/pkg/system"
 	"github.com/rancher/mapper"
 	"github.com/rancher/mapper/convert"
 	merge2 "github.com/rancher/mapper/convert/merge"

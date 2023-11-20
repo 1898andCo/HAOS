@@ -7,11 +7,11 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/1898andCo/HAOS/pkg/cli/app"
+	"github.com/1898andCo/HAOS/pkg/enterchroot"
+	"github.com/1898andCo/HAOS/pkg/transferroot"
 	"github.com/docker/docker/pkg/mount"
 	"github.com/docker/docker/pkg/reexec"
-	"github.com/rancher/k3os/pkg/cli/app"
-	"github.com/rancher/k3os/pkg/enterchroot"
-	"github.com/rancher/k3os/pkg/transferroot"
 	"github.com/sirupsen/logrus"
 )
 
