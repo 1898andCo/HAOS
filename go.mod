@@ -9,7 +9,6 @@ require (
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/mattn/go-isatty v0.0.10
 	github.com/otiai10/copy v1.0.2
-	github.com/paultag/go-modprobe v0.0.0-20180523225901-7ccf6a1b5271
 	github.com/pkg/errors v0.8.1
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
 	github.com/rancher/wrangler v0.3.1 // indirect
@@ -17,9 +16,9 @@ require (
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/urfave/cli v1.22.2
 	golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c
-	golang.org/x/sys v0.0.0-20191127021746-63cb32ae39b2
+	golang.org/x/sys v0.0.0-20210309074719-68d13333faf2
 	gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
-	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a // indirect
+	pault.ag/go/modprobe v0.1.2
 )
 
 replace (
