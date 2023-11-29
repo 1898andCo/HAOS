@@ -1,10 +1,10 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-kernel:${TAG} as kernel
+FROM ${REPO}/haos-kernel:${TAG} as kernel
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-package:${TAG}
+FROM ${REPO}/haos-package:${TAG}
 ARG VERSION
 
 COPY --from=kernel /output/ /output/k3os/system/kernel/

@@ -1,10 +1,10 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-bin:${TAG} as bin
+FROM ${REPO}/haos-bin:${TAG} as bin
 
-FROM ${REPO}/k3os-kernel-stage1:${TAG} as kernel
+FROM ${REPO}/haos-kernel-stage1:${TAG} as kernel
 
-FROM ${REPO}/k3os-base:${TAG}
+FROM ${REPO}/haos-base:${TAG}
 ARG TAG
 RUN apk --update add \
     squashfs-tools=4.5.1-r2

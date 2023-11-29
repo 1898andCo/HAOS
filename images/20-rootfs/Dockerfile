@@ -1,14 +1,14 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG} as base
+FROM ${REPO}/haos-base:${TAG} as base
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-progs:${TAG} as progs
+FROM ${REPO}/haos-progs:${TAG} as progs
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-k3s:${TAG} as k3s
+FROM ${REPO}/haos-k3s:${TAG} as k3s
 
 FROM base as k3os-build
 ARG VERSION

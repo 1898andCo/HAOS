@@ -15,21 +15,21 @@ copy_all ${DIST} "$@"
 popd
 
 mkdir -p ./build
-ID=$(docker create ${REPO}/k3os-package:${TAG})
+ID=$(docker create ${REPO}/haos-package:${TAG})
 docker cp ${ID}:/output/k3os ./build/
 docker rm -fv $ID
 
 docker build \
-  --build-arg ARCH=${ARCH} \
-  --build-arg REPO=${REPO} \
-  --build-arg TAG=${TAG} \
-  --build-arg VERSION=${VERSION} \
-  --file package/Dockerfile \
-  --tag ${REPO}/k3os:${TAG} \
-  --tag ${REPO}/k3os:latest \
-.
+    --build-arg ARCH=${ARCH} \
+    --build-arg REPO=${REPO} \
+    --build-arg TAG=${TAG} \
+    --build-arg VERSION=${VERSION} \
+    --file package/Dockerfile \
+    --tag ${REPO}/haos:${TAG} \
+    --tag ${REPO}/haos:latest \
+    .
 docker image save --output ./dist/images.tar \
-  ${REPO}/k3os:${TAG} \
-  ${REPO}/k3os:latest
-echo ${REPO}/k3os:${TAG} > ./dist/images.txt
-echo Built ${REPO}/k3os:${TAG}
+    ${REPO}/haos:${TAG} \
+    ${REPO}/haos:latest
+echo ${REPO}/haos:${TAG} >./dist/images.txt
+echo Built ${REPO}/haos:${TAG}

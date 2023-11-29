@@ -1,10 +1,10 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-tar:${TAG} as tar
+FROM ${REPO}/haos-tar:${TAG} as tar
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG}
+FROM ${REPO}/haos-base:${TAG}
 ARG ARCH
 
 COPY --from=tar /output/userspace.tar /output/k3os-rootfs-${ARCH}.tar

@@ -1,14 +1,14 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-k3s:${TAG} as k3s
+FROM ${REPO}/haos-k3s:${TAG} as k3s
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-bin:${TAG} as bin
+FROM ${REPO}/haos-bin:${TAG} as bin
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG} as base
+FROM ${REPO}/haos-base:${TAG} as base
 ARG VERSION
 
 COPY --from=k3s /output/  /output/k3os/system/k3s/
