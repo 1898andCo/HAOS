@@ -12,4 +12,4 @@ FROM ${REPO}/haos-base:${TAG}
 ARG ARCH
 
 COPY --from=kernel /output/kernel.vm.squashfs /output/k3os-kernel-vm-${ARCH}.squashfs
-COPY --from=iso /output/k3os-vm.iso /output/k3os-vm-${ARCH}.iso
+COPY --from=iso /output/haos-vm.iso /output/haos-vm-${ARCH}.iso

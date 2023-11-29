@@ -63,82 +63,82 @@ jobs:
             path: ./dist/artifacts
             artifact-name: haos_sbom.spdx        
 
-      - name: Upload k3os-amd64.iso
+      - name: Upload haos-amd64.iso
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/k3os-amd64.iso
-          asset_name: k3os-amd64.iso
+          asset_path: ./dist/artifacts/haos-amd64.iso
+          asset_name: haos-amd64.iso
           asset_content_type: application/octet-stream
 
-      - name: Upload k3os-initrd-amd64
+      - name: Upload haos-initrd-amd64
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/k3os-initrd-amd64
-          asset_name: k3os-initrd-amd64
+          asset_path: ./dist/artifacts/haos-initrd-amd64
+          asset_name: haos-initrd-amd64
           asset_content_type: application/octet-stream
 
-      - name: Upload k3os-kernel-amd64.squashfs
+      - name: Upload haos-kernel-amd64.squashfs
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/k3os-kernel-amd64.squashfs
-          asset_name: k3os-kernel-amd64.squashfs
+          asset_path: ./dist/artifacts/haos-kernel-amd64.squashfs
+          asset_name: haos-kernel-amd64.squashfs
           asset_content_type: application/octet-stream
 
-      - name: Upload k3os-kernel-version-amd64
+      - name: Upload haos-kernel-version-amd64
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/k3os-kernel-version-amd64
-          asset_name: k3os-kernel-version-amd64
+          asset_path: ./dist/artifacts/haos-kernel-version-amd64
+          asset_name: haos-kernel-version-amd64
           asset_content_type: application/octet-stream
 
-      - name: Upload k3os-kernel-vm-amd64.squashfs
+      - name: Upload haos-kernel-vm-amd64.squashfs
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/k3os-kernel-vm-amd64.squashfs
-          asset_name: k3os-kernel-vm-amd6.squashfs
+          asset_path: ./dist/artifacts/haos-kernel-vm-amd64.squashfs
+          asset_name: haos-kernel-vm-amd6.squashfs
           asset_content_type: application/octet-stream
 
-      - name: Upload k3os-rootfs-amd64.tar.gz
+      - name: Upload haos-rootfs-amd64.tar.gz
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/k3os-rootfs-amd64.tar.gz
-          asset_name: k3os-rootfs-amd64.tar.gz
+          asset_path: ./dist/artifacts/haos-rootfs-amd64.tar.gz
+          asset_name: haos-rootfs-amd64.tar.gz
           asset_content_type: application/gzip
 
-      - name: Upload k3os-vm-amd64-iso
+      - name: Upload haos-vm-amd64-iso
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/k3os-vm-amd64.iso
-          asset_name: k3os-vm-amd64.iso
+          asset_path: ./dist/artifacts/haos-vm-amd64.iso
+          asset_name: haos-vm-amd64.iso
           asset_content_type: application/octet-stream
 
-      - name: Upload k3os-vmlinuz-amd64
+      - name: Upload haos-vmlinuz-amd64
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/k3os-vmlinuz-amd64
-          asset_name: k3os-vmlinuz-amd64
+          asset_path: ./dist/artifacts/haos-vmlinuz-amd64
+          asset_name: haos-vmlinuz-amd64
           asset_content_type: application/octet-stream

@@ -23,7 +23,7 @@ exec /usr/bin/qemu-system \
     -display none \
     -rtc \
     base=utc,clock=host \
-    -cdrom /output/k3os-vm.iso \
+    -cdrom /output/haos-vm.iso \
     -m 2048 \
     -smp 2 \
     -device virtio-rng-pci \

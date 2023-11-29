@@ -61,7 +61,7 @@ echo "Starting rootfs upgrade."
 cd /k3os/system
 mount -o remount,rw .
 
-mv ${PACKAGE}/k3os-rootfs-amd64.tar.gz ./
+mv ${PACKAGE}/haos-rootfs-amd64.tar.gz ./
 tar -xzvf k3os-rootfs-amd64.tar.gz --strip-components=3 -C ./
 
 rm -rf k3os-rootfs-amd64.tar.gz
