@@ -7,5 +7,5 @@ ARG TAG
 FROM ${REPO}/haos-base:${TAG}
 ARG ARCH
 
-COPY --from=tar /output/userspace.tar /output/k3os-rootfs-${ARCH}.tar
-RUN gzip /output/k3os-rootfs-${ARCH}.tar
+COPY --from=tar /output/userspace.tar /output/haos-rootfs-${ARCH}.tar
+RUN gzip /output/haos-rootfs-${ARCH}.tar

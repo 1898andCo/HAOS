@@ -29,7 +29,7 @@ echo "Upgrading k3os to ${K3OS_VERSION}"
 
 cd /k3os/system
 mount -o remount,rw .
-curl -fsSL "https://github.com/1898andCo/HAOS/releases/download/${K3OS_VERSION}/k3os-rootfs-${ARCH}.tar.gz" | tar xz --strip-components=3
+curl -fsSL "https://github.com/1898andCo/HAOS/releases/download/${K3OS_VERSION}/haos-rootfs-${ARCH}.tar.gz" | tar xz --strip-components=3
 sync
 
 echo "Upgrade complete! Please reboot."
