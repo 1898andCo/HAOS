@@ -1,7 +1,7 @@
 ARG REPO
 ARG TAG
 ARG VERSION
-FROM ${REPO}/k3os-gobuild:${TAG} as gobuild
+FROM ${REPO}/haos-gobuild:${TAG} as gobuild
 
 ENV LINUXKIT v0.8
 

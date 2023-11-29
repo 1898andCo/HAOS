@@ -1,18 +1,18 @@
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-tar:${TAG} as tar
+FROM ${REPO}/haos-tar:${TAG} as tar
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-iso:${TAG} as iso
+FROM ${REPO}/haos-iso:${TAG} as iso
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-kernel:${TAG} as kernel
+FROM ${REPO}/haos-kernel:${TAG} as kernel
 
 ARG REPO
 ARG TAG
-FROM ${REPO}/k3os-base:${TAG}
+FROM ${REPO}/haos-base:${TAG}
 ARG ARCH
 
 COPY --from=kernel /output/vmlinuz /output/k3os-vmlinuz-${ARCH}

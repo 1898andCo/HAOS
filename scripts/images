@@ -5,8 +5,7 @@ if [ "$ARCH" != "arm" ]; then
     export DOCKER_BUILDKIT=1
 fi
 
-build_all()
-{
+build_all() {
     if [ "$#" = 0 ]; then
         set -- [0-9][0-9]*
     fi
@@ -14,7 +13,7 @@ build_all()
     for i; do
         i=$(basename $i)
         IMAGE=${i##[0-9][0-9]-}
-        FULL_IMAGE=$REPO/k3os-$IMAGE:$TAG
+        FULL_IMAGE=$REPO/haos-$IMAGE:$TAG
         FULL_IMAGE=${FULL_IMAGE//+/$'-'}
 
         cd $i
@@ -34,8 +33,7 @@ build_all()
     done
 }
 
-copy_all()
-{
+copy_all() {
     OUTPUT=$1
     shift
 
@@ -46,7 +44,7 @@ copy_all()
     for i; do
         i=$(basename $i)
         IMAGE=${i##[0-9][0-9]-}
-        FULL_IMAGE=$REPO/k3os-$IMAGE:$TAG
+        FULL_IMAGE=$REPO/haos-$IMAGE:$TAG
 
         cd $i
         if [ -e archs ] && ! grep -w -q $ARCH archs; then
