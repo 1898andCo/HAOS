@@ -1,22 +1,22 @@
-FROM golang:1.17-alpine3.13
+FROM golang:1.17.11-alpine3.16
 
 ARG DAPPER_HOST_ARCH
 ENV ARCH $DAPPER_HOST_ARCH
 ENV MAKEVER 2.4.4
 
 RUN apk --update --no-cache add \
-    bash=5.1.16-r0 \
-    git=2.30.6-r0 \
-    gcc=10.2.1_pre1-r3 \
-    musl-dev=1.2.2-r2 \
-    docker=20.10.3-r1 \
-    vim=8.2.4836-r0 \
-    less=563-r0 \
-    file=5.39-r0 \
-    curl=7.79.1-r3 \
-    wget=1.21.1-r1 \
-    ca-certificates=20220614-r0 \
-    tar=1.34-r0
+    bash=5.1.16-r2 \
+    git=2.36.6-r0 \
+    gcc=11.2.1_git20220219-r2 \
+    musl-dev=1.2.3-r3 \
+    docker=20.10.20-r0 \
+    vim=8.2.5000-r0 \
+    less=590-r1 \
+    file=5.41-r0 \
+    curl=8.4.0-r0 \
+    wget=1.21.3-r0 \
+    ca-certificates=20211220-r0 \
+    tar=1.34-r1
 
 RUN if [ "$(go env GOARCH)" = "arm64" ]; then \
     curl -sL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s v1.38.0; \
