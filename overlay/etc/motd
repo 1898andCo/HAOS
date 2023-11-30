@@ -1,8 +1,8 @@
-Welcome to BLAOS, the BOHICA LABS Appliance Operating System!
+Welcome to HAOS, the Hardened Applicance Operating System
 
-Refer to https://github.com/BOHICA-LABS/BLAOS for README and issues
+Refer to https://github.com/1898andCo/HAOS for README and issues
 
-The default mode of BLAOS is to run a single node cluster. Use "kubectl"
+The default mode of HAOS is to run a single node cluster. Use "kubectl"
 to access it. The node token in /var/lib/rancher/k3s/server/node-token
 can be used to join agents to this server.
 

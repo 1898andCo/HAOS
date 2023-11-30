@@ -2,8 +2,7 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/1898andCo/HAOS)
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/1898andCo/HAOS?include_prereleases&label=release&sort=semver)
 
-<!-- [![Build Status](https://drone.bohicalabs.com/api/badges/1898andCo/HAOS/status.svg)](https://drone.bohicalabs.com/BOHICA-LABS/BLAOS)
- -->
+
 # HAOS
 
 HAOS is a Linux distribution designed to harden and secure an OS that 
