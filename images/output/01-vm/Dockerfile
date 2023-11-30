@@ -11,5 +11,5 @@ ARG TAG
 FROM ${REPO}/haos-base:${TAG}
 ARG ARCH
 
-COPY --from=kernel /output/kernel.vm.squashfs /output/k3os-kernel-vm-${ARCH}.squashfs
+COPY --from=kernel /output/kernel.vm.squashfs /output/haos-kernel-vm-${ARCH}.squashfs
 COPY --from=iso /output/haos-vm.iso /output/haos-vm-${ARCH}.iso
