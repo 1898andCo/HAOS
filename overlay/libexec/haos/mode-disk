@@ -4,8 +4,7 @@ TARGET=/run/k3os/target
 
 source /usr/lib/os-release
 
-grow()
-{
+grow() {
     parted $1 resizepart $2 100%
     partprobe $1
     sleep 2
@@ -13,17 +12,16 @@ grow()
     resize2fs $3
 }
 
-setup_mounts()
-{
+setup_mounts() {
     mkdir -p $TARGET
-    mount -L K3OS_STATE $TARGET
+    mount -L HAOS_STATE $TARGET
 
     if [ -e $TARGET/k3os/system/growpart ]; then
-        read DEV NUM < $TARGET/k3os/system/growpart
+        read DEV NUM <$TARGET/k3os/system/growpart
         if [ ! -e "${DEV}${NUM}" ]; then
             # /dev/sda2 => /dev/sda2
             # /dev/nvme0n1p2 => /dev/nvme0n1p2
-            PART=$(blkid -L K3OS_STATE)
+            PART=$(blkid -L HAOS_STATE)
 
             # /dev/sda2 => /dev/sda
             # /dev/nvme0n1p2 => /dev/nvme0n1
@@ -36,14 +34,13 @@ setup_mounts()
         if [ -e "${PART:=${DEV}${NUM}}" ]; then
             umount $TARGET
             grow $DEV $NUM $PART || true
-            mount -L K3OS_STATE $TARGET
+            mount -L HAOS_STATE $TARGET
         fi
         rm -f $TARGET/k3os/system/growpart
     fi
 }
 
-setup_kernel_squashfs()
-{
+setup_kernel_squashfs() {
     KER_SRC="/.base/k3os/system/kernel/$(uname -r)/kernel.squashfs"
     KER_DEST="$TARGET/k3os/system/kernel/$(uname -r)/kernel.squashfs"
     if [ -e $KER_SRC ] && [ ! -e $KER_DEST ]; then
@@ -52,30 +49,28 @@ setup_kernel_squashfs()
     fi
 }
 
-setup_k3os()
-{
+setup_k3os() {
     if [ -e $TARGET/k3os/system/k3os/current/k3os ]; then
         return 0
     fi
 
-    K3OS_SRC=/.base/k3os/system/k3os/current/k3os
-    K3OS_FILE=$TARGET/k3os/system/k3os/${VERSION_ID}/k3os
+    HAOS_SRC=/.base/k3os/system/k3os/current/k3os
+    HAOS_FILE=$TARGET/k3os/system/k3os/${VERSION_ID}/k3os
 
-    if [ ! -e ${K3OS_SRC} ]; then
+    if [ ! -e ${HAOS_SRC} ]; then
         return 0
     fi
 
-    if [ ! -e ${K3OS_FILE} ]; then
-        mkdir -p $(dirname ${K3OS_FILE}.tmp)
-        cp -f ${K3OS_SRC} ${K3OS_FILE}.tmp
-        mv -f ${K3OS_FILE}.tmp ${K3OS_FILE}
+    if [ ! -e ${HAOS_FILE} ]; then
+        mkdir -p $(dirname ${HAOS_FILE}.tmp)
+        cp -f ${HAOS_SRC} ${HAOS_FILE}.tmp
+        mv -f ${HAOS_FILE}.tmp ${HAOS_FILE}
     fi
 
     ln -sf ${VERSION_ID} $TARGET/k3os/system/k3os/current
 }
 
-setup_init()
-{
+setup_init() {
     if [ -e $TARGET/sbin/init ]; then
         return 0
     fi
@@ -84,8 +79,7 @@ setup_init()
     ln -sf ../k3os/system/k3os/current/k3os $TARGET/sbin/init
 }
 
-setup_k3s()
-{
+setup_k3s() {
     if [ -e $TARGET/k3os/system/k3s/current/k3s ]; then
         return 0
     fi
@@ -103,8 +97,7 @@ setup_k3s()
     fi
 }
 
-takeover()
-{
+takeover() {
     if [ ! -e k3os/system/takeover ]; then
         return 0
     fi
@@ -112,23 +105,23 @@ takeover()
     touch k3os/system/factory-reset
 
     if [ -L sbin ]; then
-      rm -f sbin
+        rm -f sbin
     fi
 
     for i in *; do
         case $i in
-            boot|k3os|sbin)
-                ;;
-            *)
-                rm -rf $i
+        boot | k3os | sbin) ;;
+        *)
+            rm -rf $i
+            ;;
         esac
     done
     for i in sbin/*; do
         case $i in
-            sbin/init|sbin/k3s|sbin/k3os)
-                ;;
-            *)
-                rm -rf "$i"
+        sbin/init | sbin/k3s | sbin/k3os) ;;
+        *)
+            rm -rf "$i"
+            ;;
         esac
     done
 
@@ -136,7 +129,7 @@ takeover()
     rm -f k3os/system/takeover
     rm -rf k3os/data
     sync
-    
+
     if [ -e k3os/system/poweroff ]; then
         rm -f k3os/system/poweroff
         poweroff -f
@@ -163,4 +156,4 @@ losetup -d /dev/loop0 || true
 mount --make-rprivate /
 mkdir -p .root
 pivot_root . .root
-K3OS_MODE=local exec /sbin/init
+HAOS_MODE=local exec /sbin/init
