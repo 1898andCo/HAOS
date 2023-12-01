@@ -2,11 +2,10 @@
 set -e
 
 export SCRIPTS=/usr/libexec/haos
-export K3OS_SYSTEM=/.base/k3os/system
+export HAOS_SYSTEM=/.base/k3os/system
 
-reinit_debug()
-{
-    if [ "$K3OS_DEBUG" = "true" ]; then
+reinit_debug() {
+    if [ "$HAOS_DEBUG" = "true" ]; then
         set -x
         return 0
     fi
@@ -19,23 +18,22 @@ reinit_debug()
     if [ -e /proc/cmdline ]; then
         for x in $(cat /proc/cmdline); do
             case $x in
-                k3os.debug*)
-                    export K3OS_DEBUG=true
-                    mkdir -p /run/k3os
-                    echo debug > /run/k3os/debug || true
-                    ;;
+            k3os.debug*)
+                export HAOS_DEBUG=true
+                mkdir -p /run/k3os
+                echo debug >/run/k3os/debug || true
+                ;;
             esac
         done
     fi
 
-    if [ "$K3OS_DEBUG" = "true" ]; then
+    if [ "$HAOS_DEBUG" = "true" ]; then
         set -x
     fi
 }
 
-setup_kernel()
-{
-    KERNEL=${K3OS_SYSTEM}/kernel/$(uname -r)/kernel.squashfs
+setup_kernel() {
+    KERNEL=${HAOS_SYSTEM}/kernel/$(uname -r)/kernel.squashfs
     if [ ! -e ${KERNEL} ]; then
         return 0
     fi
@@ -50,32 +48,28 @@ setup_kernel()
     umount /run/k3os/kernel
 }
 
-perr()
-{
+perr() {
     echo "[ERROR]" "$@" 1>&2
 }
 
-pfatal()
-{
+pfatal() {
     echo "[FATAL]" "$@" 1>&2
     exit 1
 }
 
-pinfo()
-{
+pinfo() {
     echo " * " "$@"
 }
 
-cleanup()
-{
+cleanup() {
     rm -rf /run/k3os
     unset SCRIPTS
-    unset K3OS_SYSTEM
-    if [ -n "$K3OS_MODE" ]; then
+    unset HAOS_SYSTEM
+    if [ -n "$HAOS_MODE" ]; then
         mkdir -p /run/k3os
-        echo "$K3OS_MODE" > /run/k3os/mode
+        echo "$HAOS_MODE" >/run/k3os/mode
     fi
-    unset K3OS_MODE
+    unset HAOS_MODE
 }
 
 reinit_debug

@@ -157,7 +157,7 @@ do_grow_live() {
 }
 
 grow_live() {
-    if [ "$K3OS_MODE" != "local" ]; then
+    if [ "$HAOS_MODE" != "local" ]; then
         return 0
     fi
 
@@ -166,7 +166,7 @@ grow_live() {
         if [ ! -e "${DEV}${NUM}" ]; then
             # /dev/sda2 => /dev/sda2
             # /dev/nvme0n1p2 => /dev/nvme0n1p2
-            PART=$(blkid -L K3OS_STATE)
+            PART=$(blkid -L HAOS_STATE)
 
             # /dev/sda2 => /dev/sda
             # /dev/nvme0n1p2 => /dev/nvme0n1
