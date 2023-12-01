@@ -12,7 +12,7 @@ import (
 )
 
 func Run() error {
-	fmt.Println("\nRunning k3OS configuration")
+	fmt.Println("\nRunning HAOS configuration")
 
 	cfg, err := config.ReadConfig()
 	if err != nil {
@@ -108,7 +108,7 @@ func runInstall(cfg config.CloudConfig) error {
 		defer os.Remove(tempFile.Name())
 	}
 
-	cmd := exec.Command("/usr/libexec/k3os/install")
+	cmd := exec.Command("/usr/libexec/haos/install")
 	cmd.Env = append(os.Environ(), ev...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout

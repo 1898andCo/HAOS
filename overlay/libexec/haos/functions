@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export SCRIPTS=/usr/libexec/k3os
+export SCRIPTS=/usr/libexec/haos
 export K3OS_SYSTEM=/.base/k3os/system
 
 reinit_debug()

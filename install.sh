@@ -156,7 +156,7 @@ set gfxpayload=keep
 insmod all_video
 insmod gfxterm
 
-menuentry "k3OS Current" {
+menuentry "HAOS Current" {
   search.fs_label K3OS_STATE root
   set sqfile=/k3os/system/kernel/current/kernel.squashfs
   loopback loop0 /\$sqfile
@@ -165,7 +165,7 @@ menuentry "k3OS Current" {
   initrd /k3os/system/kernel/current/initrd
 }
 
-menuentry "k3OS Previous" {
+menuentry "HAOS Previous" {
   search.fs_label K3OS_STATE root
   set sqfile=/k3os/system/kernel/previous/kernel.squashfs
   loopback loop0 /\$sqfile
@@ -174,7 +174,7 @@ menuentry "k3OS Previous" {
   initrd /k3os/system/kernel/previous/initrd
 }
 
-menuentry "k3OS Rescue (current)" {
+menuentry "HAOS Rescue (current)" {
   search.fs_label K3OS_STATE root
   set sqfile=/k3os/system/kernel/current/kernel.squashfs
   loopback loop0 /\$sqfile
@@ -183,7 +183,7 @@ menuentry "k3OS Rescue (current)" {
   initrd /k3os/system/kernel/current/initrd
 }
 
-menuentry "k3OS Rescue (previous)" {
+menuentry "HAOS Rescue (previous)" {
   search.fs_label K3OS_STATE root
   set sqfile=/k3os/system/kernel/previous/kernel.squashfs
   loopback loop0 /\$sqfile

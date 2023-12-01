@@ -84,7 +84,7 @@ RUN rm -rf \
     /usr/src/image/usr/share/vim/vim81/tutor \
     /usr/src/image/usr/share/vim/vim81/doc
 
-COPY --from=k3s /output/install.sh /usr/src/image/libexec/k3os/k3s-install.sh
+COPY --from=k3s /output/install.sh /usr/src/image/libexec/haos/k3s-install.sh
 COPY --from=progs /output/metadata /usr/src/image/sbin/metadata
 COPY --from=progs /output/kubectx/kubectx /output/kubectx/kubens /usr/src/image/bin/
 
@@ -96,7 +96,7 @@ RUN ln -s k3s /usr/src/image/sbin/kubectl
 RUN ln -s k3s /usr/src/image/sbin/crictl
 RUN ln -s k3s /usr/src/image/sbin/ctr
 
-COPY install.sh /usr/src/image/libexec/k3os/install
+COPY install.sh /usr/src/image/libexec/haos/install
 RUN sed -i -e "s/%VERSION%/${VERSION}/g" -e "s/%ARCH%/${ARCH}/g" /usr/src/image/lib/os-release
 RUN mkdir -p /output && \
     mksquashfs /usr/src/image /output/rootfs.squashfs

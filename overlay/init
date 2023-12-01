@@ -9,7 +9,7 @@ rescue() {
 
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
-. /usr/libexec/k3os/functions
+. /usr/libexec/haos/functions
 . /usr/lib/os-release
 
 pinfo Welcome to $PRETTY_NAME

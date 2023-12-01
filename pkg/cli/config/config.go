@@ -23,7 +23,7 @@ var (
 func Command() cli.Command {
 	return cli.Command{
 		Name:      "config",
-		Usage:     "configure k3OS",
+		Usage:     "configure HAOS",
 		ShortName: "cfg",
 		// Aliases: []string{
 		// 	"ccapply",

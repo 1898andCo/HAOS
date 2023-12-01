@@ -159,7 +159,7 @@ func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
 		args = append(args, "--kubelet-arg", "register-with-taints="+taint)
 	}
 
-	cmd := exec.Command("/usr/libexec/k3os/k3s-install.sh", args...)
+	cmd := exec.Command("/usr/libexec/haos/k3s-install.sh", args...)
 	cmd.Env = append(os.Environ(), vars...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
