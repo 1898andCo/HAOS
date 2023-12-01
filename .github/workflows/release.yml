@@ -73,6 +73,17 @@ jobs:
           asset_name: haos-amd64.iso
           asset_content_type: application/octet-stream
 
+
+      - name: Upload haos-vm-amd64-iso
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/artifacts/haos-vm-amd64.iso
+          asset_name: haos-vm-amd64.iso
+          asset_content_type: application/octet-stream          
+
       - name: Upload haos-initrd-amd64
         uses: actions/upload-release-asset@v1
         env:
@@ -123,15 +134,7 @@ jobs:
           asset_name: haos-rootfs-amd64.tar.gz
           asset_content_type: application/gzip
 
-      - name: Upload haos-vm-amd64-iso
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/artifacts/haos-vm-amd64.iso
-          asset_name: haos-vm-amd64.iso
-          asset_content_type: application/octet-stream
+
 
       - name: Upload haos-vmlinuz-amd64
         uses: actions/upload-release-asset@v1
