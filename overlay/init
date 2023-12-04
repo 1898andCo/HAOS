@@ -2,7 +2,7 @@
 set -e
 
 rescue() {
-    echo ERROR "Something went wrong, run with cmdline k3os.debug for more logging"
+    echo ERROR "Something went wrong, run with cmdline haos.debug for more logging"
     echo Dropping to shell
     exec bash
 }
@@ -32,7 +32,7 @@ fi
 
 trap rescue EXIT
 
-export HAOS_MODE=$(</run/k3os/mode)
+export HAOS_MODE=$(</run/haos/mode)
 pinfo Running mode: ${HAOS_MODE}
 source $SCRIPTS/mode-${HAOS_MODE}
 

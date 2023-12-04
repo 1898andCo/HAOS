@@ -383,8 +383,8 @@ When using an overlay install such as on Raspberry Pi (see [ARM Overlay Installa
 
 ```bash
 export HAOS_VERSION=v0.10.0
-/usr/share/1898andCo/HAOS/scripts/k3os-upgrade-rootfs
-/usr/share/1898andCo/HAOS/scripts/k3os-upgrade-kernel
+/usr/share/1898andCo/HAOS/scripts/haos-upgrade-rootfs
+/usr/share/1898andCo/HAOS/scripts/haos-upgrade-kernel
 ```
 
 You should always remember to backup your data first, and reboot after upgrading.

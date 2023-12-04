@@ -2,7 +2,7 @@
 set -e
 
 export SCRIPTS=/usr/libexec/haos
-export HAOS_SYSTEM=/.base/k3os/system
+export HAOS_SYSTEM=/.base/haos/system
 
 reinit_debug() {
     if [ "$HAOS_DEBUG" = "true" ]; then
@@ -10,7 +10,7 @@ reinit_debug() {
         return 0
     fi
 
-    if [ -e /run/k3os/debug ]; then
+    if [ -e /run/haos/debug ]; then
         set -x
         return 0
     fi
@@ -18,10 +18,10 @@ reinit_debug() {
     if [ -e /proc/cmdline ]; then
         for x in $(cat /proc/cmdline); do
             case $x in
-            k3os.debug*)
+            haos.debug*)
                 export HAOS_DEBUG=true
-                mkdir -p /run/k3os
-                echo debug >/run/k3os/debug || true
+                mkdir -p /run/haos
+                echo debug >/run/haos/debug || true
                 ;;
             esac
         done
@@ -38,14 +38,14 @@ setup_kernel() {
         return 0
     fi
 
-    mkdir -p /run/k3os/kernel
-    mount -t squashfs $KERNEL /run/k3os/kernel
+    mkdir -p /run/haos/kernel
+    mount -t squashfs $KERNEL /run/haos/kernel
 
-    mount --bind /run/k3os/kernel/lib/modules /lib/modules
-    mount --bind /run/k3os/kernel/lib/firmware /lib/firmware
-    mount --bind /run/k3os/kernel/headers /usr/src
+    mount --bind /run/haos/kernel/lib/modules /lib/modules
+    mount --bind /run/haos/kernel/lib/firmware /lib/firmware
+    mount --bind /run/haos/kernel/headers /usr/src
 
-    umount /run/k3os/kernel
+    umount /run/haos/kernel
 }
 
 perr() {
@@ -62,12 +62,12 @@ pinfo() {
 }
 
 cleanup() {
-    rm -rf /run/k3os
+    rm -rf /run/haos
     unset SCRIPTS
     unset HAOS_SYSTEM
     if [ -n "$HAOS_MODE" ]; then
-        mkdir -p /run/k3os
-        echo "$HAOS_MODE" >/run/k3os/mode
+        mkdir -p /run/haos
+        echo "$HAOS_MODE" >/run/haos/mode
     fi
     unset HAOS_MODE
 }

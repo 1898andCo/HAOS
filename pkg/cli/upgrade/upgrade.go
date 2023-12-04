@@ -26,7 +26,7 @@ func Command() cli.Command {
 		Usage: "perform upgrades",
 		Flags: []cli.Flag{
 			cli.BoolFlag{
-				Name:        "k3os",
+				Name:        "haos",
 				EnvVar:      "HAOS_UPGRADE_K3OS",
 				Destination: &upgradeK3OS,
 				Hidden:      true,
@@ -45,7 +45,7 @@ func Command() cli.Command {
 			},
 			cli.BoolFlag{
 				Name:        "rootfs",
-				Usage:       "upgrade k3os+k3s",
+				Usage:       "upgrade haos+k3s",
 				EnvVar:      "HAOS_UPGRADE_ROOTFS",
 				Destination: &upgradeRootFS,
 			},
@@ -133,7 +133,7 @@ func Run(_ *cli.Context) {
 	var atLeastOneComponentCopied bool
 
 	if upgradeK3OS {
-		if copied, err := system.CopyComponent(sourceDir, destinationDir, doRemount, "k3os"); err != nil {
+		if copied, err := system.CopyComponent(sourceDir, destinationDir, doRemount, "haos"); err != nil {
 			logrus.Error(err)
 		} else if copied {
 			atLeastOneComponentCopied = true

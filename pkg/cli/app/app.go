@@ -19,7 +19,7 @@ var (
 // New CLI App
 func New() *cli.App {
 	app := cli.NewApp()
-	app.Name = "k3os"
+	app.Name = "haos"
 	app.Usage = "Booting to k3s so you don't have to"
 	app.Version = version.Version
 	cli.VersionPrinter = func(c *cli.Context) {

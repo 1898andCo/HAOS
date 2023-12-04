@@ -7,9 +7,9 @@ ARG TAG
 FROM ${REPO}/haos-package:${TAG}
 ARG VERSION
 
-COPY --from=kernel /output/ /output/k3os/system/kernel/
+COPY --from=kernel /output/ /output/haos/system/kernel/
 
-WORKDIR /output/k3os/system/kernel
+WORKDIR /output/haos/system/kernel
 RUN mkdir -vp $(cat version)
 RUN ln -sf $(cat version) current
 RUN mv -vf initrd kernel.squashfs current/

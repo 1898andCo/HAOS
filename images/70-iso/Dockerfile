@@ -31,14 +31,14 @@ COPY grub.cfg /usr/src/iso/boot/grub/grub.cfg
 
 COPY --from=package /output/ /usr/src/iso/
 
-COPY config.yaml /usr/src/iso/k3os/system/
+COPY config.yaml /usr/src/iso/haos/system/
 RUN mkdir -p /output && \
     grub-mkrescue -o /output/haos.iso /usr/src/iso/. -- -volid HAOS -joliet on && \
     [ -e /output/haos.iso ] # grub-mkrescue doesn't exit non-zero on failure
 
 # [START] Used in the creation of the virtual image version
-RUN rm -f /usr/src/iso/k3os/system/kernel/current/kernel.squashfs
-COPY --from=package /output-vm/kernel.vm.squashfs /usr/src/iso/k3os/system/kernel/current/kernel.squashfs
+RUN rm -f /usr/src/iso/haos/system/kernel/current/kernel.squashfs
+COPY --from=package /output-vm/kernel.vm.squashfs /usr/src/iso/haos/system/kernel/current/kernel.squashfs
 RUN mkdir -p /output && \
     grub-mkrescue -o /output/haos-vm.iso /usr/src/iso/. -- -volid HAOS -joliet on && \
     [ -e /output/haos-vm.iso ] # grub-mkrescue doesn't exit non-zero on failure

@@ -134,7 +134,7 @@
 - **update-issue:** improved font choice
 
 ### Dependency Updates
-- **k3os:** update to golang 1.16.x
+- **haos:** update to golang 1.16.x
 - **vendor:** tidy vendors
 
 ### Documentation Improvements
@@ -149,7 +149,7 @@
 
 ### Maintenance
 - **docker:** update docker ignore
-- **drone:** revert package names to k3os
+- **drone:** revert package names to haos
 - **drone:** add cache step to build
 - **drone:** swapped git sync method
 - **update-issue:** update to BLAOS

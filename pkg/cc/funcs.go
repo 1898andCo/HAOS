@@ -146,9 +146,9 @@ func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
 		labels = append(labels, fmt.Sprintf("%s=%s", k, v))
 	}
 	if mode != "" {
-		labels = append(labels, fmt.Sprintf("k3os.io/mode=%s", mode))
+		labels = append(labels, fmt.Sprintf("haos.io/mode=%s", mode))
 	}
-	labels = append(labels, fmt.Sprintf("k3os.io/version=%s", version.Version))
+	labels = append(labels, fmt.Sprintf("haos.io/version=%s", version.Version))
 	sort.Strings(labels)
 
 	for _, l := range labels {
@@ -178,7 +178,7 @@ func ApplyInstall(cfg *config.CloudConfig) error {
 		return nil
 	}
 
-	cmd := exec.Command("k3os", "install")
+	cmd := exec.Command("haos", "install")
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	cmd.Stdin = os.Stdin

@@ -2,44 +2,39 @@
 
 set -e
 
-if [ $(whoami) != "root" ]
-then
-	echo "This script must be run as root."
-	exit 1
+if [ $(whoami) != "root" ]; then
+    echo "This script must be run as root."
+    exit 1
 fi
 
 PROC=$(uname -m)
 
-if [ ! -d /k3os/system/kernel ]
-then
-  echo "This system seems to be using a custom kernel, no kernel updates available."
-	exit 1
-elif [ $PROC == "x86_64" ]
-then
-	ARCH="amd64"
-elif [ $PROC == "aarch64" ]
-then
-	ARCH="arm64"
-elif [[ $PROC == arm* ]] # catches armv7l and armhf
-then
-	ARCH="arm"
-	echo "k3os for 32-bit ARM architecture only provides rootfs, no kernel updates available."
-	exit 1
+if [ ! -d /haos/system/kernel ]; then
+    echo "This system seems to be using a custom kernel, no kernel updates available."
+    exit 1
+elif [ $PROC == "x86_64" ]; then
+    ARCH="amd64"
+elif [ $PROC == "aarch64" ]; then
+    ARCH="arm64"
+elif [[ $PROC == arm* ]]; then # catches armv7l and armhf
+    ARCH="arm"
+    echo "haos for 32-bit ARM architecture only provides rootfs, no kernel updates available."
+    exit 1
 else
-	echo "Unsupported CPU architecture."
-	exit 1
+    echo "Unsupported CPU architecture."
+    exit 1
 fi
 
 echo "Kernel Upgrade complete!"
 
 echo "Starting rootfs upgrade."
-cd /k3os/system
+cd /haos/system
 mount -o remount,rw .
 
 mv ${PACKAGE}/haos-rootfs-amd64.tar.gz ./
-tar -xzvf k3os-rootfs-amd64.tar.gz --strip-components=3 -C ./
+tar -xzvf haos-rootfs-amd64.tar.gz --strip-components=3 -C ./
 
-rm -rf k3os-rootfs-amd64.tar.gz
+rm -rf haos-rootfs-amd64.tar.gz
 sync
 
 rm -rf ${PACKAGE}

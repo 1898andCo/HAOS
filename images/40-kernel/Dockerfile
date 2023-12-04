@@ -30,12 +30,12 @@ RUN cd /usr/src/kernel && \
 RUN cp /usr/src/kernel/version /output/ && \
     cp /usr/src/kernel/vmlinuz /output/
 
-COPY --from=bin /output/ /usr/src/k3os/
+COPY --from=bin /output/ /usr/src/haos/
 RUN cd /usr/src/initrd && \
-    mkdir -p k3os/system/k3os/${TAG} && \
-    cp /usr/src/k3os/k3os k3os/system/k3os/${TAG} && \
-    ln -s ${TAG} k3os/system/k3os/current && \
-    ln -s /k3os/system/k3os/current/k3os init
+    mkdir -p haos/system/haos/${TAG} && \
+    cp /usr/src/haos/haos haos/system/haos/${TAG} && \
+    ln -s ${TAG} haos/system/haos/current && \
+    ln -s /haos/system/haos/current/haos init
 
 RUN cd /usr/src/initrd && \
     find . | cpio -H newc -o | gzip -c -1 > /output/initrd
