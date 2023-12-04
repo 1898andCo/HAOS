@@ -13,19 +13,11 @@ SEASCRIPT=./scripts/sea_scripts
 
 
 # CP OS Update files to staging - amd64
-#cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64"
-#cp "${DIST}/k3os-kernel-amd64.squashfs" "${PACK}/amd64"
 cp "${DIST}/haos-rootfs-amd64.tar.gz" "${PACK}/amd64"
-#cp "${DIST}/k3os-kernel-version-amd64" "${PACK}/amd64"
-#cp "${DIST}/k3os-version-amd64" "${PACK}/amd64"
 
 # CP OS Update files to staging - amd64-vm
-#cp "${DIST}/k3os-initrd-amd64" "${PACK}/amd64-vm"
-#cp "${DIST}/k3os-kernel-vm-amd64.squashfs" "${PACK}/amd64-vm/k3os-kernel-amd64.squashfs"
 cp "${DIST}/haos-rootfs-amd64.tar.gz" "${PACK}/amd64-vm" # TODO: this needs to be reviewed. It will contain the firmware that we remove for vm versions
-                                                         # TODO: This applies to the dockerhub k3os, we need to generate a vm version
-#cp "${DIST}/k3os-kernel-version-amd64" "${PACK}/amd64-vm"
-#cp "${DIST}/k3os-version-amd64" "${PACK}/amd64-vm"
+                                                         # TODO: This applies to the dockerhub haos, we need to generate a vm version
 
 # CP Installation Script
 cp "${SEASCRIPT}/run_update2" "${PACK}/amd64"
