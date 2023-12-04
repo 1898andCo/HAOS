@@ -213,7 +213,7 @@ EOF
 }
 
 get_iso() {
-    ISO_DEVICE=$(blkid -L K3OS || true)
+    ISO_DEVICE=$(blkid -L HAOS || true)
     if [ -z "${ISO_DEVICE}" ]; then
         for i in $(lsblk -o NAME,TYPE -n | grep -w disk | awk '{print $1}'); do
             mkdir -p ${DISTRO}
