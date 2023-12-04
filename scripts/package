@@ -16,7 +16,7 @@ popd
 
 mkdir -p ./build
 ID=$(docker create ${REPO}/haos-package:${TAG})
-docker cp ${ID}:/output/k3os ./build/
+docker cp ${ID}:/output/haos ./build/
 docker rm -fv $ID
 
 docker build \

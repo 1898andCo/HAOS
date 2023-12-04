@@ -3,7 +3,7 @@
         {
             "flavor": "{{user `os_flavor`}}",
             "floating_ip_pool": "{{user `os_floating_ip_pool`}}",
-            "image_name": "k3OS-{{user `k3os_version`}}-amd64",
+            "image_name": "k3OS-{{user `haos_version`}}-amd64",
             "networks": "{{user `os_network_id`}}",
             "security_groups": [
                 "default"
@@ -41,8 +41,8 @@
         }
     ],
     "variables": {
-        "iso_url": "https://github.com/1898andCo/HAOS/releases/download/v0.11.1/k3os-amd64.iso",
-        "k3os_version": "v0.11.1",
+        "iso_url": "https://github.com/1898andCo/HAOS/releases/download/v0.11.1/haos-amd64.iso",
+        "haos_version": "v0.11.1",
         "os_flavor": "{{env `OS_FLAVOR`}}",
         "os_floating_ip_pool": "{{env `OS_FLOATING_IP_POOL`}}",
         "os_network_id": "{{env `OS_NETWORK_ID`}}",

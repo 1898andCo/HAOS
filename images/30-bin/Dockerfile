@@ -11,7 +11,7 @@ ARG TAG
 FROM ${REPO}/haos-base:${TAG}
 
 COPY --from=rootfs /output/rootfs.squashfs /usr/src/
-COPY install.sh /output/k3os-install.sh
-COPY --from=progs /output/haos /output/k3os
-RUN echo -n "_sqmagic_" >> /output/k3os
-RUN cat /usr/src/rootfs.squashfs >> /output/k3os
+COPY install.sh /output/haos-install.sh
+COPY --from=progs /output/haos /output/haos
+RUN echo -n "_sqmagic_" >> /output/haos
+RUN cat /usr/src/rootfs.squashfs >> /output/haos

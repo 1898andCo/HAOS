@@ -10,7 +10,7 @@ ARG REPO
 ARG TAG
 FROM ${REPO}/haos-k3s:${TAG} as k3s
 
-FROM base as k3os-build
+FROM base as haos-build
 ARG VERSION
 ARG ARCH
 RUN apk --update add \
@@ -90,8 +90,8 @@ COPY --from=progs /output/kubectx/kubectx /output/kubectx/kubens /usr/src/image/
 
 COPY overlay/ /usr/src/image/
 
-RUN ln -s /k3os/system/k3os/current/k3os /usr/src/image/sbin/k3os
-RUN ln -s /k3os/system/k3s/current/k3s /usr/src/image/sbin/k3s
+RUN ln -s /haos/system/haos/current/haos /usr/src/image/sbin/haos
+RUN ln -s /haos/system/k3s/current/k3s /usr/src/image/sbin/k3s
 RUN ln -s k3s /usr/src/image/sbin/kubectl
 RUN ln -s k3s /usr/src/image/sbin/crictl
 RUN ln -s k3s /usr/src/image/sbin/ctr

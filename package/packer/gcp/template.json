@@ -4,7 +4,7 @@
             "account_file": "account.json",
             "disk_size": "50",
             "disk_type": "pd-ssd",
-            "image_name": "rancher-k3os-{{user `k3os_version` | clean_resource_name}}-b{{isotime `200601020304`}}",
+            "image_name": "rancher-haos-{{user `haos_version` | clean_resource_name}}-b{{isotime `200601020304`}}",
             "machine_type": "n1-standard-2",
             "network": "default",
             "omit_external_ip": false,
@@ -47,8 +47,8 @@
     ],
     "variables": {
         "gcp_project_id": "{{env `GCP_PROJECT_ID`}}",
-        "iso_url": "https://github.com/1898andCo/HAOS/releases/download/v0.11.0/k3os-amd64.iso",
-        "k3os_version": "v0.11.0",
+        "iso_url": "https://github.com/1898andCo/HAOS/releases/download/v0.11.0/haos-amd64.iso",
+        "haos_version": "v0.11.0",
         "region": "us-east1-d"
     }
 }

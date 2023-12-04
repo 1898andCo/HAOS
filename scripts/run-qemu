@@ -1,6 +1,6 @@
 #!/bin/bash
 . $(dirname $0)/version
-: ${STATE_DIR:=$(dirname $0)/../build/state/k3os-$TAG} # unique value per vm instance
+: ${STATE_DIR:=$(dirname $0)/../build/state/haos-$TAG} # unique value per vm instance
 
 set -e
 
@@ -21,16 +21,16 @@ fi
 
 # Example Usage
 ## live cd boot
-# ./scripts/run-qemu k3os.mode=live
+# ./scripts/run-qemu haos.mode=live
 
 ## silent install
-# DISK_NAME=test.img ./scripts/run-qemu k3os.mode=install k3os.install.silent k3os.install.device=/dev/vda k3os.install.power_off=true
+# DISK_NAME=test.img ./scripts/run-qemu haos.mode=install haos.install.silent haos.install.device=/dev/vda haos.install.power_off=true
 
 ## run installed vm
-# DISK_NAME=test.img ./scripts/run-qemu k3os.password=rancher
+# DISK_NAME=test.img ./scripts/run-qemu haos.password=rancher
 
 ## recover installed vm
-# DISK_NAME=test.img ./scripts/run-qemu k3os.password=rancher k3os.mode=live
+# DISK_NAME=test.img ./scripts/run-qemu haos.password=rancher haos.mode=live
 
 exec $QEMU_SYSTEM \
     -m ${MEMORY:=2048} \

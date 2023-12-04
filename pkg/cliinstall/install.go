@@ -79,7 +79,7 @@ func runInstall(cfg config.CloudConfig) error {
 	}
 
 	if cfg.K3OS.Install.ConfigURL == "" {
-		tempFile, err = ioutil.TempFile("/tmp", "k3os.XXXXXXXX")
+		tempFile, err = ioutil.TempFile("/tmp", "haos.XXXXXXXX")
 		if err != nil {
 			return err
 		}

@@ -39,8 +39,8 @@ config.vm.provision 'shell',
   inline: <<-SHELL
 mkdir -p /mnt
 mount /dev/sda1 /mnt
-cat <<EOF > /mnt/k3os/system/config.yaml
-k3os:
+cat <<EOF > /mnt/haos/system/config.yaml
+haos:
   token: EbvX0V38syjPQBZJ71tb9EIHbyL5mISBqDSTa2aJt7LSCF1JEW
   password: rancher
 EOF

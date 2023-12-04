@@ -2,7 +2,7 @@
     "builders": [
         {
             "access_key": "{{user `aws_access_key`}}",
-            "ami_name": "rancher-k3os-{{user `k3os_version`}}-arm64-{{isotime `200601020304`}}",
+            "ami_name": "rancher-haos-{{user `haos_version`}}-arm64-{{isotime `200601020304`}}",
             "instance_type": "a1.large",
             "region": "{{user `region`}}",
             "secret_key": "{{user `aws_secret_key`}}",
@@ -20,7 +20,7 @@
             "ssh_username": "ubuntu",
             "tags": {
                 "Name": "k3OS",
-                "Version": "{{user `k3os_version`}}"
+                "Version": "{{user `haos_version`}}"
             },
             "type": "amazon-ebs"
         }
@@ -55,8 +55,8 @@
     "variables": {
         "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
         "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-        "iso_url": "https://github.com/1898andCo/HAOS/releases/download/v0.11.0/k3os-arm64.iso",
-        "k3os_version": "v0.11.0",
+        "iso_url": "https://github.com/1898andCo/HAOS/releases/download/v0.11.0/haos-arm64.iso",
+        "haos_version": "v0.11.0",
         "region": "{{env `AWS_DEFAULT_REGION`}}"
     }
 }

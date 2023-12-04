@@ -65,7 +65,7 @@ setup_services() {
 }
 
 setup_config() {
-    k3os config --boot
+    haos config --boot
     if [ -e /etc/conf.d/udev-settle ]; then
         ln -s /etc/init.d/udev-settle /etc/runlevels/sysinit/
     fi
@@ -116,7 +116,7 @@ setup_hostname() {
     fi
 
     mkdir -p /var/lib/1898andCo/HAOS
-    HOSTNAME=k3os-${RANDOM}
+    HOSTNAME=haos-${RANDOM}
     echo $HOSTNAME >/var/lib/1898andCo/HAOS/hostname
     cp /var/lib/1898andCo/HAOS/hostname /etc/hostname
 
@@ -128,9 +128,9 @@ setup_mounts() {
         mount --bind /.base/boot /boot
     fi
 
-    if [ -e /.base/k3os/system ]; then
-        mkdir -p /k3os/system
-        mount -o ro --bind /.base/k3os/system /k3os/system
+    if [ -e /.base/haos/system ]; then
+        mkdir -p /haos/system
+        mount -o ro --bind /.base/haos/system /haos/system
     fi
 
     # Twice on purpose.  A live system double mounts this
@@ -161,8 +161,8 @@ grow_live() {
         return 0
     fi
 
-    if [ -e /k3os/system/growpart ]; then
-        read DEV NUM </k3os/system/growpart
+    if [ -e /haos/system/growpart ]; then
+        read DEV NUM </haos/system/growpart
         if [ ! -e "${DEV}${NUM}" ]; then
             # /dev/sda2 => /dev/sda2
             # /dev/nvme0n1p2 => /dev/nvme0n1p2
@@ -178,7 +178,7 @@ grow_live() {
         fi
         pinfo Growing ${PART:=${DEV}${NUM}}
         do_grow_live $DEV $NUM $PART || true
-        rm -f /k3os/system/growpart
+        rm -f /haos/system/growpart
     fi
 }
 
