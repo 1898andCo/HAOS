@@ -9,7 +9,7 @@ import (
 )
 
 func ConfigureSysctl(cfg *config.CloudConfig) error {
-	for k, v := range cfg.K3OS.Sysctls {
+	for k, v := range cfg.HAOS.Sysctls {
 		elements := []string{"/proc", "sys"}
 		elements = append(elements, strings.Split(k, ".")...)
 		path := path.Join(elements...)

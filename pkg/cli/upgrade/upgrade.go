@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	upgradeK3OS, upgradeK3S             bool
+	upgradeHAOS, upgradeK3S             bool
 	upgradeKernel, upgradeRootFS        bool
 	doRemount, doSync, doReboot         bool
 	sourceDir, destinationDir, lockFile string
@@ -27,8 +27,8 @@ func Command() cli.Command {
 		Flags: []cli.Flag{
 			cli.BoolFlag{
 				Name:        "haos",
-				EnvVar:      "HAOS_UPGRADE_K3OS",
-				Destination: &upgradeK3OS,
+				EnvVar:      "HAOS_UPGRADE_HAOS",
+				Destination: &upgradeHAOS,
 				Hidden:      true,
 			},
 			cli.BoolFlag{
@@ -97,9 +97,9 @@ func Command() cli.Command {
 			}
 			if upgradeRootFS {
 				upgradeK3S = true
-				upgradeK3OS = true
+				upgradeHAOS = true
 			}
-			if !upgradeK3OS && !upgradeK3S && !upgradeKernel {
+			if !upgradeHAOS && !upgradeK3S && !upgradeKernel {
 				cli.ShowSubcommandHelp(c)
 				logrus.Error("must specify components to upgrade, e.g. `rootfs`, `kernel`")
 				os.Exit(1)
@@ -132,7 +132,7 @@ func Run(_ *cli.Context) {
 
 	var atLeastOneComponentCopied bool
 
-	if upgradeK3OS {
+	if upgradeHAOS {
 		if copied, err := system.CopyComponent(sourceDir, destinationDir, doRemount, "haos"); err != nil {
 			logrus.Error(err)
 		} else if copied {

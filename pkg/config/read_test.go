@@ -13,11 +13,11 @@ func TestDataSource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(cc.K3OS.DataSources) != 1 {
+	if len(cc.HAOS.DataSources) != 1 {
 		t.Fatal("no datasources")
 	}
-	if cc.K3OS.DataSources[0] != "foo" {
-		t.Fatalf("%s != foo", cc.K3OS.DataSources[0])
+	if cc.HAOS.DataSources[0] != "foo" {
+		t.Fatalf("%s != foo", cc.HAOS.DataSources[0])
 	}
 }
 
