@@ -40,6 +40,13 @@ jobs:
           commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
           file_pattern: CHANGELOG.md   
 
+
+
+
+
+      - name: Build and package
+        run:  make release
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -52,10 +59,6 @@ jobs:
           tag_name: ${{ github.ref_name }}
           body: ${{ steps.changelog.outputs.changes }}
 
-
-
-      - name: Build and package
-        run:  make release
 
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
