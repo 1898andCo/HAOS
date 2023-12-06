@@ -18,6 +18,7 @@ RUN apk --update --no-cache add \
     efibootmgr=18-r0 \
     eudev=3.2.11-r4 \
     findutils=4.9.0-r3 \
+    gcompat=1.1.0-r0 \
     grub-efi=2.06-r8 \
     haveged=1.9.18-r0 \
     htop=3.2.1-r1 \
