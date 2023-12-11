@@ -8,21 +8,6 @@ import (
 
 type Converter func(val interface{}) interface{}
 
-type fieldConverter struct {
-	mappers.DefaultMapper
-	fieldName string
-	converter Converter
-}
-
-func (f fieldConverter) ToInternal(data map[string]interface{}) error {
-	val, ok := data[f.fieldName]
-	if !ok {
-		return nil
-	}
-	data[f.fieldName] = f.converter(val)
-	return nil
-}
-
 type typeConverter struct {
 	mappers.DefaultMapper
 	converter Converter
@@ -32,18 +17,6 @@ type typeConverter struct {
 
 func (t *typeConverter) ToInternal(data map[string]interface{}) error {
 	return t.mappers.ToInternal(data)
-}
-
-func (t *typeConverter) ModifySchema(schema *mapper.Schema, schemas *mapper.Schemas) error {
-	for name, field := range schema.ResourceFields {
-		if field.Type == t.fieldType {
-			t.mappers = append(t.mappers, fieldConverter{
-				fieldName: name,
-				converter: t.converter,
-			})
-		}
-	}
-	return nil
 }
 
 func NewTypeConverter(fieldType string, converter Converter) mapper.Mapper {

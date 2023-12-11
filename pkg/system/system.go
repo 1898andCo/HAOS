@@ -1,16 +1,21 @@
+// Package system abstracts the filesystem layout of the system and exposes functions to copy and move files
 package system
 
-import "path/filepath"
+import (
+	"path/filepath"
+
+	"github.com/spf13/afero"
+)
 
 const (
 	// DefaultRootDir represents where persistent installations are located
-	DefaultRootDir = "/haos/system"
+	DefaultRootDir = "/HAOS/system"
 	// DefaultDataDir represents where persistent state is located
-	DefaultDataDir = "/haos/data"
+	DefaultDataDir = "/HAOS/data"
 	// DefaultLocalDir represents where local, persistent configuration is located
-	DefaultLocalDir = "/var/lib/1898andCo/HAOS"
+	DefaultLocalDir = "/var/lib/1898andCo/haos"
 	// DefaultStateDir represents where ephemeral state is located
-	DefaultStateDir = "/run/haos"
+	DefaultStateDir = "/run/HAOS"
 )
 
 var (
@@ -18,6 +23,7 @@ var (
 	dataDirectory  = DefaultDataDir
 	localDirectory = DefaultLocalDir
 	stateDirectory = DefaultStateDir
+	AppFs          = afero.NewOsFs()
 )
 
 // RootPath joins any number of elements into a single path underneath the persistent installation root, by default `DefaultRootDir`
