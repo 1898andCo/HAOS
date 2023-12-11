@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -14,6 +13,7 @@ import (
 	"github.com/rancher/mapper/convert"
 	merge2 "github.com/rancher/mapper/convert/merge"
 	"github.com/rancher/mapper/values"
+	"github.com/spf13/afero"
 )
 
 var (
@@ -78,6 +78,7 @@ func readersToObject(readers ...reader) (CloudConfig, error) {
 		HAOS: HAOS{
 			Install: &Install{},
 		},
+		Fs: system.AppFs,
 	}
 
 	data, err := merge(readers...)
@@ -97,6 +98,7 @@ func merge(readers ...reader) (map[string]interface{}, error) {
 		if err != nil {
 			return nil, err
 		}
+		// TODO: ToInternal NEVER returns error
 		if err := schema.Mapper.ToInternal(newData); err != nil {
 			return nil, err
 		}
@@ -116,7 +118,7 @@ func readLocalConfig() (map[string]interface{}, error) {
 func readLocalConfigs() []reader {
 	var result []reader
 
-	files, err := ioutil.ReadDir(localConfigs)
+	files, err := afero.ReadDir(system.AppFs, localConfigs)
 	if os.IsNotExist(err) {
 		return nil
 	} else if err != nil {
@@ -138,7 +140,7 @@ func readLocalConfigs() []reader {
 }
 
 func readFile(path string) (map[string]interface{}, error) {
-	f, err := ioutil.ReadFile(path)
+	f, err := afero.ReadFile(system.AppFs, path)
 	if os.IsNotExist(err) {
 		return nil, nil
 	} else if err != nil {
@@ -160,7 +162,7 @@ func readCmdline() (map[string]interface{}, error) {
 		return nil, nil
 	}
 
-	bytes, err := ioutil.ReadFile("/proc/cmdline")
+	bytes, err := afero.ReadFile(system.AppFs, "/proc/cmdline")
 	if os.IsNotExist(err) {
 		return nil, nil
 	} else if err != nil {

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+
+	"github.com/spf13/afero"
 )
 
 type HAOS struct {
@@ -50,6 +52,11 @@ type CloudConfig struct {
 	Runcmd            []string   `json:"runCmd,omitempty"`
 	Bootcmd           []string   `json:"bootCmd,omitempty"`
 	Initcmd           []string   `json:"initCmd,omitempty"`
+	Fs                afero.Fs   `json:"-"`
+}
+
+func (c *CloudConfig) InitFs(fs afero.Fs) {
+	c.Fs = fs
 }
 
 type File struct {

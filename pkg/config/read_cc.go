@@ -3,12 +3,13 @@ package config
 import (
 	"bytes"
 	"encoding/base64"
-	"io/ioutil"
 	"os"
 	"strings"
 
+	"github.com/1898andCo/HAOS/pkg/system"
 	"github.com/ghodss/yaml"
 	"github.com/rancher/mapper/convert"
+	"github.com/spf13/afero"
 )
 
 const (
@@ -21,12 +22,12 @@ func readCloudConfig() (map[string]interface{}, error) {
 	var keys []string
 	result := map[string]interface{}{}
 
-	hostname, err := ioutil.ReadFile(hostname)
+	hostname, err := afero.ReadFile(system.AppFs, hostname)
 	if err == nil {
 		result["hostname"] = strings.TrimSpace(string(hostname))
 	}
 
-	keyData, err := ioutil.ReadFile(ssh)
+	keyData, err := afero.ReadFile(system.AppFs, ssh)
 	if err != nil {
 		// ignore error
 		return result, nil
@@ -49,7 +50,7 @@ func readCloudConfig() (map[string]interface{}, error) {
 func readUserData() (map[string]interface{}, error) {
 	result := map[string]interface{}{}
 
-	data, err := ioutil.ReadFile(userdata)
+	data, err := afero.ReadFile(system.AppFs, userdata)
 	if os.IsNotExist(err) {
 		return nil, nil
 	} else if err != nil {
