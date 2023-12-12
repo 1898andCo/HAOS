@@ -21,6 +21,7 @@ func main() {
 	reexec.Register("enter-root", enterchroot.Enter)
 
 	if !reexec.Init() {
+		logrus.Info("Running in initrd mode")
 		app := app.New()
 		args := []string{app.Name}
 		path := filepath.Base(os.Args[0])
