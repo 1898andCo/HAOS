@@ -26,7 +26,7 @@ func Ask(cfg *config.CloudConfig) (bool, error) {
 }
 
 func isInstall(cfg *config.CloudConfig) (bool, error) {
-	mode, err := mode.Get()
+	mode, err := mode.Get(cfg)
 	if err != nil {
 		return false, err
 	}
@@ -127,7 +127,7 @@ func AskToken(cfg *config.CloudConfig, server bool) error {
 }
 
 func isServer(cfg *config.CloudConfig) (bool, error) {
-	mode, err := mode.Get()
+	mode, err := mode.Get(cfg)
 	if err != nil {
 		return false, err
 	}

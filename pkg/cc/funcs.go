@@ -210,7 +210,7 @@ func ApplyK3SNoRestart(cfg *config.CloudConfig) error {
 }
 
 func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
-	mode, err := mode.Get()
+	mode, err := mode.Get(cfg)
 	if err != nil {
 		return err
 	}
@@ -296,7 +296,7 @@ func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
 }
 
 func ApplyInstall(cfg *config.CloudConfig) error {
-	mode, err := mode.Get()
+	mode, err := mode.Get(cfg)
 	if err != nil {
 		return err
 	}
