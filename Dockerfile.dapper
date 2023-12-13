@@ -13,7 +13,7 @@ RUN apk --update --no-cache add \
     vim=9.0.2073-r0 \
     less=633-r0 \
     file=5.45-r0 \
-    curl=8.4.0-r0 \
+    curl=8.5.0-r0 \
     wget=1.21.4-r0 \
     ca-certificates=20230506-r0 \
     tar=1.34-r3
