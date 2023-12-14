@@ -72,7 +72,7 @@ func runInstall(cfg config.CloudConfig) error {
 	if !cfg.HAOS.Install.Silent {
 		val, err := questions.PromptBool("\nConfiguration\n"+"-------------\n\n"+
 			string(installBytes)+
-			"\nYour disk will be formatted and k3OS will be installed with the above configuration.\nContinue?", false)
+			"\nYour disk will be formatted and HAOS will be installed with the above configuration.\nContinue?", false)
 		if err != nil || !val {
 			return err
 		}
