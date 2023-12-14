@@ -30,7 +30,7 @@ setup_base() {
 
 setup_passwd() {
     # no passwords in live mode
-    passwd -d rancher >/dev/null 2>&1
+    passwd -d 1898andco >/dev/null 2>&1
 }
 
 setup_base

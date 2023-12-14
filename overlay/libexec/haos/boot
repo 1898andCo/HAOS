@@ -27,7 +27,7 @@ setup_ttys() {
 
 setup_sudoers() {
     echo '%sudo   ALL = (ALL) ALL' >/etc/sudoers.d/sudo
-    echo 'rancher ALL = (ALL) NOPASSWD: ALL' >>/etc/sudoers.d/sudo
+    echo '1898andco ALL = (ALL) NOPASSWD: ALL' >>/etc/sudoers.d/sudo
 }
 
 setup_services() {
@@ -110,15 +110,15 @@ setup_hostname() {
         return 0
     fi
 
-    if [ -e /var/lib/1898andCo/HAOS/hostname ]; then
-        cp /var/lib/1898andCo/HAOS/hostname /etc/hostname
+    if [ -e /var/lib/1898andco/HAOS/hostname ]; then
+        cp /var/lib/1898andco/HAOS/hostname /etc/hostname
         return 0
     fi
 
-    mkdir -p /var/lib/1898andCo/HAOS
+    mkdir -p /var/lib/1898andco/HAOS
     HOSTNAME=haos-${RANDOM}
-    echo $HOSTNAME >/var/lib/1898andCo/HAOS/hostname
-    cp /var/lib/1898andCo/HAOS/hostname /etc/hostname
+    echo $HOSTNAME >/var/lib/1898andco/HAOS/hostname
+    cp /var/lib/1898andco/HAOS/hostname /etc/hostname
 
 }
 
