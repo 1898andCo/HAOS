@@ -53,14 +53,16 @@ github.com/sirupsen/logrus
 # github.com/urfave/cli v1.22.2
 ## explicit
 github.com/urfave/cli
-# golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c
+# golang.org/x/crypto v0.17.0
 ## explicit
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a
+# golang.org/x/sys v0.15.0
 ## explicit
-golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
+# golang.org/x/term v0.15.0
+golang.org/x/term
 # gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
 ## explicit
 gopkg.in/freddierice/go-losetup.v1
