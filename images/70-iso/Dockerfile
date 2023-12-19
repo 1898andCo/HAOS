@@ -10,17 +10,17 @@ ARG ARCH
 
 
 RUN apk --update add \
-    xorriso=1.5.4-r2 \
-    grub=2.06-r8 \
-    grub-efi=2.06-r8 \
-    mtools=4.0.42-r0 \
-    libvirt=8.9.0-r4 \
-    qemu-img=7.1.0-r7
+    xorriso=1.5.4-r3 \
+    grub \
+    grub-efi \
+    mtools=4.0.43-r1 \
+    libvirt \
+    qemu-img
 RUN if [ "$ARCH" == "amd64" ]; then \
     apk --update add \ 
-    qemu-system-x86_64=7.1.0-r7 \
-    grub-bios=2.06-r8 \
-    ovmf=0.0.202208-r0 \
+    qemu-system-x86_64=8.0.5-r0 \
+    grub-bios \
+    ovmf \
     ;elif [ "$ARCH" == "arm64" ]; then  \
     apk add qemu-system-aarch647.1.0-r7 \
     ;fi
