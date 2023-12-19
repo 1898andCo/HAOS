@@ -1,6 +1,6 @@
 module github.com/1898andCo/HAOS
 
-go 1.16
+go 1.18
 
 require (
 	github.com/docker/docker v1.13.1
