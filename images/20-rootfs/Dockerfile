@@ -14,7 +14,7 @@ FROM base as haos-build
 ARG VERSION
 ARG ARCH
 RUN apk --update add \
-    squashfs-tools=4.5.1-r2
+    squashfs-tools=4.6.1-r1
 COPY --from=base /bin /usr/src/image/bin/
 COPY --from=base /lib /usr/src/image/lib/
 COPY --from=base /sbin /usr/src/image/sbin/
