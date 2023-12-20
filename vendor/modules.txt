@@ -71,7 +71,7 @@ golang.org/x/term
 # gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
 ## explicit
 gopkg.in/freddierice/go-losetup.v1
-# gopkg.in/yaml.v2 v2.2.4
+# gopkg.in/yaml.v2 v2.2.8
 ## explicit
 gopkg.in/yaml.v2
 # pault.ag/go/modprobe v0.1.2
