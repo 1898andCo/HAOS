@@ -57,10 +57,17 @@ RUN apk --update --no-cache add \
     tzdata=2023c-r1 \
     util-linux=2.38.1-r8 \
     vim=9.0.2073-r0 \
+    virt-what=1.25-r1 \
     wireguard-tools=1.0.20210914-r3 \
     wpa_supplicant=2.10-r7 \
     xfsprogs=6.2.0-r2 \
-    xz=5.4.3-r0
+    xz=5.4.3-r0 \
+    grub-bios \
+    open-vm-tools=12.3.0-r0 \
+    open-vm-tools-deploypkg=12.3.0-r0 \
+    open-vm-tools-guestinfo=12.3.0-r0 \
+    open-vm-tools-static=12.3.0-r0 \
+    open-vm-tools-vmbackup=12.3.0-r0
 
 RUN mv -vf /etc/conf.d/qemu-guest-agent /etc/conf.d/qemu-guest-agent.orig && \
     mv -vf /etc/conf.d/rngd /etc/conf.d/rngd.orig && \
