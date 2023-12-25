@@ -1,6 +1,8 @@
 ### BASE ###
 FROM alpine:3.18 as base
 ARG ARCH
+ENV ARCH ${ARCH}
+ENV VERSION v1.43.0
 RUN apk --update --no-cache add \
     bash=5.2.15-r5 \ 
     bash-completion=2.11-r5 \
@@ -75,3 +77,8 @@ RUN mv -vf /etc/conf.d/qemu-guest-agent /etc/conf.d/qemu-guest-agent.orig && \
     # replicate the default "no idea, friend" behavior of virt-what
     touch /usr/sbin/virt-what && \
     chmod +x /usr/sbin/virt-what # buildkit
+
+RUN curl -L https://github.com/replicatedhq/kots/releases/download/${VERSION}/kots_linux_amd64.tar.gz > kots_linux_amd64.tar.gz
+RUN tar -zxvf /kots_linux_amd64.tar.gz kots
+RUN rm -rf /kots_linux_amd64.tar.gz
+RUN mv -vf kots /sbin/kubectl-kots
