@@ -220,6 +220,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		fields := strings.Split(scanner.Text(), ":")
+		// TODO(username): this username string needs to be parameterized - probably in the config struct
 		if len(fields) > 1 && fields[0] == "rancher" {
 			cfg.HAOS.Password = fields[1]
 			return nil

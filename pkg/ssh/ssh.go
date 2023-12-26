@@ -26,6 +26,7 @@ func SetAuthorizedKeys(cfg *config.CloudConfig, withNet bool) error {
 	if err != nil {
 		return err
 	}
+	// TODO(username): this username string needs to be parameterized - probably in the config struct
 	uid, gid, homeDir, err := findUserHomeDir(bytes, "rancher")
 	if err != nil {
 		return err
