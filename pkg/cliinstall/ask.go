@@ -201,7 +201,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 	}()
 
 	cmd := exec.Command("chpasswd")
-	// TODO(username): this username string needs to be parameterized (and then colon appended)
+	// TODO(username): username should be hardcoded to 1898andco (and then colon appended)
 	cmd.Stdin = strings.NewReader(fmt.Sprintf("rancher:%s", pass))
 	errBuffer := &bytes.Buffer{}
 	cmd.Stdout = os.Stdout
@@ -221,7 +221,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		fields := strings.Split(scanner.Text(), ":")
-		// TODO(username): this username string needs to be parameterized - probably in the config struct
+		// TODO(username): username should be hardcoded to 1898andco
 		if len(fields) > 1 && fields[0] == "rancher" {
 			cfg.HAOS.Password = fields[1]
 			return nil

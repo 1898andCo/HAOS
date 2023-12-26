@@ -17,13 +17,13 @@ var (
 )
 
 func PromptPassword() (string, bool, error) {
-	// TODO(username): this username string needs to be parameterized
+	// TODO(username): username should be hardcoded to 1898andco
 	fmt.Print("Please enter password for [rancher]: ")
 	p, err := MaskPassword(os.Stdin, os.Stdout)
 	if err != nil {
 		return "", false, errors.Wrapf(err, "failed to set password")
 	}
-	// TODO(username): this username string needs to be parameterized
+	// TODO(username): username should be hardcoded to 1898andco
 	fmt.Print("Confirm password for [rancher]: ")
 	c, err := MaskPassword(os.Stdin, os.Stdout)
 	if err != nil {
