@@ -201,6 +201,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 	}()
 
 	cmd := exec.Command("chpasswd")
+	// TODO(username): this username string needs to be parameterized (and then colon appended)
 	cmd.Stdin = strings.NewReader(fmt.Sprintf("rancher:%s", pass))
 	errBuffer := &bytes.Buffer{}
 	cmd.Stdout = os.Stdout

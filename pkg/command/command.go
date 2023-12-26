@@ -31,6 +31,8 @@ func SetPassword(password string) error {
 	if strings.HasPrefix(password, "$") {
 		cmd.Args = append(cmd.Args, "-e")
 	}
+	// TODO(username): this username string needs to be parameterized - probably in the config struct
+	// note that this variant takes a colon, probably best to store the base in and concat the colon on
 	cmd.Stdin = strings.NewReader(fmt.Sprint("rancher:", password))
 	cmd.Stdout = os.Stdout
 	errBuffer := &bytes.Buffer{}
