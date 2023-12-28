@@ -26,6 +26,7 @@ func SetAuthorizedKeys(cfg *config.CloudConfig, withNet bool) error {
 	if err != nil {
 		return err
 	}
+	// TODO(username): username should be hardcoded to 1898andco
 	uid, gid, homeDir, err := findUserHomeDir(bytes, "rancher")
 	if err != nil {
 		return err

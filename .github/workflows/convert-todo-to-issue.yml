@@ -1,0 +1,11 @@
+name: Parse Comments for Actions
+on:
+    push:
+    workflow_dispatch:
+
+jobs:
+  todo:              
+    runs-on: ubuntu-latest  
+    steps:
+        - name: TODO to Issue
+          uses: alstr/todo-to-issue-action@v4.11.1

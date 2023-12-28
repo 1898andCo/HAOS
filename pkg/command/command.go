@@ -31,6 +31,7 @@ func SetPassword(password string) error {
 	if strings.HasPrefix(password, "$") {
 		cmd.Args = append(cmd.Args, "-e")
 	}
+	// TODO(username): username should be hardcoded to 1898andco 
 	cmd.Stdin = strings.NewReader(fmt.Sprint("rancher:", password))
 	cmd.Stdout = os.Stdout
 	errBuffer := &bytes.Buffer{}
