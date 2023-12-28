@@ -10,19 +10,49 @@ import (
 	"github.com/1898andCo/HAOS/pkg/config"
 )
 
-func SetHostname(c *config.CloudConfig) error {
+type HostnameAbstract interface {
+	Sethostname([]byte) error
+	Hostname() (string, error)
+	Open(string) (*os.File, error)
+	Close(*os.File) error
+	WriteFile(string, []byte, os.FileMode) error
+}
+
+type HostnameConcrete struct{}
+
+func (HostnameConcrete) Sethostname(hostname []byte) error {
+	return syscall.Sethostname(hostname)
+}
+
+func (HostnameConcrete) Hostname() (string, error) {
+	return os.Hostname()
+}
+
+func (HostnameConcrete) Open(path string) (*os.File, error) {
+	return os.Open(path)
+}
+
+func (HostnameConcrete) Close(file *os.File) error {
+	return file.Close()
+}
+
+func (HostnameConcrete) WriteFile(path string, data []byte, perm os.FileMode) error {
+	return ioutil.WriteFile(path, data, perm)
+}
+
+func SetHostname(c *config.CloudConfig, call HostnameAbstract) error {
 	hostname := c.Hostname
 	if hostname == "" {
 		return nil
 	}
-	if err := syscall.Sethostname([]byte(hostname)); err != nil {
+	if err := call.Sethostname([]byte(hostname)); err != nil {
 		return err
 	}
-	return syncHostname()
+	return syncHostname(call)
 }
 
-func syncHostname() error {
-	hostname, err := os.Hostname()
+func syncHostname(h HostnameAbstract) error {
+	hostname, err := h.Hostname()
 	if err != nil {
 		return err
 	}
@@ -30,12 +60,12 @@ func syncHostname() error {
 		return nil
 	}
 
-	if err := ioutil.WriteFile("/etc/hostname", []byte(hostname+"\n"), 0644); err != nil {
+	if err := h.WriteFile("/etc/hostname", []byte(hostname+"\n"), 0644); err != nil {
 		return err
 	}
 
-	hosts, err := os.Open("/etc/hosts")
-	defer hosts.Close()
+	hosts, err := h.Open("/etc/hosts")
+	defer h.Close(hosts)
 	if err != nil {
 		return err
 	}
@@ -50,5 +80,5 @@ func syncHostname() error {
 		}
 		content += line + "\n"
 	}
-	return ioutil.WriteFile("/etc/hosts", []byte(content), 0600)
+	return h.WriteFile("/etc/hosts", []byte(content), 0600)
 }
