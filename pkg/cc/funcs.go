@@ -25,7 +25,7 @@ import (
 )
 
 func ApplyModules(cfg *config.CloudConfig) error {
-	return module.LoadModules(cfg)
+	return module.LoadModules(cfg, module.Concrete{})
 }
 
 func ApplySysctls(cfg *config.CloudConfig) error {

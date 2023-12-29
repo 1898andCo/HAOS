@@ -15,13 +15,31 @@ const (
 	procModulesFile = "/proc/modules"
 )
 
-func LoadModules(cfg *config.CloudConfig) error {
+type Abstract interface {
+	Open(string) (*os.File, error)
+	Close(*os.File) error
+	Load(string, string) error
+}
+
+type Concrete struct{}
+
+func (Concrete) Open(name string) (*os.File, error) {
+	return os.Open(name)
+}
+
+func (Concrete) Close(f *os.File) error {
+	return f.Close()
+}
+func (Concrete) Load(module, params string) error {
+	return modprobe.Load(module, params)
+}
+func LoadModules(cfg *config.CloudConfig, m Abstract) error {
 	loaded := map[string]bool{}
-	f, err := os.Open(procModulesFile)
+	f, err := m.Open(procModulesFile)
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer m.Close(f)
 	sc := bufio.NewScanner(f)
 	for sc.Scan() {
 		loaded[strings.SplitN(sc.Text(), " ", 2)[0]] = true
