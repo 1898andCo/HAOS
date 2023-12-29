@@ -10,28 +10,38 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func ExecuteCommand(commands []string) error {
+type Abstract interface {
+	Command(name string, arg ...string) *exec.Cmd
+}
+
+type Concrete struct{}
+
+func (Concrete) Command(name string, arg ...string) *exec.Cmd {
+	return exec.Command(name, arg...)
+}
+
+func ExecuteCommand(commands []string, c Abstract) error {
 	for _, cmd := range commands {
 		logrus.Debugf("running cmd `%s`", cmd)
-		c := exec.Command("sh", "-c", cmd)
-		c.Stdout = os.Stdout
-		c.Stderr = os.Stderr
-		if err := c.Run(); err != nil {
+		ce := exec.Command("sh", "-c", cmd)
+		ce.Stdout = os.Stdout
+		ce.Stderr = os.Stderr
+		if err := ce.Run(); err != nil {
 			return fmt.Errorf("failed to run %s: %v", cmd, err)
 		}
 	}
 	return nil
 }
 
-func SetPassword(password string) error {
+func SetPassword(password string, c Abstract) error {
 	if password == "" {
 		return nil
 	}
-	cmd := exec.Command("chpasswd")
+	cmd := c.Command("chpasswd")
 	if strings.HasPrefix(password, "$") {
 		cmd.Args = append(cmd.Args, "-e")
 	}
-	// TODO(username): username should be hardcoded to 1898andco 
+	// TODO(username): username should be hardcoded to 1898andco
 	cmd.Stdin = strings.NewReader(fmt.Sprint("rancher:", password))
 	cmd.Stdout = os.Stdout
 	errBuffer := &bytes.Buffer{}
