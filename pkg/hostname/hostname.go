@@ -10,7 +10,7 @@ import (
 	"github.com/1898andCo/HAOS/pkg/config"
 )
 
-type HostnameAbstract interface {
+type Abstract interface {
 	Sethostname([]byte) error
 	Hostname() (string, error)
 	Open(string) (*os.File, error)
@@ -18,29 +18,29 @@ type HostnameAbstract interface {
 	WriteFile(string, []byte, os.FileMode) error
 }
 
-type HostnameConcrete struct{}
+type Concrete struct{}
 
-func (HostnameConcrete) Sethostname(hostname []byte) error {
+func (Concrete) Sethostname(hostname []byte) error {
 	return syscall.Sethostname(hostname)
 }
 
-func (HostnameConcrete) Hostname() (string, error) {
+func (Concrete) Hostname() (string, error) {
 	return os.Hostname()
 }
 
-func (HostnameConcrete) Open(path string) (*os.File, error) {
+func (Concrete) Open(path string) (*os.File, error) {
 	return os.Open(path)
 }
 
-func (HostnameConcrete) Close(file *os.File) error {
+func (Concrete) Close(file *os.File) error {
 	return file.Close()
 }
 
-func (HostnameConcrete) WriteFile(path string, data []byte, perm os.FileMode) error {
+func (Concrete) WriteFile(path string, data []byte, perm os.FileMode) error {
 	return ioutil.WriteFile(path, data, perm)
 }
 
-func SetHostname(c *config.CloudConfig, call HostnameAbstract) error {
+func SetHostname(c *config.CloudConfig, call Abstract) error {
 	hostname := c.Hostname
 	if hostname == "" {
 		return nil
@@ -51,7 +51,7 @@ func SetHostname(c *config.CloudConfig, call HostnameAbstract) error {
 	return syncHostname(call)
 }
 
-func syncHostname(h HostnameAbstract) error {
+func syncHostname(h Abstract) error {
 	hostname, err := h.Hostname()
 	if err != nil {
 		return err
