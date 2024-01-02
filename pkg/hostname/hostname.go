@@ -10,7 +10,7 @@ import (
 	"github.com/1898andCo/HAOS/pkg/config"
 )
 
-type Abstract interface {
+type abstract interface {
 	Sethostname([]byte) error
 	Hostname() (string, error)
 	Open(string) (*os.File, error)
@@ -40,7 +40,7 @@ func (Concrete) WriteFile(path string, data []byte, perm os.FileMode) error {
 	return ioutil.WriteFile(path, data, perm)
 }
 
-func SetHostname(c *config.CloudConfig, call Abstract) error {
+func SetHostname(c *config.CloudConfig, call abstract) error {
 	hostname := c.Hostname
 	if hostname == "" {
 		return nil
@@ -51,7 +51,7 @@ func SetHostname(c *config.CloudConfig, call Abstract) error {
 	return syncHostname(call)
 }
 
-func syncHostname(h Abstract) error {
+func syncHostname(h abstract) error {
 	hostname, err := h.Hostname()
 	if err != nil {
 		return err
