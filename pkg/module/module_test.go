@@ -7,17 +7,17 @@ import (
 	"github.com/1898andCo/HAOS/pkg/config"
 )
 
-type Mock struct{}
+type mock struct{}
 
-func (Mock) Open(name string) (*os.File, error) {
+func (mock) Open(name string) (*os.File, error) {
 	return os.NewFile(0, "mock"), nil
 }
 
-func (Mock) Load(module, params string) error {
+func (mock) Load(module, params string) error {
 	return nil
 }
 
-func (Mock) Close(f *os.File) error {
+func (mock) Close(f *os.File) error {
 	err := f.Close()
 	if err != nil {
 		return err
@@ -26,8 +26,8 @@ func (Mock) Close(f *os.File) error {
 }
 
 func TestModule(t *testing.T) {
-	m := Mock{}
-	err := LoadModules(&config.CloudConfig{HAOS: config.HAOS{Modules: []string{}}}, m)
+	impl = mock{}
+	err := LoadModules(&config.CloudConfig{HAOS: config.HAOS{Modules: []string{}}})
 	if err != nil {
 		t.Errorf("failed to load modules: %v", err)
 	}
