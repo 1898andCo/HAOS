@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-type Mock struct{}
+type mock struct{}
 
-func (Mock) Command(name string, arg ...string) *exec.Cmd {
+func (mock) Command(name string, arg ...string) *exec.Cmd {
 	return exec.Command("echo", "mock")
 }
 
 func TestExecuteCommand(t *testing.T) {
-	impl = Mock{}
+	impl = mock{}
 	err := ExecuteCommand([]string{"echo"})
 	if err != nil {
 		t.Errorf("failed to execute command: %v", err)
@@ -20,7 +20,7 @@ func TestExecuteCommand(t *testing.T) {
 }
 
 func TestSetPassword(t *testing.T) {
-	impl = Mock{}
+	impl = mock{}
 	err := SetPassword("mock")
 	if err != nil {
 		t.Errorf("failed to set password: %v", err)

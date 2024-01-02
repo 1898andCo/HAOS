@@ -10,17 +10,17 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type Abstract interface {
+type abstract interface {
 	Command(name string, arg ...string) *exec.Cmd
 }
 
-type Concrete struct{}
+type concrete struct{}
 
-func (Concrete) Command(name string, arg ...string) *exec.Cmd {
+func (concrete) Command(name string, arg ...string) *exec.Cmd {
 	return exec.Command(name, arg...)
 }
 
-var impl Abstract = Concrete{}
+var impl abstract = concrete{}
 
 func ExecuteCommand(commands []string) error {
 	for _, cmd := range commands {
