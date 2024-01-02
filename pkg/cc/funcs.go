@@ -37,19 +37,19 @@ func ApplyHostname(cfg *config.CloudConfig) error {
 }
 
 func ApplyPassword(cfg *config.CloudConfig) error {
-	return command.SetPassword(cfg.HAOS.Password, command.Concrete{})
+	return command.SetPassword(cfg.HAOS.Password)
 }
 
 func ApplyRuncmd(cfg *config.CloudConfig) error {
-	return command.ExecuteCommand(cfg.Runcmd, command.Concrete{})
+	return command.ExecuteCommand(cfg.Runcmd)
 }
 
 func ApplyBootcmd(cfg *config.CloudConfig) error {
-	return command.ExecuteCommand(cfg.Bootcmd, command.Concrete{})
+	return command.ExecuteCommand(cfg.Bootcmd)
 }
 
 func ApplyInitcmd(cfg *config.CloudConfig) error {
-	return command.ExecuteCommand(cfg.Initcmd, command.Concrete{})
+	return command.ExecuteCommand(cfg.Initcmd)
 }
 
 func ApplyWriteFiles(cfg *config.CloudConfig) error {

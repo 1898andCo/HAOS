@@ -20,10 +20,12 @@ func (Concrete) Command(name string, arg ...string) *exec.Cmd {
 	return exec.Command(name, arg...)
 }
 
-func ExecuteCommand(commands []string, c Abstract) error {
+var impl Abstract = Concrete{}
+
+func ExecuteCommand(commands []string) error {
 	for _, cmd := range commands {
 		logrus.Debugf("running cmd `%s`", cmd)
-		ce := exec.Command("sh", "-c", cmd)
+		ce := impl.Command("sh", "-c", cmd)
 		ce.Stdout = os.Stdout
 		ce.Stderr = os.Stderr
 		if err := ce.Run(); err != nil {
@@ -33,11 +35,11 @@ func ExecuteCommand(commands []string, c Abstract) error {
 	return nil
 }
 
-func SetPassword(password string, c Abstract) error {
+func SetPassword(password string) error {
 	if password == "" {
 		return nil
 	}
-	cmd := c.Command("chpasswd")
+	cmd := impl.Command("chpasswd")
 	if strings.HasPrefix(password, "$") {
 		cmd.Args = append(cmd.Args, "-e")
 	}

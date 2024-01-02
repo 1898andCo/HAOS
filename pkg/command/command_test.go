@@ -12,14 +12,16 @@ func (Mock) Command(name string, arg ...string) *exec.Cmd {
 }
 
 func TestExecuteCommand(t *testing.T) {
-	err := ExecuteCommand([]string{"echo"}, Mock{})
+	impl = Mock{}
+	err := ExecuteCommand([]string{"echo"})
 	if err != nil {
 		t.Errorf("failed to execute command: %v", err)
 	}
 }
 
 func TestSetPassword(t *testing.T) {
-	err := SetPassword("mock", Mock{})
+	impl = Mock{}
+	err := SetPassword("mock")
 	if err != nil {
 		t.Errorf("failed to set password: %v", err)
 	}
