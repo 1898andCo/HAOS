@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -12,6 +13,27 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
+
+type Abstract interface {
+	Get(string) (*http.Response, error)
+	WriteFile(string, []byte, os.FileMode) error
+}
+
+type Concrete struct{}
+
+func (Concrete) Get(url string) (*http.Response, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download manifest URL")
+	}
+	return resp, nil
+}
+
+func (Concrete) WriteFile(path string, data []byte, perm os.FileMode) error {
+	return ioutil.WriteFile(path, data, perm)
+}
+
+var impl Abstract = Concrete{}
 
 const (
 	retryMax     = 5
@@ -29,7 +51,7 @@ func ApplyBootManifests(cfg *config.CloudConfig) error {
 		var data []byte
 		retries := 0
 		for retryMax > retries {
-			resp, err := http.Get(m.URL)
+			resp, err := impl.Get(m.URL)
 			if err != nil {
 				logrus.Errorf("manifest download failed for %q, retrying [%d/%d]", m.URL, retries, retryMax)
 				retries++
@@ -62,7 +84,7 @@ func ApplyBootManifests(cfg *config.CloudConfig) error {
 	}
 	for file, data := range filesToWrite {
 		p := filepath.Join(manifestsDir, file)
-		if err := ioutil.WriteFile(p, data, 0600); err != nil {
+		if err := impl.WriteFile(p, data, 0600); err != nil {
 			return err
 		}
 
