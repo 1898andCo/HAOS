@@ -3,7 +3,7 @@ module github.com/1898andCo/HAOS
 go 1.18
 
 require (
-	github.com/docker/docker v1.13.1
+	github.com/docker/docker v20.10.27+incompatible
 	github.com/ghodss/yaml v1.0.0
 	github.com/mattn/go-isatty v0.0.10
 	github.com/moby/sys/mount v0.3.3
@@ -30,6 +30,7 @@ require (
 	github.com/stretchr/testify v1.4.0 // indirect
 	golang.org/x/term v0.15.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
+	gotest.tools/v3 v3.5.1 // indirect
 	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a // indirect
 )
 
