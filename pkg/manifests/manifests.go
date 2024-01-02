@@ -14,14 +14,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type Abstract interface {
+type abstract interface {
 	Get(string) (*http.Response, error)
 	WriteFile(string, []byte, os.FileMode) error
 }
 
-type Concrete struct{}
+type concrete struct{}
 
-func (Concrete) Get(url string) (*http.Response, error) {
+func (concrete) Get(url string) (*http.Response, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to download manifest URL")
@@ -29,11 +29,11 @@ func (Concrete) Get(url string) (*http.Response, error) {
 	return resp, nil
 }
 
-func (Concrete) WriteFile(path string, data []byte, perm os.FileMode) error {
+func (concrete) WriteFile(path string, data []byte, perm os.FileMode) error {
 	return ioutil.WriteFile(path, data, perm)
 }
 
-var impl Abstract = Concrete{}
+var impl abstract = concrete{}
 
 const (
 	retryMax     = 5

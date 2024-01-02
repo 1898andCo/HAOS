@@ -10,9 +10,9 @@ import (
 	"github.com/1898andCo/HAOS/pkg/config"
 )
 
-type Mock struct{}
+type mock struct{}
 
-func (Mock) Get(url string) (*http.Response, error) {
+func (mock) Get(url string) (*http.Response, error) {
 	stringReader := strings.NewReader("this is the body")
 	stringReadCloser := io.NopCloser(stringReader)
 	return &http.Response{
@@ -24,14 +24,14 @@ func (Mock) Get(url string) (*http.Response, error) {
 
 var mockData = []byte("")
 
-func (Mock) WriteFile(path string, data []byte, perm os.FileMode) error {
+func (mock) WriteFile(path string, data []byte, perm os.FileMode) error {
 	mockData = data
 	return nil
 }
 
-type MockError struct{}
+type mockError struct{}
 
-func (MockError) Get(url string) (*http.Response, error) {
+func (mockError) Get(url string) (*http.Response, error) {
 	stringReader := strings.NewReader("")
 	stringReadCloser := io.NopCloser(stringReader)
 	return &http.Response{
@@ -46,7 +46,7 @@ func TestApplyBootManifests(t *testing.T) {
 		URL:    "localhost",
 		SHA256: "",
 	}
-	impl = Mock{}
+	impl = mock{}
 	cfg := &config.CloudConfig{
 		BootManifests: []config.Manifest{manifest},
 	}
