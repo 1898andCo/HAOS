@@ -7,20 +7,20 @@ import (
 	"testing"
 )
 
-type MockBool struct{}
+type mockBool struct{}
 
-func (MockBool) Stdin() *bufio.Reader {
+func (mockBool) Stdin() *bufio.Reader {
 	return bufio.NewReader(bytes.NewBufferString("y\n"))
 }
 
-type MockBlank struct{}
+type mockBlank struct{}
 
-func (MockBlank) Stdin() *bufio.Reader {
+func (mockBlank) Stdin() *bufio.Reader {
 	return bufio.NewReader(bytes.NewBufferString(" \n"))
 }
 
 func TestPrompt(t *testing.T) {
-	impl = MockBool{}
+	impl = mockBool{}
 	ans, err := Prompt("Enter y: ", "")
 	if err != nil {
 		t.Fatal(err)
@@ -33,7 +33,7 @@ func TestPrompt(t *testing.T) {
 }
 
 func TestPromptBool(t *testing.T) {
-	impl = MockBool{}
+	impl = mockBool{}
 	ans, err := PromptBool("Enter y: ", false)
 	if err != nil {
 		t.Fatal(err)
@@ -46,7 +46,7 @@ func TestPromptBool(t *testing.T) {
 }
 
 func TestPromptOptional(t *testing.T) {
-	impl = MockBlank{}
+	impl = mockBlank{}
 	ans, err := PromptOptional("Enter something: ", "default")
 	if err != nil {
 		t.Fatal(err)

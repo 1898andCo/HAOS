@@ -10,17 +10,17 @@ import (
 	"github.com/mattn/go-isatty"
 )
 
-type Abstract interface {
+type abstract interface {
 	Stdin() *bufio.Reader
 }
 
-type Concrete struct{}
+type concrete struct{}
 
-func (Concrete) Stdin() *bufio.Reader {
+func (concrete) Stdin() *bufio.Reader {
 	return bufio.NewReader(os.Stdin)
 }
 
-var impl Abstract = Concrete{}
+var impl abstract = concrete{}
 
 func PromptFormattedOptions(text string, def int, options ...string) (int, error) {
 	var newOptions []string
