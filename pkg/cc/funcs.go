@@ -33,7 +33,7 @@ func ApplySysctls(cfg *config.CloudConfig) error {
 }
 
 func ApplyHostname(cfg *config.CloudConfig) error {
-	return hostname.SetHostname(cfg)
+	return hostname.SetHostname(cfg, hostname.Concrete{})
 }
 
 func ApplyPassword(cfg *config.CloudConfig) error {
