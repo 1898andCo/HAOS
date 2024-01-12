@@ -10,6 +10,18 @@ import (
 	"github.com/mattn/go-isatty"
 )
 
+type abstract interface {
+	Stdin() *bufio.Reader
+}
+
+type concrete struct{}
+
+func (concrete) Stdin() *bufio.Reader {
+	return bufio.NewReader(os.Stdin)
+}
+
+var impl abstract = concrete{}
+
 func PromptFormattedOptions(text string, def int, options ...string) (int, error) {
 	var newOptions []string
 	for i := range options {
@@ -106,7 +118,7 @@ func PrintfToTerm(msg string, format ...interface{}) {
 func Prompt(text, def string) (string, error) {
 	for {
 		PrintToTerm(text)
-		answer, err := bufio.NewReader(os.Stdin).ReadString('\n')
+		answer, err := bufio.NewReader(impl.Stdin()).ReadString('\n')
 		if err != nil {
 			return "", err
 		}
@@ -127,7 +139,7 @@ func Prompt(text, def string) (string, error) {
 func PromptOptional(text, def string) (string, error) {
 	for {
 		PrintToTerm(text)
-		answer, err := bufio.NewReader(os.Stdin).ReadString('\n')
+		answer, err := bufio.NewReader(impl.Stdin()).ReadString('\n')
 		if err != nil {
 			return "", err
 		}
