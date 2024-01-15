@@ -45,8 +45,8 @@ RUN apk --update --no-cache add \
     nfs-utils=2.6.3-r1 \
     open-iscsi=2.1.8-r2 \
     openrc=0.48-r0 \
-    openssh-client=9.3_p2-r0 \
-    openssh-server=9.3_p2-r0 \
+    openssh-client=9.3_p2-r1 \
+    openssh-server=9.3_p2-r1 \
     parted=3.6-r1 \
     procps-ng=4.0.4-r0 \
     qemu-guest-agent=8.0.5-r0\
@@ -56,7 +56,7 @@ RUN apk --update --no-cache add \
     strace=6.3-r1 \
     sudo=1.9.13_p3-r2 \
     tar=1.34-r3 \
-    tzdata=2023c-r1 \
+    tzdata=2023d-r0 \
     util-linux=2.38.1-r8 \
     vim=9.0.2073-r0 \
     virt-what=1.25-r1 \

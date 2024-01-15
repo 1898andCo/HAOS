@@ -1,7 +1,7 @@
 # github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d
 ## explicit; go 1.12
 github.com/cpuguy83/go-md2man/v2/md2man
-# github.com/docker/docker v1.13.1
+# github.com/docker/docker v20.10.27+incompatible
 ## explicit
 github.com/docker/docker/pkg/mount
 github.com/docker/docker/pkg/reexec
@@ -74,6 +74,8 @@ gopkg.in/freddierice/go-losetup.v1
 # gopkg.in/yaml.v2 v2.2.8
 ## explicit
 gopkg.in/yaml.v2
+# gotest.tools/v3 v3.5.1
+## explicit; go 1.17
 # pault.ag/go/modprobe v0.1.2
 ## explicit; go 1.15
 pault.ag/go/modprobe
