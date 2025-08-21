@@ -13,8 +13,8 @@ require (
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
 	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.22.2
-	golang.org/x/crypto v0.17.0
-	golang.org/x/sys v0.15.0
+	golang.org/x/crypto v0.31.0
+	golang.org/x/sys v0.28.0
 	gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
 	pault.ag/go/modprobe v0.1.2
 )
@@ -28,7 +28,7 @@ require (
 	github.com/russross/blackfriday/v2 v2.0.1 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect
-	golang.org/x/term v0.15.0 // indirect
+	golang.org/x/term v0.27.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a // indirect
 )
