@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest  
     steps:
         - name: TODO to Issue
-          uses: alstr/todo-to-issue-action@v4.11.1
+          uses: alstr/todo-to-issue-action@5c97b3cb39d2d868453245e62bccc9a022b6d680 # v4.11.1

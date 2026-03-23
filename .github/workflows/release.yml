@@ -12,7 +12,7 @@ jobs:
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         with:
           fetch-depth: 0
       
@@ -25,7 +25,7 @@ jobs:
 
       - name: Update CHANGELOG
         id: changelog
-        uses: requarks/changelog-action@v1
+        uses: requarks/changelog-action@6d71e098526ee17bae963f058d34cd763378337f # v1
         with:
           token: ${{ github.token }}
           toTag: ${{ github.ref }}
@@ -35,7 +35,7 @@ jobs:
         continue-on-error: true
 
       - name: Commit CHANGELOG.md
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4
         with:
           branch: ${{ github.base_ref}}
           commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
@@ -46,7 +46,7 @@ jobs:
 
       - name: Create release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -57,13 +57,13 @@ jobs:
           body: ${{ steps.changelog.outputs.changes }}
 
       - name: Generate SBOM
-        uses: anchore/sbom-action@v0
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
         with:
             path: ./dist/artifacts
             artifact-name: haos_sbom.spdx        
 
       - name: Upload haos-amd64.iso
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -73,7 +73,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload haos-vm-amd64-iso
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -83,7 +83,7 @@ jobs:
           asset_content_type: application/octet-stream          
 
       - name: Upload haos-initrd-amd64
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -93,7 +93,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload haos-kernel-amd64.squashfs
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -103,7 +103,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload haos-kernel-version-amd64
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -113,7 +113,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload haos-kernel-vm-amd64.squashfs
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -123,7 +123,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Upload haos-rootfs-amd64.tar.gz
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -133,7 +133,7 @@ jobs:
           asset_content_type: application/gzip
 
       - name: Upload haos-vmlinuz-amd64
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
