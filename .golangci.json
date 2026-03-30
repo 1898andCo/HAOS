@@ -5,15 +5,19 @@
 		"enable": [
 			"govet",
 			"revive",
-			"goimports",
 			"misspell",
-			"ineffassign",
-			"gofmt"
+			"ineffassign"
 		],
 		"exclusions": {
 			"paths": [
 				"zz_generated_"
 			]
 		}
+	},
+	"formatters": {
+		"enable": [
+			"goimports",
+			"gofmt"
+		]
 	}
 }
