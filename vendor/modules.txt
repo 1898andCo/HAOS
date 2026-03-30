@@ -11,9 +11,6 @@ github.com/docker/go-units
 # github.com/ghodss/yaml v1.0.0
 ## explicit
 github.com/ghodss/yaml
-# github.com/konsorten/go-windows-terminal-sequences v1.0.2
-## explicit
-github.com/konsorten/go-windows-terminal-sequences
 # github.com/mattn/go-isatty v0.0.10
 ## explicit; go 1.14
 github.com/mattn/go-isatty
@@ -49,11 +46,9 @@ github.com/russross/blackfriday/v2
 # github.com/shurcooL/sanitized_anchor_name v1.0.0
 ## explicit
 github.com/shurcooL/sanitized_anchor_name
-# github.com/sirupsen/logrus v1.4.2
-## explicit
+# github.com/sirupsen/logrus v1.8.3
+## explicit; go 1.13
 github.com/sirupsen/logrus
-# github.com/stretchr/testify v1.4.0
-## explicit
 # github.com/urfave/cli v1.22.2
 ## explicit; go 1.11
 github.com/urfave/cli
