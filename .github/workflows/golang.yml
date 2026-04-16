@@ -4,11 +4,22 @@ name: Golang Build and Unit Tests
 on:
     push:
     workflow_dispatch:
+permissions:
+  contents: read
+
 jobs:
   golang:
+    permissions:
+      checks: write  # for reviewdog/action-golangci-lint to report issues using checks
+      contents: read  # for actions/checkout to fetch code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
       - name: Set up Go
         uses: actions/setup-go@7b8cf10d4e4a01d4992d18a89f4d7dc5a3e6d6f4 # v4
@@ -22,4 +33,4 @@ jobs:
         run: go test -v ./...
 
       - name: Lint
-        uses: reviewdog/action-golangci-lint@c76cceaaab89abe74e649d2e34c6c9adc26662d2 # v2
+        uses: step-security/action-golangci-lint@4d3d0630d31ce622dc13dc7b19a49fe58a10524f # v2.8.0

@@ -2,10 +2,21 @@ name: SBOM
 
 on: [release]
 
+permissions:
+  contents: read
+
 jobs:
   SBOM:
+    permissions:
+      actions: write  # for anchore/sbom-action to upload workflow artifacts
+      contents: write  # for anchore/sbom-action to upload & delete release assets
     runs-on: ubuntu-latest
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+        with:
+          egress-policy: audit
+
       - name: Checkout
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: Build/Package
