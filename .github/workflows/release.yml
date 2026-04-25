@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Release
-    runs-on: self-hosted 
+    runs-on: [build-deploy, Common, X64] 
     steps:
 
       - name: Harden the runner (Audit all outbound calls)
