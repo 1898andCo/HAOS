@@ -3,6 +3,10 @@ on:
     push:
     workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   todo:              
     runs-on: ubuntu-latest  
