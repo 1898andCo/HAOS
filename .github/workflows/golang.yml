@@ -14,18 +14,10 @@ jobs:
       contents: read  # for actions/checkout to fetch code
     runs-on: [build-sandbox, Common, X64]
     steps:
-      - name: Harden the runner (Block egress except allowlist)
+      - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
         with:
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-            objects.githubusercontent.com:443
-            proxy.golang.org:443
-            release-assets.githubusercontent.com:443
-            storage.googleapis.com:443
-            sum.golang.org:443
+          egress-policy: audit
 
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 

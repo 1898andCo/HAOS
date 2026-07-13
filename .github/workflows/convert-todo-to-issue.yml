@@ -11,13 +11,10 @@ jobs:
   todo:              
     runs-on: [build-sandbox, Common, X64]
     steps:
-        - name: Harden the runner (Block egress except allowlist)
+        - name: Harden the runner (Audit all outbound calls)
           uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
           with:
-            egress-policy: block
-            allowed-endpoints: >
-              api.github.com:443
-              github.com:443
+            egress-policy: audit
 
         - name: TODO to Issue
           uses: alstr/todo-to-issue-action@5c97b3cb39d2d868453245e62bccc9a022b6d680 # v4.11.1
