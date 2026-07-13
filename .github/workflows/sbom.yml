@@ -10,7 +10,7 @@ jobs:
     permissions:
       actions: write  # for anchore/sbom-action to upload workflow artifacts
       contents: write  # for anchore/sbom-action to upload & delete release assets
-    runs-on: ubuntu-latest
+    runs-on: [build-sandbox, Common, X64]
     steps:
       - name: Harden the runner (Block egress except allowlist)
         uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
