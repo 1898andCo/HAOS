@@ -12,7 +12,7 @@ jobs:
     permissions:
       checks: write  # for reviewdog/action-golangci-lint to report issues using checks
       contents: read  # for actions/checkout to fetch code
-    runs-on: ubuntu-latest
+    runs-on: [build-sandbox, Common, X64]
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
