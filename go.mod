@@ -11,7 +11,7 @@ require (
 	github.com/otiai10/copy v1.0.2
 	github.com/pkg/errors v0.8.1
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
-	github.com/sirupsen/logrus v1.4.2
+	github.com/sirupsen/logrus v1.8.3
 	github.com/urfave/cli v1.22.2
 	golang.org/x/crypto v0.31.0
 	golang.org/x/sys v0.28.0
@@ -22,12 +22,10 @@ require (
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d // indirect
 	github.com/docker/go-units v0.4.0 // indirect
-	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
 	github.com/mattn/go-shellwords v1.0.5 // indirect
 	github.com/rancher/wrangler v0.3.1 // indirect
 	github.com/russross/blackfriday/v2 v2.0.1 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
-	github.com/stretchr/testify v1.4.0 // indirect
 	golang.org/x/term v0.27.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a // indirect
